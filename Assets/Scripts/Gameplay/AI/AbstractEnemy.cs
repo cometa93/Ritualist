@@ -25,8 +25,6 @@ namespace Ritualist.AI
             base.Awake();
         }
 
-        protected abstract void Setup();
-
         protected virtual void Update()
         {
             Move();
@@ -38,9 +36,11 @@ namespace Ritualist.AI
             LookoutFortrap();
         }
 
-        public abstract void Move();
+        protected abstract void Setup();
 
-        public abstract void Attack();
+        protected abstract void Move();
+
+        protected abstract void Attack();
 
         protected abstract void LookoutFortrap();
 
