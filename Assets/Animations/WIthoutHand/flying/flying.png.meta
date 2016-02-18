@@ -1,0 +1,130 @@
+fileFormatVersion: 2
+guid: 56f951037eb05d4449caadd98de0e0a7
+timeCreated: 1454236664
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: flying_0
+    21300002: flying_1
+    21300004: flying_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 2
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: flying_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 865
+        width: 142
+        height: 422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 71, y: 211}
+        - {x: -71, y: 211}
+        - {x: -71, y: -124}
+        - {x: -51, y: -110}
+        - {x: -45, y: -103}
+        - {x: -36, y: -126}
+        - {x: -11, y: -211}
+        - {x: 40, y: -211}
+        - {x: 68, y: -163}
+        - {x: 26, y: -56}
+        - {x: 71, y: 81}
+    - name: flying_1
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 432
+        width: 141
+        height: 422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30.5, y: -211}
+        - {x: 44.5, y: -211}
+        - {x: 65.5, y: -155}
+        - {x: 70.5, y: 2}
+        - {x: 70.5, y: 201}
+        - {x: 57.5, y: 211}
+        - {x: -70.5, y: 211}
+        - {x: -70.5, y: -148}
+        - {x: -25.5, y: -211}
+        - {x: -0.5, y: -211}
+        - {x: 4.5, y: -204}
+        - {x: 17.5, y: -182}
+        - {x: 20.5, y: -177}
+        - {x: 17.5, y: -205}
+    - name: flying_2
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 2
+        width: 141
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 70.5, y: 180.5}
+        - {x: 62.5, y: 210.5}
+        - {x: -57.5, y: 210.5}
+        - {x: -66.5, y: 178.5}
+        - {x: -70.5, y: 152.5}
+        - {x: -70.5, y: -107.5}
+        - {x: -54.5, y: -112.5}
+        - {x: -30.5, y: -210.5}
+        - {x: 52.5, y: -210.5}
+        - {x: 69.5, y: -170.5}
+        - {x: 34.5, y: 42.5}
+        - {x: 70.5, y: 113.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

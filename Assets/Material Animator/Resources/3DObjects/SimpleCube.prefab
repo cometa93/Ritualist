@@ -1,0 +1,697 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 33: {fileID: 3300000}
+  - 23: {fileID: 2300000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1002 &100001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!1 &100002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400002}
+  - 111: {fileID: 11100000}
+  m_Layer: 0
+  m_Name: SimpleCube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1002 &100003
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: -0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 400002}
+  m_RootOrder: 0
+--- !u!1002 &400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!4 &400002
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400000}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!1002 &400003
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!23 &2300000
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 9588d69a0adbdc443b63e617f0bbf3dc, type: 2}
+  - {fileID: 2100000, guid: cca2c9cfb9a94e04a82a863dc1f158c4, type: 2}
+  - {fileID: 2100000, guid: bac810f755edc4041b1eac4be0f81f43, type: 2}
+  - {fileID: 2100000, guid: c87fbab64c72d9747b88b03407c96f6e, type: 2}
+  - {fileID: 2100000, guid: 2a111a7fc1900b544b4dc1fbcb114d30, type: 2}
+  - {fileID: 2100000, guid: 299adceb4262c91408d7a2e0836d4b11, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1002 &2300001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!33 &3300000
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mesh: {fileID: 4300000, guid: 35fa5f5a5f987cd4c94d7dbd903f0ee3, type: 3}
+--- !u!1002 &3300001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!111 &11100000
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 35fa5f5a5f987cd4c94d7dbd903f0ee3, type: 3}
+  m_Animations:
+  - {fileID: 7400000, guid: 35fa5f5a5f987cd4c94d7dbd903f0ee3, type: 3}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!1002 &11100001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92478a317d7c09047868647074f3992d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownObject: {fileID: 100000}
+  initialized: 1
+  matCount: 0
+  getMatCount: 6
+  texCount: 0
+  colCount: 1
+  display:
+  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  animMaterial:
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 53706563436f6c6f72
+    - 456d697373696f6e
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor:
+    - r: 1
+      g: 0.9440559
+      b: 0
+      a: 1
+    setSwLoop: 0
+    animTint: 1
+    colorLoop: 1
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor: []
+    setSwLoop: 0
+    animTint: 0
+    colorLoop: 0
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 53706563436f6c6f72
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor: []
+    setSwLoop: 0
+    animTint: 0
+    colorLoop: 0
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor: []
+    setSwLoop: 0
+    animTint: 0
+    colorLoop: 0
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 44657461696c
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor: []
+    setSwLoop: 0
+    animTint: 0
+    colorLoop: 0
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 446563616c546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 53706563436f6c6f72
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor: []
+    setSwLoop: 0
+    animTint: 0
+    colorLoop: 0
+    timeInverter: 0
+    speedTint: 1
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 0
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 0
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 1
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 0
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange: []
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 0
+    texLoop: 0
+    switchInterval: 1
+    resetTexture: 0
+  shaderNames:
+  - 5665727465784c6974
+  - 44696666757365
+  - 53706563756c6172
+  - 446966667573652044657461696c
+  - 446563616c
+  - 53706563756c6172
+  tempColorNamesList:
+  - 436f6c6f72
+  - 53706563436f6c6f72
+  - 456d697373696f6e
+  - 437573746f6d
+  tempTextureNamesList:
+  - 4d61696e546578
+  - 437573746f6d
+  tempColor: []
+  tempTexture: []
+  tempOffset: []
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100002}
+  m_IsPrefabParent: 1
+--- !u!1002 &100100001
+EditorExtensionImpl:
+  serializedVersion: 6

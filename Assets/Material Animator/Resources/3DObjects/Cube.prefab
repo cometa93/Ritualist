@@ -1,0 +1,299 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 33: {fileID: 3300000}
+  - 65: {fileID: 6500000}
+  - 23: {fileID: 2300000}
+  - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1002 &100001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!1002 &400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!23 &2300000
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 4743f41d976ecf74f9c789a264b54d4a, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1002 &2300001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!33 &3300000
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1002 &3300001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!65 &6500000
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1002 &6500001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e27c99ac4676e47a2d0faf728eb7c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedRot: {x: 50, y: 30, z: 20}
+  values: 5
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92478a317d7c09047868647074f3992d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownObject: {fileID: 100000}
+  initialized: 1
+  matCount: 0
+  getMatCount: 1
+  texCount: 6
+  colCount: 6
+  animMaterial:
+  - materialIndex: 0
+    hasTextureProperty: 1
+    hasColorProperty: 1
+    colorsNames:
+    - 436f6c6f72
+    - 53706563436f6c6f72
+    - 456d697373696f6e
+    - 437573746f6d
+    tempColorName: 436f6c6f72
+    colorID: 0
+    colorIndex: 0
+    tintColor:
+    - r: 0.022053892
+      g: 0.98507464
+      b: 0.9042618
+      a: 1
+    - r: 0.9925373
+      g: 0.0074069886
+      b: 0.0074069886
+      a: 1
+    - r: 0.9925373
+      g: 0.9370107
+      b: 0
+      a: 1
+    - r: 0.9925373
+      g: 0.0074069886
+      b: 0.81342286
+      a: 1
+    - r: 0.0065756715
+      g: 0.9402985
+      b: 0
+      a: 1
+    - r: 0.04785523
+      g: 0
+      b: 0.97761196
+      a: 1
+    setSwLoop: 0
+    animTint: 1
+    colorLoop: 1
+    timeInverter: 0
+    speedTint: 2
+    colAnimRate:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    detObject: {fileID: 0}
+    defSwitching: 0
+    colInterval: 3
+    resetColor: 0
+    texturesNames:
+    - 4d61696e546578
+    - 437573746f6d
+    tempTextureName: 4d61696e546578
+    textureID: 0
+    curTexIndex: -1
+    animScrollX: 1
+    loopScrollX: 0
+    timeInverterX: 0
+    speedUVX: 0.25
+    uvAnimRateX:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.3
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    animScrollY: 1
+    loopScrollY: 0
+    timeInverterY: 0
+    speedUVY: 1
+    uvAnimRateY:
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    texChange:
+    - {fileID: 2800000, guid: ed33336b8d2b6bf46ad74fb4bb461559, type: 3}
+    - {fileID: 2800000, guid: 82659bd30149f29489bb8666f456e33c, type: 3}
+    - {fileID: 2800000, guid: 0a70e1de62ae87844b0afae5d939dd30, type: 3}
+    - {fileID: 2800000, guid: 5fb4c8755f50ee8439df881263f0747e, type: 3}
+    - {fileID: 2800000, guid: 413f378f35c0423479912543e91c7d2a, type: 3}
+    - {fileID: 2800000, guid: 788b05bde0747e74888ee4ef2f289335, type: 3}
+    detOtherObject: {fileID: 0}
+    defSwitchingTex: 0
+    texSwitch: 1
+    texLoop: 1
+    switchInterval: 0.5
+    resetTexture: 0
+  display:
+  - 1
+  shaderNames:
+  - 5665727465784c6974
+  tempTextureNamesList:
+  - 4d61696e546578
+  - 437573746f6d
+  tempColorNamesList:
+  - 436f6c6f72
+  - 53706563436f6c6f72
+  - 456d697373696f6e
+  - 437573746f6d
+  tempColor: []
+  tempTexture: []
+  tempOffset: []
+--- !u!1002 &11400003
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+--- !u!1002 &100100001
+EditorExtensionImpl:
+  serializedVersion: 6
