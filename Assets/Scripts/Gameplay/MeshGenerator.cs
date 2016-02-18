@@ -42,7 +42,7 @@ namespace DevilMind.Utils
             base.OnEvent(gameEvent);
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (_frames.Count <= 0)
             {

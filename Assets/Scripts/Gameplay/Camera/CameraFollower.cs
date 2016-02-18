@@ -20,7 +20,7 @@ namespace Ritualist
             base.Awake();
         }
 
-        private void Update()
+        protected override void Update()
         {
 
             var temp = Vector3.Lerp(_myTransform.position, _pointToFollow.position * 1.2f, _speedFactor * Time.deltaTime);

@@ -81,7 +81,7 @@ namespace Ritualist.Controller
         }
 
 
-        private void Update()
+        protected override void Update()
         {
             if (_preparedRune != null)
             {

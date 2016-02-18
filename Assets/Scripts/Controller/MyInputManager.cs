@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using DevilMind;
 using EventType = DevilMind.EventType;
@@ -9,10 +10,9 @@ namespace Ritualist.Controller
     public static class MyInputManager
     {
         public const float Radius = 6f;
-        private static bool _controllerRegistered = false;
-        private static bool _rightTriggerClicked = false;
-        private static bool _leftTriggerClicked = false;
-        private static float _triggerHoldTime = 0;
+        private static bool _controllerRegistered;
+        private static bool _rightTriggerClicked;
+        private static bool _leftTriggerClicked;
 
         private static readonly Dictionary<InputAxis, string> AxisNames = new Dictionary<InputAxis, string>
         {
@@ -31,8 +31,8 @@ namespace Ritualist.Controller
             {InputButton.X, "X" }
         };
 
-        private static Dictionary<int, bool> _clickedButtons = new Dictionary<int, bool>(); 
-        private static Dictionary<int, float> _buttonsHoldingTime = new Dictionary<int, float>(); 
+        private static readonly Dictionary<int, bool> ClickedButtons = new Dictionary<int, bool>(); 
+        private static readonly Dictionary<int, float> ButtonsHoldingTime = new Dictionary<int, float>(); 
 
 
         public static float GetAxis(InputAxis axis)
@@ -55,10 +55,10 @@ namespace Ritualist.Controller
         {
             for (int i = 1, c = (int)InputButton.Count; i < c; ++i)
             {
-                if (_clickedButtons.ContainsKey(i) == false)
+                if (ClickedButtons.ContainsKey(i) == false)
                 {
-                    _clickedButtons.Add(i, false);
-                    _buttonsHoldingTime.Add(i, 0);
+                    ClickedButtons.Add(i, false);
+                    ButtonsHoldingTime.Add(i, 0);
                 }
             }
             _controllerRegistered = true;
@@ -93,27 +93,27 @@ namespace Ritualist.Controller
             {
                 if (IsButtonDown((InputButton)i) == false)
                 {
-                    if (_clickedButtons[i])
+                    if (ClickedButtons[i])
                     {
                         GameMaster.Events.Rise(EventType.ButtonReleased, i);
                     }
-                    _buttonsHoldingTime[i] = 0;
-                    _clickedButtons[i] = false;
+                    ButtonsHoldingTime[i] = 0;
+                    ClickedButtons[i] = false;
                 }
-                else if (_clickedButtons[i] == false && IsButtonDown((InputButton)i))
+                else if (ClickedButtons[i] == false && IsButtonDown((InputButton)i))
                 {
-                    _clickedButtons[i] = true;
+                    ClickedButtons[i] = true;
                     GameMaster.Events.Rise(EventType.ButtonClicked, i);
                 }
-                else if (_clickedButtons[i] && IsButtonDown((InputButton) i))
+                else if (ClickedButtons[i] && IsButtonDown((InputButton) i))
                 {
-                    _buttonsHoldingTime[i] += Time.deltaTime;
+                    ButtonsHoldingTime[i] += Time.deltaTime;
                 }
             }
 
             //Clicking triggers
             var trigger = GetAxis(InputAxis.LeftTrigger);
-            if (trigger != 0)
+            if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _leftTriggerClicked == false)
                 {
@@ -131,7 +131,7 @@ namespace Ritualist.Controller
             }
 
             trigger = GetAxis(InputAxis.RightTrigger);
-            if (trigger != 0)
+            if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _rightTriggerClicked == false)
                 {

@@ -47,7 +47,7 @@ namespace Ritualist.AI
             }
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (GameplayController.Instance.GameEnded)
             {

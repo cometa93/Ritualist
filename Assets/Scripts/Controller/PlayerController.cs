@@ -8,16 +8,14 @@ using EventType = DevilMind.EventType;
 
 namespace Ritualist.Controller 
 {
-    public class CharacterController : DevilBehaviour
+    public class PlayerController : DevilBehaviour
     {
-        [SerializeField] private bool _jump, _crouch;
-
+        [SerializeField] private bool _jump;
         [SerializeField] private PlatformerCharacter2D _character;
         [SerializeField] private AimBehaviour _aim;
         [Range(0, 2.5f)] [SerializeField] private float _aimRadius;
 
         private float _xAxisMoveValue;
-        private bool _rightTriggerHolded;
 
         protected override void Awake()
         {
@@ -43,27 +41,14 @@ namespace Ritualist.Controller
                         Jump();
                         break;
                     case InputButton.B:
-                        Debug.Log("CROUCHING");
                         break;
                     case InputButton.X:
                         break;
                 }
             }
-
-            if (gameEvent.Type == EventType.RightTriggerClicked)
-            {
-                _rightTriggerHolded = true;
-                //TODO CHANGE INTO GHOST
-            }
-
-            if (gameEvent.Type == EventType.RightTriggerReleased)
-            {
-                _rightTriggerHolded = false;
-                //TODO CHANGE INTO RITUALYST
-            }
         }
 
-        private void Update()
+        protected override void Update()
         {
             if (GameplayController.Instance.GameEnded)
             {

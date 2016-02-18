@@ -36,8 +36,10 @@ namespace DevilMind
         {
         }
 
+        protected virtual void Update()
+        {
+        }
 
-        //TODO : REMOVING UNUSED LISTENERS !
         protected virtual void OnDisable()
         {
             

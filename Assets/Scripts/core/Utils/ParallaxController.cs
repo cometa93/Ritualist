@@ -20,7 +20,7 @@ namespace DevilMind.Utils
         }
 
         //Calculating poses
-        void Update()
+        protected override void Update()
         {
             float prevX = _previousPosition.x;
             float currX = _objectToFollow.transform.position.x;

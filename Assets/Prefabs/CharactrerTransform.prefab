@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 433648}
   - 212: {fileID: 21299618}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CrashBandicootMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 497708}
   - 212: {fileID: 21279686}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 487586}
   - 212: {fileID: 21257384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430290}
   - 212: {fileID: 21249232}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: hand kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 474744}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 428918}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BackCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 455136}
   - 212: {fileID: 21280970}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: boot kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438550}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FrontCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 406006}
   - 212: {fileID: 21235270}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 4 kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 481700}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CharactrerTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443842}
   - 212: {fileID: 21222914}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: rightleg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 470238}
   - 212: {fileID: 21209486}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 479200}
   - 212: {fileID: 21271704}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 474470}
   - 114: {fileID: 11430828}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AimRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 481486}
   - 212: {fileID: 21259072}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 460084}
   - 212: {fileID: 21203854}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 470996}
   - 212: {fileID: 21283530}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leftfrontArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 433062}
   - 212: {fileID: 21270890}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: boot kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,11 +293,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 400552}
   - 95: {fileID: 9588224}
-  - 61: {fileID: 6186022}
-  - 58: {fileID: 5814052}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Character Graphics
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,7 +308,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 462968}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: handToRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +324,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 499228}
   - 212: {fileID: 21204746}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia 3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +339,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 468742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +355,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 406934}
   - 212: {fileID: 21228832}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +371,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412514}
   - 114: {fileID: 11461608}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +387,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 482884}
   - 212: {fileID: 21253354}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +403,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 450244}
   - 212: {fileID: 21260660}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 4 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +419,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 414904}
   - 212: {fileID: 21289858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leftfrontArm kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,9 +437,11 @@ GameObject:
   - 50: {fileID: 5090500}
   - 114: {fileID: 11463774}
   - 114: {fileID: 11438814}
-  m_Layer: 0
+  - 61: {fileID: 6124450}
+  - 58: {fileID: 5871886}
+  m_Layer: 9
   m_Name: CharacterOnly
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -455,7 +455,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 483826}
   - 212: {fileID: 21249720}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 488118}
   - 212: {fileID: 21226862}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 480266}
   - 212: {fileID: 21295436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 410020}
   - 212: {fileID: 21204194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 405504}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera point To follow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 402640}
   - 212: {fileID: 21256438}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 401538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CeilingCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 425036}
   - 212: {fileID: 21211456}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: leg bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 449704}
   - 212: {fileID: 21220494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 426380}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AimSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 441040}
   - 212: {fileID: 21204124}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: rightArn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 432422}
   - 212: {fileID: 21275074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Warstwa 3 kopia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,7 +643,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 405160}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AimAndHandWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +899,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05620265, y: -0.18167901, z: 0}
+  m_LocalPosition: {x: -0.05620265, y: -0.228, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 426380}
@@ -1228,34 +1228,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &5814052
+--- !u!58 &5871886
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151010}
+  m_GameObject: {fileID: 169998}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.45, y: -1.53}
+  m_Offset: {x: 0.44, y: -1.64}
   serializedVersion: 2
-  m_Radius: 2.8152962
---- !u!61 &6186022
+  m_Radius: 2.86
+--- !u!61 &6124450
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151010}
+  m_GameObject: {fileID: 169998}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.40196133, y: 4.3411784}
+  m_Offset: {x: 0.45, y: 4.42}
   serializedVersion: 2
-  m_Size: {x: 5.0196114, y: 9.682357}
+  m_Size: {x: 4.9, y: 10.01}
 --- !u!95 &9588224
 Animator:
   serializedVersion: 3
@@ -1296,7 +1296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jump: 0
-  _crouch: 0
   _character: {fileID: 11463774}
   _aim: {fileID: 11430828}
   _aimRadius: 2.5
@@ -1325,11 +1324,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runningAnimationSpeed: 1.8
+  _runningAnimationSpeed: 2
   _walkingAnimationSpeed: 2
-  _doubleJumpPower: 8.49
-  _airControllPowerModyfier: 0.51
-  _minimumAirControllSpeed: 0
+  _doubleJumpPower: 9
+  _airControllPowerModyfier: 0.4
+  _minimumAirControllSpeed: 0.5
   _maxSpeed: 10
   _jumpForce: 300
   _airControl: 1
