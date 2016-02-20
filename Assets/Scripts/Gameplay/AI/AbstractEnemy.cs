@@ -25,7 +25,7 @@ namespace Ritualist.AI
             base.Awake();
         }
 
-        protected virtual void Update()
+        protected override void Update()
         {
             Move();
             Attack();

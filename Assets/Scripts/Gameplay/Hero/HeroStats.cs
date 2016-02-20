@@ -1,4 +1,6 @@
-﻿namespace Ritualist
+﻿using UnityEngine;
+
+namespace Ritualist
 {
     public class HeroStats
     {

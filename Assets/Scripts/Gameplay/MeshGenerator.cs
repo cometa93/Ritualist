@@ -37,7 +37,7 @@ namespace DevilMind.Utils
         {
             if (gameEvent.Type == EventType.GenerateMagicField)
             {
-                SetupMagicField((List<RuneBehaviour>) gameEvent.Parameter);
+                SetupMagicField((List<CatchPoint>) gameEvent.Parameter);
             }
             base.OnEvent(gameEvent);
         }
@@ -73,11 +73,9 @@ namespace DevilMind.Utils
             tweenParams.Add("time", 0.3f);
             tweenParams.Add("onupdate", "OnColorUpdated");
             iTween.ValueTo(gameObject, tweenParams);
-
-            GameplayController.Instance.RefillAmmo();
         }
 
-        private List<Vector2> GetPoints(List<RuneBehaviour> runes)
+        private List<Vector2> GetPoints(List<CatchPoint> runes)
         {
             var list = new List<Vector2>();
             for (int i = 0, c = runes.Count; i < c; ++i)
@@ -91,7 +89,7 @@ namespace DevilMind.Utils
             return list;
         }
 
-        private void SetupMagicField(List<RuneBehaviour> magicFieldPoints)
+        private void SetupMagicField(List<CatchPoint> magicFieldPoints)
         {
             _polygonCollider2D.enabled = true;
             _points = GetPoints(magicFieldPoints);

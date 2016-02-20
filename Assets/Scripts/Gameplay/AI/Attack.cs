@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Ritualist.AI
+﻿namespace Ritualist.AI
 {
     public enum AttackEffect
     {

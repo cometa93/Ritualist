@@ -44,8 +44,6 @@ namespace Ritualist.UI
 
         private void EndGame()
         {
-            GameplayController.Instance.AmmoCount = 3;
-            GameplayController.Instance.EnemyKilledCounter = 0;
             StartCoroutine(FadeColor());
             StartCoroutine(WaitAWhile());
         }

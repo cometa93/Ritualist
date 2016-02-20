@@ -11,14 +11,12 @@ namespace Ritualist.UI
     {
         [SerializeField] private Transform _pressAInfo;
         [SerializeField] private Transform _infoScreen;
-        private bool _available;
         private int counter = 0;
 
         private void Awake()
         {
             counter = 0;
             _pressAInfo.gameObject.SetActive(false);
-            _available = false;
             StartCoroutine(WaitAWhile());
         }
 
@@ -28,7 +26,6 @@ namespace Ritualist.UI
             if (MyInputManager.IsButtonDown(InputButton.A))
             {
                 counter ++;
-                _available = false;
                 if (counter == 1)
                 {
                     _infoScreen.gameObject.SetActive(true);
@@ -47,12 +44,7 @@ namespace Ritualist.UI
             yield return new WaitForSeconds(3f);
             if (counter == 0)
             {
-                _available = true;
                 _pressAInfo.gameObject.SetActive(true);
-            }
-            else if (counter == 1)
-            {
-                _available = true;
             }
 
         }

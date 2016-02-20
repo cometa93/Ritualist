@@ -10,8 +10,9 @@ namespace Ritualist.Controller
 {
     public class PlayerController : DevilBehaviour
     {
+
         [SerializeField] private bool _jump;
-        [SerializeField] private PlatformerCharacter2D _character;
+        [SerializeField] private PlatformerCharacter2D _characterAnimationController;
         [SerializeField] private AimBehaviour _aim;
         [Range(0, 2.5f)] [SerializeField] private float _aimRadius;
 
@@ -67,7 +68,7 @@ namespace Ritualist.Controller
         private void Move()
         {
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
-            _character.Move(_xAxisMoveValue, false, _jump);
+            _characterAnimationController.Move(_xAxisMoveValue, false, _jump);
             _jump = false;
         }
         
@@ -79,11 +80,11 @@ namespace Ritualist.Controller
 
             if (Mathf.Abs(yPosition) < 0.2f && Mathf.Abs(xPosition) < 0.2f)
             {
-                _aim.Rotate(_character.CharacterFront()*_aimRadius);
-                _character.RotateAimOfRuneShooter(_character.CharacterFront() * _aimRadius);
+                _aim.Rotate(_characterAnimationController.CharacterFront()*_aimRadius);
+                _characterAnimationController.RotateAimOfRuneShooter(_characterAnimationController.CharacterFront() * _aimRadius);
                 return;
             }
-            _character.RotateAimOfRuneShooter(MyInputManager.GetLeftStickPosition());
+            _characterAnimationController.RotateAimOfRuneShooter(MyInputManager.GetLeftStickPosition());
             _aim.Rotate(MyInputManager.GetLeftStickPosition());
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DevilMind;
 using DevilMind.Utils;
 using UnityEngine;
-using Event = DevilMind.Event;
+
 using EventType = DevilMind.EventType;
 
 namespace Ritualist.AI

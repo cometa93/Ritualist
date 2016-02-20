@@ -11,7 +11,6 @@ namespace Ritualist
     {
         public bool GameEnded { get; private set; }
         public int EnemyCounter { get; set; }
-        private const int MaximalRunesCount = 3;
         public int EnemyKilledCounter = 0;
 
         private static GameplayController _instance;
@@ -26,24 +25,7 @@ namespace Ritualist
             base.Awake();
         }
 
-        private List<RuneBehaviour> _placedRunes = new List<RuneBehaviour>();
-        public int AmmoCount = MaximalRunesCount;
-
-        public void PlaceRune(RuneBehaviour behaviour)
-        {
-            _placedRunes.Add(behaviour);
-            if (_placedRunes.Count == MaximalRunesCount)
-            {
-                GenerateMagicField();
-            }
-        }
-
-        private void GenerateMagicField()
-        {
-            GameMaster.Events.Rise(EventType.GenerateMagicField, new List<RuneBehaviour>(_placedRunes));
-            _placedRunes.Clear();
-        }
-
+    
         public void SpawnEnemy(EnemyType enemyType)
         {
             StartCoroutine(SpawnEnemyLater(enemyType));
@@ -53,11 +35,6 @@ namespace Ritualist
         {
             yield return new WaitForSeconds(Random.Range(0,2f));
             GameMaster.Events.Rise(EventType.SpawnEnemy,type);
-        }
-
-        public void RefillAmmo()
-        {
-            AmmoCount = MaximalRunesCount;
         }
 
         #region Actions performed on hero.
