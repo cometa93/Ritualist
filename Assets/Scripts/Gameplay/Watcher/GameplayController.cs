@@ -9,32 +9,39 @@ namespace Ritualist
 {
     public class GameplayController : DevilBehaviour
     {
+        private GameObject _magicFieldPrefab;
+        private MagicField.Config _config;
+
+        //TODO REMOVE
         public bool GameEnded { get; private set; }
-        public int EnemyCounter { get; set; }
-        public int EnemyKilledCounter = 0;
 
         private static GameplayController _instance;
-        public static GameplayController Instance {  get { return _instance; } }
+        public static GameplayController Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    var obj = new GameObject("GameplayController");
+                    obj.transform.position = Vector3.zero;
+                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localEulerAngles = Vector3.zero;
+                    obj.AddComponent<GameplayController>();
+                    _instance = obj.GetComponent<GameplayController>();
+                }
+                return _instance;
+            }
+        }
 
         protected override void Awake()
         {
             GameMaster.Hero.Stats.Reset();
-            _instance = null;
-            _instance = this;
-            SpawnEnemy(EnemyType.Ghost);
+            _magicFieldPrefab = ResourceLoader.LoadMagicField();
+            if (_magicFieldPrefab == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "MagicField prefab is null");
+            }
             base.Awake();
-        }
-
-    
-        public void SpawnEnemy(EnemyType enemyType)
-        {
-            StartCoroutine(SpawnEnemyLater(enemyType));
-        }
-
-        private IEnumerator SpawnEnemyLater(EnemyType type)
-        {
-            yield return new WaitForSeconds(Random.Range(0,2f));
-            GameMaster.Events.Rise(EventType.SpawnEnemy,type);
         }
 
         #region Actions performed on hero.
@@ -48,6 +55,30 @@ namespace Ritualist
             {
                 GameEnded = true;
                 GameMaster.Events.Rise(EventType.GameEnd);
+            }
+        }
+       
+        #endregion
+
+        #region Catch Skill Helper
+        public void PlacePoint(CatchPoint point)
+        {
+            var config = _config ?? ( _config = new MagicField.Config()
+            {
+                LongLife = GameMaster.Hero.Skills[SkillEffect.Catch].LongLife,
+                CatchPoints = new List<CatchPoint>()
+            });
+
+            config.CatchPoints.Add(point);
+
+            if (config.IsFull)
+            {
+                _config = null;
+                var magicField = Instantiate(_magicFieldPrefab);
+                StartCoroutine(TimeHelper.RunAfterFrames(5, () =>
+                {
+                    magicField.GetComponent<MagicField>().Setup(config);
+                }));
             }
         }
 

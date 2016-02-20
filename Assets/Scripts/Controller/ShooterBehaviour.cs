@@ -36,6 +36,7 @@ namespace Ritualist.Controller
             switch (currentSkill)
             {
                 case SkillEffect.Catch:
+                    ShootCatchPoint();
                     break;
                 case SkillEffect.Stunt:
                     break;
@@ -56,8 +57,7 @@ namespace Ritualist.Controller
                 Log.Error(MessageGroup.Gameplay, "Spawned prefab is null");
                 return null;
             }
-
-            ResourceLoader.SetLayer(spawnedPrefab, gameObject.layer);
+            
             spawnedPrefab.transform.parent = transform;
             spawnedPrefab.localScale = Vector3.one;
             spawnedPrefab.localPosition = Vector3.zero;

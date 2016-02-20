@@ -11,7 +11,6 @@ namespace Ritualist.UI
 {
     public class CounterBehaviour : DevilBehaviour
     {
-        [SerializeField] private Text text;
         [SerializeField] private Image _image;
         [SerializeField] private Image _panel;
 
@@ -19,17 +18,12 @@ namespace Ritualist.UI
         {
             _panel.color = Color.clear;
             _image.color = Color.clear;
-            EventsToListen.Add(EventType.EnemyDied);
             EventsToListen.Add(EventType.GameEnd);
             base.Awake();
         }
 
         protected override void OnEvent(Event gameEvent)
         {
-            if (gameEvent.Type == EventType.EnemyDied)
-            {
-                UpdateCounter();
-            }
             if (gameEvent.Type == EventType.GameEnd)
             {
               EndGame();
@@ -37,10 +31,6 @@ namespace Ritualist.UI
             base.OnEvent(gameEvent);
         }
 
-        private void UpdateCounter()
-        {
-            text.text = GameplayController.Instance.EnemyKilledCounter.ToString();
-        }
 
         private void EndGame()
         {

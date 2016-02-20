@@ -10,6 +10,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
         private float Value;
         private bool _isCatched;
         private bool _isFinished;
+        protected bool _isAbleToCatch;
 
         private Coroutine _countingCoroutine;
 
@@ -70,8 +71,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
             }
             _isFinished = true;
         }
-
-
+        
         protected virtual void OnProgressChanged()
         {
         }

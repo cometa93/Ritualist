@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DevilMind;
+using DevilMind.Utils;
 
 namespace Ritualist
 {
@@ -10,6 +11,8 @@ namespace Ritualist
         [SerializeField] private LayerMask _collideAbleObjectsMask;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private GameObject _particlesOnCollision;
+        [SerializeField] private GameObject _destroyParticles;
+        [SerializeField] private GameObject _dockedParticles;
 
         private bool _alreadyDocked;
 
@@ -25,14 +28,10 @@ namespace Ritualist
                 return;
             }
 
-            if (collision2D.collider.gameObject.layer != _collideAbleObjectsMask)
-            {
-                Log.Error(MessageGroup.Gameplay, "Catchable object should not collide with other layers than world !");
-                return;
-            }
-
             _rigidbody2D.isKinematic = true;
             _alreadyDocked = true;
+            _dockedParticles.gameObject.SetActive(true);
+            GameplayController.Instance.PlacePoint(this);
             Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
         }
        
@@ -45,5 +44,15 @@ namespace Ritualist
         {
             _rigidbody2D.AddRelativeForce(new Vector2(0, 140), ForceMode2D.Force);
         }
+
+        public void DestroyMe()
+        {
+            Instantiate(_destroyParticles, transform.position, Quaternion.identity);
+            StartCoroutine(TimeHelper.RunAfterSeconds(0.5f, () =>
+            {
+                Destroy(gameObject);
+            }));
+        }
+
     }
 }

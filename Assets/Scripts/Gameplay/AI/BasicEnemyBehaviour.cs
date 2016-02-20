@@ -29,7 +29,6 @@ namespace Ritualist.AI
         protected override void Awake()
         {
             _characterToFollow = GameObject.FindGameObjectWithTag("Player").transform;
-            GameplayController.Instance.EnemyCounter++;
             _myTransform = transform;
             _canAttack = true;
                         
@@ -118,11 +117,7 @@ namespace Ritualist.AI
         {
             _destroyParticles.gameObject.SetActive(true);
             _destroyParticles.Play(true);
-            GameplayController.Instance.EnemyKilledCounter++;
             GameMaster.Events.Rise(EventType.EnemyDied);
-            GameplayController.Instance.SpawnEnemy(EnemyType);
-            //TEMPORARY SPAWNING INFINITE !
-            GameplayController.Instance.SpawnEnemy(EnemyType);
             iTween.ScaleTo(gameObject, iTween.Hash(
                  "scale", Vector3.zero,
                  "time", 0.5f,
@@ -138,8 +133,6 @@ namespace Ritualist.AI
 
         private void OnTrapFounded()
         {
-
-            GameplayController.Instance.SpawnEnemy(EnemyType);
             iTween.ScaleTo(gameObject, iTween.Hash(
                  "scale", Vector3.zero,
                  "time", 0.5f,
