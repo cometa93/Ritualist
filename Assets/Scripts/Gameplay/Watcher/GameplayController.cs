@@ -11,10 +11,7 @@ namespace Ritualist
     {
         private GameObject _magicFieldPrefab;
         private MagicField.Config _config;
-
-        //TODO REMOVE
-        public bool GameEnded { get; private set; }
-
+        
         private static GameplayController _instance;
         public static GameplayController Instance
         {
@@ -44,22 +41,6 @@ namespace Ritualist
             base.Awake();
         }
 
-        #region Actions performed on hero.
-
-        public void PerformAttackOnHero(int damage)
-        {
-            GameMaster.Hero.Stats.Health -= damage;
-            GameMaster.Events.Rise(EventType.HeroHurted);
-
-            if (GameMaster.Hero.Stats.Health <= 0)
-            {
-                GameEnded = true;
-                GameMaster.Events.Rise(EventType.GameEnd);
-            }
-        }
-       
-        #endregion
-
         #region Catch Skill Helper
         public void PlacePoint(CatchPoint point)
         {
@@ -75,6 +56,9 @@ namespace Ritualist
             {
                 _config = null;
                 var magicField = Instantiate(_magicFieldPrefab);
+                var goPosition = magicField.transform.position;
+                goPosition.z = 15;
+                magicField.transform.position = goPosition;
                 StartCoroutine(TimeHelper.RunAfterFrames(5, () =>
                 {
                     magicField.GetComponent<MagicField>().Setup(config);

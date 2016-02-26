@@ -29,12 +29,7 @@ namespace Ritualist.Controller
 
         protected override void OnEvent(Event gameEvent)
         {
-            if (GameplayController.Instance.GameEnded)
-            {
-                return;
-            }
-
-            if (gameEvent.Type == EventType.ButtonClicked)
+           if (gameEvent.Type == EventType.ButtonClicked)
             {
                 switch ((InputButton) gameEvent.Parameter)
                 {
@@ -51,11 +46,6 @@ namespace Ritualist.Controller
 
         protected override void Update()
         {
-            if (GameplayController.Instance.GameEnded)
-            {
-                return;
-            }
-
             SetAimVector();
             Move();
         }
