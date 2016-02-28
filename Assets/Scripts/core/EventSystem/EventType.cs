@@ -10,10 +10,7 @@
         LeftTriggerClicked,
         LeftTriggerReleased,
         GenerateMagicField,
-        EnemyDied,
-        SpawnEnemy,
-        GameEnd,
-        HeroHurted,
+        HeroPowerChanged,
     }
 
 }

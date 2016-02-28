@@ -54,6 +54,21 @@ namespace DevilMind
             return Load<GameObject>("Prefabs/MagicField/MagicFieldGenerator");
         }
 
+        public static GameObject LoadGameplayGUI()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/GameplayGUI");
+        }
+
+        public static GameObject LoadLoadingScreen()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/LoadingScreen");
+        }
+
+        public static GameObject LoadCharacter()
+        {
+            return Load<GameObject>("Prefabs/Character/CharacterTransform");
+        }
+
         public static GameObject LoadEnemy(EnemyType enemy)
         {
             if (Enemies.ContainsKey(enemy) == false)

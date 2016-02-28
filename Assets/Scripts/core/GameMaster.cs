@@ -1,5 +1,4 @@
 ﻿using System;
-using DevilMind.Utils;
 using Ritualist;
 using UnityEngine;
 
@@ -36,6 +35,7 @@ namespace DevilMind
                 return _instance;
             }
         }
+
 
         public void MainLoop(float deltaTime)
         {

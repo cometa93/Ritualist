@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6498a40f170564747895b82cbac2eff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EffectValue: 1
+  EffectValue: 10
   HasProgressBar: 1
   _progressBarParent: {fileID: 438040}
   _progressBarPrefab: {fileID: 104220, guid: daa8ed8443d62674ab0a68f6e29fe636, type: 2}
@@ -6300,7 +6300,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: EffectValue
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 177764}

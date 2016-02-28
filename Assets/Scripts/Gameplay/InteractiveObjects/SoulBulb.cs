@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DevilMind;
+using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.InteractiveObjects
 {
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
 
         protected override void OnFinished()
         {
+            GameMaster.Hero.Stats.Power += (int) EffectValue;
             _animator.SetBool(IsFinished, true);
             Destroy(gameObject, 3f);
             base.OnFinished();

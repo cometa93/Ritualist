@@ -10,35 +10,123 @@ namespace Ritualist
     public class GameplayController : DevilBehaviour
     {
         private GameObject _magicFieldPrefab;
+        private GameObject _gameplayGui;
         private MagicField.Config _config;
+        private readonly List<Transform> _checkPoints = new List<Transform>(); 
         
         private static GameplayController _instance;
         public static GameplayController Instance
         {
             get
             {
-                if (_instance == null)
-                {
-                    var obj = new GameObject("GameplayController");
-                    obj.transform.position = Vector3.zero;
-                    obj.transform.localScale = Vector3.one;
-                    obj.transform.localEulerAngles = Vector3.zero;
-                    obj.AddComponent<GameplayController>();
-                    _instance = obj.GetComponent<GameplayController>();
-                }
                 return _instance;
             }
         }
 
         protected override void Awake()
         {
-            GameMaster.Hero.Stats.Reset();
+            _instance = GetComponent<GameplayController>();
+            SetupCheckPoints();
+            SetupMagicFieldPrefab();
+            SetupGameplayGui();
+            SetupCharacterObject();
+            SceneLoader.Instance.StageLoaded();
+            base.Awake();
+        }
+
+        //TODO Make spawna points checkpoints and save character state;
+        private void SetupCheckPoints()
+        {
+            var go = GameObject.FindGameObjectWithTag("SpawnPoint");
+            if (go == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Couldn't find checkpoints parent");
+                return;
+            }
+
+            foreach (Transform t in go.transform)
+            {
+                _checkPoints.Add(t);
+            }
+
+            _checkPoints.Sort((transform1, transform2) =>
+            {
+                int t1, t2;
+
+                if (int.TryParse(transform1.name, out t1) == false)
+                {
+                    return -1;
+                };
+
+                if (int.TryParse(transform2.name, out t2) == false)
+                {
+                    return 1;
+                };
+
+                return t1 >= t2 ? 1:-1;
+            });
+        }
+
+        private void SetupCharacterObject()
+        {
+            var prefab = ResourceLoader.LoadCharacter();
+            if (prefab == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Character transform is null");
+                return;
+            }
+
+            var go = Instantiate(prefab);
+            if (go == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Couldn't spawn character gameobject");
+                return;
+            }
+            //Seting up character position on spawn point;
+            var characterObj = go.transform.FindChild("CharacterOnly");
+            if (characterObj == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't find character in character transform");
+                return;
+            }
+
+            if (_checkPoints.Count <= 0)
+            {
+                Log.Error(MessageGroup.Gameplay, "Checkpoints are empty !");
+                return;
+            }
+
+            characterObj.transform.position = _checkPoints[0].position;
+        }
+
+        private void SetupMagicFieldPrefab()
+        {
             _magicFieldPrefab = ResourceLoader.LoadMagicField();
             if (_magicFieldPrefab == null)
             {
                 Log.Error(MessageGroup.Gameplay, "MagicField prefab is null");
             }
-            base.Awake();
+        }
+
+        private void SetupGameplayGui()
+        {
+            var prefab = ResourceLoader.LoadGameplayGUI();
+            if (prefab == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't get gameplay gui object");
+                return;
+            }
+
+            if (_gameplayGui != null)
+            {
+                return;
+            }
+
+            _gameplayGui = Instantiate(prefab) as GameObject;
+            if (_gameplayGui == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Couldn't instantiate gui");
+            }
         }
 
         #region Catch Skill Helper
@@ -65,7 +153,6 @@ namespace Ritualist
                 }));
             }
         }
-
         #endregion
     }
 }

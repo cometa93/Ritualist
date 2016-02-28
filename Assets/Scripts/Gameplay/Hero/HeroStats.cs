@@ -1,16 +1,31 @@
-﻿using UnityEngine;
+﻿using DevilMind;
+using EventType = DevilMind.EventType;
 
 namespace Ritualist
 {
     public class HeroStats
     {
-        public int Health = 100;
-        public int MaxHealth { get ; private set; }
-        
-        public void Reset()
+        private int _power;
+        public int Power
         {
-            MaxHealth = 100;
-            Health = 100;
+            set
+            {
+                _power = value;
+                if (_power > MaxPower)
+                {
+                    _power = MaxPower;
+                }
+                GameMaster.Events.Rise(EventType.HeroPowerChanged);
+            }
+            get { return _power; }   
+        }
+        public int MaxPower = 100;
+        
+
+
+        public HeroStats()
+        {
+            _power = 30;
         }
     }
 }

@@ -1,0 +1,430 @@
+fileFormatVersion: 2
+guid: 9b1e3cf4bdbfa5d40b0e949055f79651
+timeCreated: 1456660193
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: power_bar_atlas_0
+    21300002: power_bar_atlas_1
+    21300004: power_bar_atlas_2
+    21300006: power_bar_atlas_3
+    21300008: power_bar_atlas_4
+    21300010: power_bar_atlas_5
+    21300012: power_bar_atlas_6
+    21300014: power_bar_atlas_7
+    21300016: power_bar_atlas_8
+    21300018: power_bar_atlas_9
+    21300020: power_bar_atlas_10
+    21300022: power_bar_atlas_11
+    21300024: power_bar_atlas_12
+    21300026: power_bar_atlas_13
+    21300028: power_bar_atlas_14
+    21300030: power_bar_atlas_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 2
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: power_bar_atlas_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 804
+        width: 201
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 85.5, y: 73.5}
+        - {x: 42.5, y: 100.5}
+        - {x: -35.5, y: 100.5}
+        - {x: -57.5, y: 97.5}
+        - {x: -87.5, y: 60.5}
+        - {x: -100.5, y: 35.5}
+        - {x: -100.5, y: -34.5}
+        - {x: -94.5, y: -56.5}
+        - {x: -55.5, y: -93.5}
+        - {x: -39.5, y: -100.5}
+        - {x: 46.5, y: -100.5}
+        - {x: 97.5, y: -57.5}
+        - {x: 100.5, y: -33.5}
+        - {x: 100.5, y: 40.5}
+    - name: power_bar_atlas_1
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 803
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_2
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 809
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -32.5, y: 98.5}
+        - {x: -40.5, y: 96.5}
+        - {x: -98.5, y: 80.5}
+        - {x: -98.5, y: -94.5}
+        - {x: -81.5, y: -98.5}
+        - {x: 80.5, y: -98.5}
+        - {x: 98.5, y: -88.5}
+        - {x: 98.5, y: 86.5}
+        - {x: 43.5, y: 98.5}
+      - - {x: -51.5, y: -48.5}
+        - {x: -51.5, y: 46.5}
+        - {x: 51.5, y: 46.5}
+        - {x: 51.5, y: -48.5}
+    - name: power_bar_atlas_3
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 808
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_4
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 584
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_5
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 584
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_6
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 584
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_7
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 584
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_8
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 364
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_9
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 364
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_10
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 360
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_11
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 360
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_12
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 144
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_13
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 144
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_14
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 136
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    - name: power_bar_atlas_15
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 136
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 98.5}
+        - {x: -98.5, y: 54.5}
+        - {x: -98.5, y: -98.5}
+        - {x: 85.5, y: -98.5}
+        - {x: 98.5, y: -71.5}
+        - {x: 98.5, y: 87.5}
+        - {x: 65.5, y: 98.5}
+      - - {x: -51.5, y: -47.5}
+        - {x: -51.5, y: 47.5}
+        - {x: 51.5, y: 47.5}
+        - {x: 51.5, y: -47.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

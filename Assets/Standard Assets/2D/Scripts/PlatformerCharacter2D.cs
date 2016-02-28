@@ -32,8 +32,19 @@ namespace Ritualist
         public bool DoubleJump;
         private bool _handIsVisible;
         const float _groundedCheckRadius = .1f; 
-        private bool _isGrounded;           
-        private bool _IsFacingRight;
+        private bool _isGrounded;
+
+        private void Awake()
+        {
+            var scale = transform.localScale;
+            scale.x = scale.x*(-1);
+            transform.localScale = scale;
+        }
+
+        private bool IsFacingRight
+        {
+            get { return transform.localScale.x < 0; }
+        }
         private float _lastFloatMoveValue;
 
         private void Update()
@@ -90,7 +101,7 @@ namespace Ritualist
 
         public Vector2 CharacterFront()
         {
-            return _IsFacingRight == false ? new Vector2(-1, 0) : new Vector2(1, 0);
+            return IsFacingRight == false ? new Vector2(-1, 0) : new Vector2(1, 0);
         }
 
         public void RotateAimOfRuneShooter(Vector2 point)
@@ -102,12 +113,12 @@ namespace Ritualist
             _aimRatationTransform.localEulerAngles = new Vector3(0,0, rotation);
 
             var zAngle = rotation;
-            if (zAngle > 180 && zAngle > 0 && _IsFacingRight == false)
+            if (zAngle > 180 && zAngle > 0 && IsFacingRight == false)
             {
                 Flip();
             }
 
-            if (zAngle < 180 && zAngle < 360 && _IsFacingRight )
+            if (zAngle < 180 && zAngle < 360 && IsFacingRight )
             {
                 Flip();
             }
@@ -116,11 +127,11 @@ namespace Ritualist
         public void Move(float move, bool crouch, bool jump)
         {
 
-            if (move > 0 && _IsFacingRight == false)
+            if (move > 0 && IsFacingRight == false)
             {
                 Flip();
             }
-            else if (move < 0 && _IsFacingRight)
+            else if (move < 0 && IsFacingRight)
             {
                 Flip();
             }
@@ -172,9 +183,6 @@ namespace Ritualist
 
         private void Flip()
         {
-            // Switch the way the player is labelled as facing.
-            _IsFacingRight = !_IsFacingRight;
-
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
