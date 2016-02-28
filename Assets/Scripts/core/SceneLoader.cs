@@ -12,8 +12,7 @@ namespace DevilMind
 
         private const string StagePrefix = "_STAGE";
         private bool _isLoadingStage;
-        //TODO MAKE IT FROM INITIALIZATION FUNCTION WHICH WILL PROVIDE TO STARTING SCENE FROM SPLASHSCREEN
-        private string _currentScene = "1_STAGE";
+        private string _currentScene;
         private LoadingScreenBehaviour _loadingScren;
         private static SceneLoader _instance;
         public static SceneLoader Instance
@@ -93,13 +92,10 @@ namespace DevilMind
                 onProgress(async.progress);
                 yield return null;
             }
-//            Find other options to see if 
-//            if (string.IsNullOrEmpty(_currentScene) == false)
-//            {
-//                SceneManager.UnloadScene(_currentScene);
-//            }
+
             _currentScene = scene;
             async.allowSceneActivation = true;
+            yield return new WaitForSeconds(0.5f);
 
             while (async.isDone == false)
             {

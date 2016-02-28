@@ -73,7 +73,6 @@ namespace Ritualist.Controller
                 Debug.LogWarning("prepared rune is null");
                 return;
             }
-            catchPoint.Shoot();
             catchPoint.transform.parent = _worldParent;
         }
 
