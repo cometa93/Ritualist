@@ -11,6 +11,8 @@ namespace Ritualist.Skills
             Cooldowns.Add(0);
             Cooldowns.Add(3);
             LongLife = 5f;
+            Range = 2f;
+            PowerCost = 5;
         }
     }
 }

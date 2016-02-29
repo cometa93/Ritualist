@@ -1,9 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
+using Random = UnityEngine.Random;
 
 namespace Ritualist.Controller
 {
@@ -32,7 +35,7 @@ namespace Ritualist.Controller
 
         public void Shoot()
         {
-            var currentSkill = GameMaster.Hero.CurrentSkill;
+            var currentSkill = GameMaster.Hero.CurrentSkillEffect;
             switch (currentSkill)
             {
                 case SkillEffect.Catch:
@@ -74,8 +77,51 @@ namespace Ritualist.Controller
                 return;
             }
             catchPoint.transform.parent = _worldParent;
+            var targets = GetPossibleTargets(GameMaster.Hero.CurrentHeroSkill);
+            catchPoint.Shoot(targets.Count > 0 ? targets[0].Position : GetMissShoot(GameMaster.Hero.CurrentHeroSkill));
         }
 
+
+        private List<SkillTarget> GetPossibleTargets(HeroSkill currentSkill)
+        {
+            if (currentSkill == null)
+            {
+                return null;
+            }
+
+            switch (currentSkill.Effect)
+            {
+                case SkillEffect.Catch:
+                    return GetCatchPointsTargets(currentSkill.Range);
+                default:
+                    return null;
+            }
+            //TODO IMPLEMENT MORE !
+        }
+
+        private List<SkillTarget> GetCatchPointsTargets(float range)
+        {
+            var list = new List<SkillTarget>();
+            var possibleTargets = GameplayController.Instance.GetTargets(SkillTargetType.CatchPoint);
+            for (int i = 0, c = possibleTargets.Count; i < c; ++i)
+            {
+                var target = possibleTargets[i];
+                if (range <= target.Distance(_spawnPoint.position))
+                {
+                    list.Add(target);
+                }
+            }
+            list.Sort((target1, target2) =>
+            {
+                return target1.Distance(_spawnPoint.position) >= target2.Distance(_spawnPoint.position) ? 1 : -1;
+            });
+            return list;
+        }
+
+        private Vector2 GetMissShoot(HeroSkill currentSkill)
+        {
+            return new Vector2(Random.Range(0, 1f), Random.Range(0, 1f))*currentSkill.Range;
+        }
         #endregion
     }
 }

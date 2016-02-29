@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using DevilMind;
 using Ritualist.UI;
 using UnityEngine;
@@ -15,10 +16,12 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
         private bool _isCatched;
         private bool _isFinished;
         protected bool _isAbleToCatch;
+
         [SerializeField] protected float EffectValue = 1f;
         [SerializeField] protected bool HasProgressBar;
         [SerializeField] private Transform _progressBarParent;
         [SerializeField] private GameObject _progressBarPrefab;
+        [SerializeField] private List<CatchPointTarget> _myPoints;
 
         private Coroutine _countingCoroutine;
         private ProgressBar _myProgressBar;
@@ -116,5 +119,19 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
         {
         }
 
+        public virtual void CatchPointTargetActivated()
+        {
+            bool isCatched = true;
+            for (int i = 0, c = _myPoints.Count; i < c; ++i)
+            {
+                var point = _myPoints[i];
+                if (point.IsActive == false)
+                {
+                    isCatched = false;
+                }
+            }
+
+            IsCatched = isCatched;
+        }
     }
 }

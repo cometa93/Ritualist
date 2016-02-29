@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using DevilMind.Utils;
 using EventType = DevilMind.EventType;
@@ -12,7 +13,8 @@ namespace Ritualist
         private GameObject _magicFieldPrefab;
         private GameObject _gameplayGui;
         private MagicField.Config _config;
-        private readonly List<Transform> _checkPoints = new List<Transform>(); 
+        private readonly List<Transform> _checkPoints = new List<Transform>();
+        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>(); 
         
         private static GameplayController _instance;
         public static GameplayController Instance
@@ -30,8 +32,31 @@ namespace Ritualist
             SetupMagicFieldPrefab();
             SetupGameplayGui();
             SetupCharacterObject();
+            SetupTargets();
             SceneLoader.Instance.StageLoaded();
             base.Awake();
+        }
+
+        private void SetupTargets()
+        {
+            var gos = GameObject.FindGameObjectsWithTag("Target");
+            for (int i = 0, c = gos.Length; i < c; ++i)
+            {
+                GameObject go = gos[i];
+                if (go == null)
+                {
+                    continue;
+                }
+
+                SkillTarget target = go.GetComponent<SkillTarget>();
+                if (target == null)
+                {
+                    Log.Warning(MessageGroup.Gameplay,
+                        "target with name : " + go.name + " is not a target or dont have script attached");
+                    continue;
+                }
+                RegisterTarget(target);
+            }
         }
 
         //TODO Make spawna points checkpoints and save character state;
@@ -128,6 +153,42 @@ namespace Ritualist
                 Log.Error(MessageGroup.Gameplay, "Couldn't instantiate gui");
             }
         }
+
+        public void RegisterTarget(SkillTarget target)
+        {
+            if (_targets.ContainsKey(target.Type) == false)
+            {
+                _targets[target.Type] = new List<SkillTarget>();
+            }
+
+            if (_targets[target.Type].Contains(target) == false)
+            {
+                _targets[target.Type].Add(target);
+            }
+        }
+
+        public void UnregisterTarget(SkillTarget target)
+        {
+            if (_targets.ContainsKey(target.Type) == false)
+            {
+                return;
+            }
+
+            if (_targets[target.Type].Contains(target))
+            {
+                _targets[target.Type].Remove(target);
+            }
+        }
+
+        public List<SkillTarget> GetTargets(SkillTargetType type)
+        {
+            if (_targets.ContainsKey(type) == false)
+            {
+                return new List<SkillTarget>();
+            }
+
+            return _targets[type];
+        } 
 
         #region Catch Skill Helper
         public void PlacePoint(CatchPoint point)

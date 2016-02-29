@@ -9,13 +9,11 @@ namespace Ritualist
     public class CatchPoint : MonoBehaviour
     {
         [SerializeField] private float _timeToTarget = 1f;
-
-        [SerializeField] private Transform _frontCheck;
+        
         [SerializeField] private LayerMask _collideAbleObjectsMask;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private GameObject _particlesOnCollision;
         [SerializeField] private GameObject _destroyParticles;
-        [SerializeField] private GameObject _dockedParticles;
 
         private bool _alreadyDocked;
         private Vector2 _target;
@@ -32,22 +30,21 @@ namespace Ritualist
             {
                 return;
             }
-
-            _rigidbody2D.isKinematic = true;
+            
             _alreadyDocked = true;
-            _dockedParticles.gameObject.SetActive(true);
-            GameplayController.Instance.PlacePoint(this);
             Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
+            StartCoroutine(TimeHelper.RunAfterSeconds(1f, DestroyMe));
         }
        
-        public Vector2 GetDockPosition()
-        {
-            return _frontCheck.transform.position;
-        }
-
         public void Shoot(Vector2 target)
         {
-            gameObject.MoveTo(CreateRandomPath(new Vector3(target.x, target.y, 0)), _timeToTarget,0,EaseType.easeInCubic);
+            iTween.MoveTo(gameObject, new Hashtable
+            {
+                { iT.MoveTo.orienttopath,true},
+                { iT.MoveTo.path, CreateRandomPath(new Vector3(target.x, target.y,0)) },
+                { iT.MoveTo.easetype, EaseType.easeInOutCirc },
+                { iT.MoveTo.time, _timeToTarget}
+            });
         }
 
         private Transform[] CreateRandomPath(Vector3 target)
@@ -83,12 +80,9 @@ namespace Ritualist
 
         public void DestroyMe()
         {
-            iTween.Stop(gameObject, true);
             Instantiate(_destroyParticles, transform.position, Quaternion.identity);
-            StartCoroutine(TimeHelper.RunAfterSeconds(0.5f, () =>
-            {
-                Destroy(gameObject);
-            }));
+            iTween.Stop(gameObject, true);
+            Destroy(gameObject, 1f);
         }
     }
 }

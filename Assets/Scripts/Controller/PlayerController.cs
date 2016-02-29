@@ -13,8 +13,6 @@ namespace Ritualist.Controller
 
         [SerializeField] private bool _jump;
         [SerializeField] private PlatformerCharacter2D _characterAnimationController;
-        [SerializeField] private AimBehaviour _aim;
-        [Range(0, 2.5f)] [SerializeField] private float _aimRadius;
 
         private float _xAxisMoveValue;
 
@@ -46,7 +44,6 @@ namespace Ritualist.Controller
 
         protected override void Update()
         {
-            SetAimVector();
             Move();
         }
 
@@ -60,22 +57,6 @@ namespace Ritualist.Controller
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
             _characterAnimationController.Move(_xAxisMoveValue, false, _jump);
             _jump = false;
-        }
-        
-        private void SetAimVector()
-        {
-            var position = MyInputManager.GetLeftStickPosition();
-            var yPosition = position.y;
-            var xPosition = position.x;
-
-            if (Mathf.Abs(yPosition) < 0.2f && Mathf.Abs(xPosition) < 0.2f)
-            {
-                _aim.Rotate(_characterAnimationController.CharacterFront()*_aimRadius);
-                _characterAnimationController.RotateAimOfRuneShooter(_characterAnimationController.CharacterFront() * _aimRadius);
-                return;
-            }
-            _characterAnimationController.RotateAimOfRuneShooter(MyInputManager.GetLeftStickPosition());
-            _aim.Rotate(MyInputManager.GetLeftStickPosition());
         }
     }
 }

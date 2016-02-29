@@ -25,7 +25,6 @@ namespace DevilMind.Utils
         private MeshFilter _meshFilter;
         private PolygonCollider2D _polygonCollider2D;
         private MeshRenderer _meshRenderer;
-        private readonly List<CatchAbleObject> _catchedObjects = new List<CatchAbleObject>();
         private List<Vector2> _points;
         private float _counter;
         private int _currentFrameIndex;
@@ -37,7 +36,6 @@ namespace DevilMind.Utils
                 return _frames.Count != 0 ? 1f/_frames.Count : 1;
             }
         }
-
 
         protected override void Update()
         {
@@ -68,22 +66,6 @@ namespace DevilMind.Utils
 
         private void DeactivateMagicField()
         {
-            for (int i = 0, c = _catchedObjects.Count; i < c; ++i)
-            {
-                var obj = _catchedObjects[i];
-                if (obj != null)
-                {
-                    obj.IsCatched = false;
-                }
-            }
-            for (int i = 0, c = _config.CatchPoints.Count; i < c; ++i)
-            {
-                var catchPoint = _config.CatchPoints[i];
-                if (catchPoint != null)
-                {
-                    catchPoint.DestroyMe();
-                }
-            }
             _polygonCollider2D.enabled = false;
             Hashtable tweenParams = new Hashtable();
             tweenParams.Add("from", _meshRenderer.material.GetColor("_TintColor"));
@@ -94,17 +76,9 @@ namespace DevilMind.Utils
             iTween.ValueTo(gameObject, tweenParams);
         }
 
-        private List<Vector2> GetPoints(List<CatchPoint> runes)
+        private List<Vector2> GetPoints()
         {
             var list = new List<Vector2>();
-            for (int i = 0, c = runes.Count; i < c; ++i)
-            {
-                var rune = runes[i];
-                if (rune != null)
-                {
-                    list.Add(rune.GetDockPosition());
-                }
-            }
             return list;
         }
 
@@ -125,7 +99,6 @@ namespace DevilMind.Utils
         private void SetupMagicField()
         {
             _polygonCollider2D.enabled = true;
-            _points = GetPoints(_config.CatchPoints);
             _meshRenderer.enabled = true;
 
             Vector3[] vertices = new Vector3[4];
@@ -182,22 +155,10 @@ namespace DevilMind.Utils
 
         private void OnTriggerEnter2D(Collider2D collider2D)
         {
-            var catchedObject = collider2D.GetComponent<CatchAbleObject>();
-            if (catchedObject != null && _catchedObjects.Contains(catchedObject) == false)
-            {
-                _catchedObjects.Add(catchedObject);
-                collider2D.GetComponent<CatchAbleObject>().IsCatched = true;
-            }
         }
 
         private void OnTriggerExit2D(Collider2D collider2D)
         {
-            var catchedObject = collider2D.GetComponent<CatchAbleObject>();
-            if (catchedObject != null && _catchedObjects.Contains(catchedObject))
-            {
-                _catchedObjects.Remove(catchedObject);
-                catchedObject.IsCatched = false;
-            }
         }
 
         private void SetupCollider()

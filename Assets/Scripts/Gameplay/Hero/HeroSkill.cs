@@ -28,6 +28,7 @@ namespace Ritualist
         }
         public float Damage;
         public float Range;
+        public int PowerCost;
         public float LongLife;
     }
 }
