@@ -1448,8 +1448,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jump: 0
   _characterAnimationController: {fileID: 11497450}
-  _aim: {fileID: 11442810}
-  _aimRadius: 2.5
 --- !u!114 &11497450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1461,11 +1459,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runningAnimationSpeed: 2
+  _runningAnimationSpeed: 2.5
   _walkingAnimationSpeed: 2
-  _doubleJumpPower: 9
-  _airControllPowerModyfier: 0.4
-  _minimumAirControllSpeed: 0.5
+  _doubleJumpPower: 7.5
+  _airControllPowerModyfier: 0.35
+  _minimumAirControllSpeed: 0
   _maxSpeed: 10
   _jumpForce: 300
   _airControl: 1

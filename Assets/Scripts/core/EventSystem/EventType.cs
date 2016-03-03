@@ -11,6 +11,7 @@
         LeftTriggerReleased,
         GenerateMagicField,
         HeroPowerChanged,
+        DamageByStaticObjectDone
     }
 
 }

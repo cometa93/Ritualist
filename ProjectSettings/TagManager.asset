@@ -22,8 +22,8 @@ TagManager:
   - CatchPoints
   - CatchableObjects
   - Targets
-  - 
-  - 
+  - DealingDamageObjects
+  - SceneSwitchers
   - 
   - 
   - 
