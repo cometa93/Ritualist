@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using UnityEngine;
 using System.Collections.Generic;
 using DevilMind;
@@ -10,6 +10,7 @@ namespace Ritualist.Controller
     public static class MyInputManager
     {
         public const float Radius = 6f;
+        private const float SpeedModyfierValue = 0.3f;
         private static bool _controllerRegistered;
         private static bool _rightTriggerClicked;
         private static bool _leftTriggerClicked;
@@ -31,6 +32,19 @@ namespace Ritualist.Controller
             {InputButton.X, "X" }
         };
 
+        private static readonly Dictionary<InputAxis, string> AxisKeyboardNames = new Dictionary<InputAxis, string>
+        {
+            {InputAxis.RightTrigger, "Shoot"}
+        }; 
+
+        private static readonly Dictionary<InputButton, string> ButtonKeyboardNames = new Dictionary
+            <InputButton, string>
+        {
+            {InputButton.A, "Aaction" },
+            {InputButton.B, "Baction" },
+            {InputButton.X, "Xaction" }
+        }; 
+
         private static readonly Dictionary<int, bool> ClickedButtons = new Dictionary<int, bool>(); 
         private static readonly Dictionary<int, float> ButtonsHoldingTime = new Dictionary<int, float>(); 
 
@@ -47,8 +61,8 @@ namespace Ritualist.Controller
                 Debug.LogWarning("There is no axis key name in dict.");
                 return 0;
             }
-
-            return Input.GetAxis(AxisNames[axis]);
+            var input = Input.GetAxis(AxisNames[axis]);
+            return Math.Abs(input) > 0.05f ? input : GetKeyboardAxis(axis);
         }
 
         private static void RegisterController()
@@ -64,6 +78,70 @@ namespace Ritualist.Controller
             _controllerRegistered = true;
         }
 
+        private static float GetKeyboardAxis(InputAxis axis)
+        {
+            switch (axis)
+            {
+               
+                case InputAxis.LeftStickX:
+                    return GetKeyboardMoveValue();
+
+                case InputAxis.LeftStickY:
+                    return GetKeyboardUpDownValue();
+
+                case InputAxis.LeftTrigger:
+                    break;
+                case InputAxis.RightTrigger:
+                    return Input.GetButton("Shoot") ? 1f : 0f;
+
+                default:
+                    Log.Error(MessageGroup.Common, axis + "dont have represenatation on keyboard");
+                    break;
+            }
+
+            return 0f;
+        }
+
+        private static float GetKeyboardMoveValue()
+        {
+            var initValue = 0f;
+            if (Input.GetButton("Right"))
+            {
+                initValue += 1f;
+            }
+            if (Input.GetButton("Left"))
+            {
+                initValue -= 1f;
+            }
+
+            if (Input.GetButton("Speed Modyficator"))
+            {
+                initValue *= SpeedModyfierValue;
+            }
+
+            return initValue;
+        }
+
+        private static float GetKeyboardUpDownValue()
+        {
+            var initValue = 0f;
+            if (Input.GetButton("Up"))
+            {
+                initValue += 1f;
+            }
+            if (Input.GetButton("Down"))
+            {
+                initValue -= 1f;
+            }
+
+            if (Input.GetButton("Speed Modyficator"))
+            {
+                initValue *= SpeedModyfierValue;
+            }
+
+            return initValue;
+        }
+
         public static bool IsButtonDown(InputButton buttonType)
         {
             if (buttonType == InputButton.Unknown)
@@ -77,7 +155,13 @@ namespace Ritualist.Controller
                 return false;
             }
 
-            return Input.GetButtonDown(ButtonNames[buttonType]);
+            if (ButtonKeyboardNames.ContainsKey(buttonType) == false)
+            {
+                Debug.LogWarning("There is no button key name in dict. " + buttonType);
+                return false;
+            }
+
+            return Input.GetButtonDown(ButtonNames[buttonType]) || Input.GetButtonDown(ButtonKeyboardNames[buttonType]);
         }
 
         public static void Update()
@@ -87,11 +171,11 @@ namespace Ritualist.Controller
                 RegisterController();
                 return;
             }
-            
+
             //Actions for each button.
-            for (int i = 1, c = (int)InputButton.Count; i < c; ++i)
+            for (int i = 1, c = (int) InputButton.Count; i < c; ++i)
             {
-                if (IsButtonDown((InputButton)i) == false)
+                if (IsButtonDown((InputButton) i) == false)
                 {
                     if (ClickedButtons[i])
                     {
@@ -100,7 +184,7 @@ namespace Ritualist.Controller
                     ButtonsHoldingTime[i] = 0;
                     ClickedButtons[i] = false;
                 }
-                else if (ClickedButtons[i] == false && IsButtonDown((InputButton)i))
+                else if (ClickedButtons[i] == false && IsButtonDown((InputButton) i))
                 {
                     ClickedButtons[i] = true;
                     GameMaster.Events.Rise(EventType.ButtonClicked, i);
@@ -147,9 +231,6 @@ namespace Ritualist.Controller
                     GameMaster.Events.Rise(EventType.RightTriggerReleased);
                 }
             }
-
-
-
         }
 
         public static Vector3 GetLeftStickPosition()
@@ -157,10 +238,10 @@ namespace Ritualist.Controller
             {
                 float leftStickX = GetAxis(InputAxis.LeftStickX);
 
-                float xPosition = leftStickX * Radius;
+                float xPosition = leftStickX*Radius;
 
                 float leftStickY = GetAxis(InputAxis.LeftStickY);
-                float yPosition = -leftStickY * Radius;
+                float yPosition = -leftStickY*Radius;
 
                 return new Vector3(xPosition, yPosition);
             }
@@ -170,10 +251,10 @@ namespace Ritualist.Controller
         {
             float rightStickX = GetAxis(InputAxis.RightStickX);
 
-            float xPosition = rightStickX * Radius;
+            float xPosition = rightStickX*Radius;
 
             float rightStickY = GetAxis(InputAxis.RightStickY);
-            float yPosition = -rightStickY * Radius;
+            float yPosition = -rightStickY*Radius;
 
             return new Vector3(xPosition, yPosition);
         }
