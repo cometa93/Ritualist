@@ -8,70 +8,75 @@ namespace Ritualist
 {
     public class CatchPoint : MonoBehaviour
     {
-        [SerializeField] private float _timeToTarget = 1f;
-        
+        [SerializeField] private const float TimeToTarget = 1.5f;
+
         [SerializeField] private LayerMask _collideAbleObjectsMask;
         [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private CircleCollider2D _collider2D;
         [SerializeField] private GameObject _particlesOnCollision;
         [SerializeField] private GameObject _destroyParticles;
 
         private bool _alreadyDocked;
         private Vector2 _target;
 
-        private void Awake()
+        private void FixedUpdate()
         {
-            _rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            Collider2D[] result = new Collider2D[1];
+            if (Physics2D.OverlapCircleNonAlloc(transform.position, _collider2D.radius, result, _collideAbleObjectsMask) > 0)
+            {
+                iTween.Stop(gameObject, true);
+                if (_alreadyDocked)
+                {
+                    return;
+                }
+
+                _alreadyDocked = true;
+                Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
+                StartCoroutine(TimeHelper.RunAfterSeconds(1f, DestroyMe));
+            }
         }
 
-        private void OnCollisionEnter2D(Collision2D collision2D)
-        {
-            iTween.Stop(gameObject, true);
-            if (_alreadyDocked)
-            {
-                return;
-            }
-            
-            _alreadyDocked = true;
-            Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
-            StartCoroutine(TimeHelper.RunAfterSeconds(1f, DestroyMe));
-        }
-       
         public void Shoot(Vector2 target)
         {
             iTween.MoveTo(gameObject, new Hashtable
             {
                 { iT.MoveTo.orienttopath,true},
                 { iT.MoveTo.path, CreateRandomPath(new Vector3(target.x, target.y,0)) },
-                { iT.MoveTo.easetype, EaseType.easeInOutCirc },
-                { iT.MoveTo.time, _timeToTarget}
+                { iT.MoveTo.easetype, iTween.EaseType.easeInQuart},
+                { iT.MoveTo.time, TimeToTarget},
+                { iT.MoveTo.oncomplete, "DestroyMe"}
             });
         }
 
         private Transform[] CreateRandomPath(Vector3 target)
         {
                 var direction = target - transform.position;
+                direction.z = 0;
                 var normal = direction.normalized;
-                var cross = Vector3.Cross(Vector3.up, normal);
-                var variance = direction.magnitude * 0.25f;
+                normal.z = 0;
+                var crossed = Vector3.Cross(new Vector3(0,0,1), normal);
+                Vector2 cross = crossed;
+                var variance = direction.magnitude * 0.1f;
 
                 var amount = 0.0f;
-                var path = new List<Vector3>{ transform.position};
+                var path = new List<Vector2>{ transform.position};
 
-                while (amount < 1.0)
+                while (amount < 1f)
                 {
-                    amount = Mathf.Clamp01(amount + Random.Range(0.1f, 0.2f));
-                    var point = Vector3.Lerp(transform.position, target, amount);
+                    amount = Mathf.Clamp01(amount + Random.Range(0.2f, 0.3f));
+                    var point = Vector2.Lerp(transform.position, target, amount);
                      point += cross * Random.Range(-variance, variance);
                     if (amount >= 1.0) point = target;
-                    Debug.DrawLine(point, point + Vector3.up, Color.Lerp(Color.green, Color.red, amount), 5);
-                    path.Add(point);
+                    {
+                        path.Add(point);
+                    }
                 }
 
             var transforms = new List<Transform>();
             foreach (var x in path)
             {
                 var go = new GameObject("pathPoint");
-                Destroy(go, 10f);
+                Destroy(go, TimeToTarget + 0.3f);
                 go.transform.position = x;
                 transforms.Add(go.transform);
             }

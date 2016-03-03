@@ -19,7 +19,11 @@ namespace Ritualist
             }
             get { return _power; }   
         }
-        public int MaxPower = 100;
+
+        public int MaxPower
+        {
+            get { return 100; }
+        }
         
 
 

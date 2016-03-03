@@ -77,8 +77,10 @@ namespace Ritualist.Controller
                 return;
             }
             catchPoint.transform.parent = _worldParent;
-            var targets = GetPossibleTargets(GameMaster.Hero.CurrentHeroSkill);
+            var currentSkill = GameMaster.Hero.CurrentHeroSkill;
+            var targets = GetPossibleTargets(currentSkill);
             catchPoint.Shoot(targets.Count > 0 ? targets[0].Position : GetMissShoot(GameMaster.Hero.CurrentHeroSkill));
+            GameMaster.Hero.Stats.Power  -= currentSkill.PowerCost;
         }
 
 
@@ -106,7 +108,7 @@ namespace Ritualist.Controller
             for (int i = 0, c = possibleTargets.Count; i < c; ++i)
             {
                 var target = possibleTargets[i];
-                if (range <= target.Distance(_spawnPoint.position))
+                if (range >= target.Distance(_spawnPoint.position))
                 {
                     list.Add(target);
                 }
@@ -120,7 +122,10 @@ namespace Ritualist.Controller
 
         private Vector2 GetMissShoot(HeroSkill currentSkill)
         {
-            return new Vector2(Random.Range(0, 1f), Random.Range(0, 1f))*currentSkill.Range;
+            var random = new Vector2(Random.Range(0, 1f), Random.Range(0, 1f))*currentSkill.Range;
+            random.x += transform.position.x;
+            random.y += transform.position.y;
+            return random;
         }
         #endregion
     }

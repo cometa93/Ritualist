@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -72.64739, y: -6.9352064, z: 1}
+  m_LocalPosition: {x: -10.979785, y: 5.1796513, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417852}
@@ -132,11 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8a997e52a1bb64b9a20651cb07bc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToTarget: 1
   _collideAbleObjectsMask:
     serializedVersion: 2
     m_Bits: 256
   _rigidbody2D: {fileID: 5036842}
+  _collider2D: {fileID: 5883066}
   _particlesOnCollision: {fileID: 136106, guid: 4fb7a7e840fe0bd4a81d2141241cc512,
     type: 2}
   _destroyParticles: {fileID: 197918, guid: 8c4833802b0b28840a955314e5e01d24, type: 2}
@@ -1633,7 +1633,7 @@ ParticleSystem:
         m_RotationOrder: 0
       minMaxState: 3
     startSpeed:
-      scalar: 0.79
+      scalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1762,12 +1762,12 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 0.8
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0.2
+          value: 0.5
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1883,7 +1883,7 @@ ParticleSystem:
       minMaxState: 3
     randomizeRotationDirection: 0
     gravityModifier: 0
-    maxNumParticles: 100
+    maxNumParticles: 118
     rotation3D: 0
   ShapeModule:
     serializedVersion: 2
@@ -2994,7 +2994,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_SortMode: 2
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -3035,7 +3035,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_SortMode: 2
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5

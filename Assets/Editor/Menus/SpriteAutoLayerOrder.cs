@@ -17,12 +17,14 @@ namespace Ritualist
             Transform[] transforms = Selection.GetTransforms(SelectionMode.DeepAssets | SelectionMode.Unfiltered | SelectionMode.Deep);
 
             foreach (Transform t in transforms)
-            {
-                SpriteRenderer renderer = t.GetComponent<SpriteRenderer>();
-                if (renderer != null)
+            { 
+                Renderer renderer = t.GetComponent<Renderer>();
+                if (renderer  == null)
                 {
-                    renderer.sortingOrder = (int)(-t.position.z * 100f);
+                    continue;
                 }
+                renderer.sortingOrder = (int)(-t.position.z * 100f);
+                Debug.Log(t.name + " sorting order changed");
             }
         }
     }

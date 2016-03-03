@@ -150,10 +150,10 @@ InputManager:
     axis: 9
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal
+    m_Name: Right
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: a
+    negativeButton: 
     positiveButton: d
     altNegativeButton: 
     altPositiveButton: 
@@ -203,6 +203,86 @@ InputManager:
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: space
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Baction
+    descriptiveName: Makes nothing now
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: e
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Xaction
+    descriptiveName: MakesNothing now
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: q
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Left
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: a
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Down
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: s
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Up
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: w
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
