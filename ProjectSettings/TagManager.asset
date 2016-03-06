@@ -43,3 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Character Graphics
+    uniqueID: 2401172091
+    locked: 0
+  - name: Bones
+    uniqueID: 638891049
+    locked: 0
+  - name: Controls
+    uniqueID: 2220450041
+    locked: 0

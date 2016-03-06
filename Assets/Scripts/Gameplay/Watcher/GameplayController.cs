@@ -108,7 +108,7 @@ namespace Ritualist
                 return;
             }
             //Seting up character position on spawn point;
-            var characterObj = go.transform.FindChild("CharacterOnly");
+            var characterObj = go.transform.FindChild("MainCharacter");
             if (characterObj == null)
             {
                 Log.Error(MessageGroup.Gameplay, "Can't find character in character transform");
