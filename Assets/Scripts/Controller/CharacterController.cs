@@ -1,17 +1,24 @@
-using System;
-using System.Security.Policy;
+using DevilMind;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityStandardAssets.Cameras;
 
 namespace Ritualist
 {
-    public class PlatformerCharacter2D : MonoBehaviour
+    public class CharacterController : MonoBehaviour
     {
+        private struct SlopeRayResult
+        {
+            public RaycastHit2D CenterBottomHit;
+
+            public float SlopeAngle
+            {
+                get { return Mathf.Abs(DevilMath.GetAngleBeetwenPoints(CenterBottomHit.normal.x, CenterBottomHit.normal.y)); }
+            }
+        }
+
         private const string CharacterHorizontalSpeed = "HorizontalSpeed";
         private const string CharacterVerticalSpeed = "VerticalSpeed";
         private const string CharacterIsGrounded = "IsGrounded";
-
+        private const float GroundCheckRadius = .1f;
         private const float MaximalWalkingSpeed = 0.5f;
         private const float MinimalWalkingSpeed = 0.01f;
 
@@ -21,21 +28,22 @@ namespace Ritualist
         [Range(0.1f, 1f)] [SerializeField] private float _airControllPowerModyfier;
         [Range(0f, 10f)] [SerializeField] private float _minimumAirControllSpeed;
 
-        [SerializeField] private float _maxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float _jumpForce = 400f;                  // Amount of force added when the player jumps.
-        [SerializeField] private bool _airControl = false;                 // Whether or not a player can steer while jumping;
-        [SerializeField] private LayerMask _whatIsGround;      // A mask determining what is ground to the character
+        [SerializeField] private float _maxSpeed = 10f;
+        [SerializeField] private float _jumpForce = 400f;
+        [SerializeField] private bool _airControl = false;
+        [SerializeField] private LayerMask _whatIsGround;     
         [SerializeField] private Rigidbody2D _myRigidBody2D;
         [SerializeField] private Transform _backCheck;
         [SerializeField] private Transform _frontCheck;
         [SerializeField] private Transform[] _groundCheck;
         [SerializeField] private Animator _characterAnimator;
+        [SerializeField] private BoxCollider2D _boxCollider;
 
-        public bool DoubleJump;
+        private bool _doubleJump;
         private bool _handIsVisible;
         private bool _isGrounded;
-        const float _groundedCheckRadius = .1f;
         private float _lastFloatMoveValue;
+        private SlopeRayResult _rayResult = new SlopeRayResult();
 
         private bool IsFacingRight
         {
@@ -45,8 +53,25 @@ namespace Ritualist
         private void Update()
         {
             SetupClipSpeedBasedOnVelocity();
+            SetRaysResult();
         }
 
+        private void FixedUpdate()
+        {
+            _isGrounded = false;
+            for (int i = 0, c = _groundCheck.Length; i < c; ++i)
+            {
+                if (Physics2D.OverlapCircle(_groundCheck[i].position, GroundCheckRadius + 1, _whatIsGround))
+                {
+                    _isGrounded = true;
+                    _doubleJump = false;
+                }
+            }
+
+            _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
+            _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
+        }
+        
         private void SetupClipSpeedBasedOnVelocity()
         {
             float velocity = _characterAnimator.GetFloat(CharacterHorizontalSpeed);
@@ -73,31 +98,25 @@ namespace Ritualist
 
             _characterAnimator.speed = 1;
         }
-
-        private void FixedUpdate()
+        
+        private void Flip()
         {
-            _isGrounded = false;
-            // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-            // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-
-            for (int i = 0, c = _groundCheck.Length; i < c; ++i)
-            {
-                if (Physics2D.OverlapCircle(_groundCheck[i].position, _groundedCheckRadius+1, _whatIsGround))
-                {
-                    _isGrounded = true;
-                    DoubleJump = false;
-                }
-            }
-            
-           
-            _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
-            // Set the vertical animation
-            _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
+            Vector3 theScale = transform.localScale;
+            theScale.z *= -1;
+            transform.localScale = theScale;
+            Vector3 theRotation = transform.localEulerAngles;
+            theRotation.y = theScale.z > 0 ? 0 : 180;
+            transform.localEulerAngles = theRotation;
         }
 
-        public Vector2 CharacterFront()
+        private void SetRaysResult()
         {
-            return IsFacingRight == false ? new Vector2(-1, 0) : new Vector2(1, 0);
+            var centerBottomPosition = new Vector2(_groundCheck[2].position.x, _groundCheck[2].position.y + 0.1f);
+            var rayCenterResult = Physics2D.Raycast(centerBottomPosition, Vector2.down, 1f, _whatIsGround);
+            _rayResult.CenterBottomHit = rayCenterResult;
+            Debug.DrawRay(new Vector2(_groundCheck[2].position.x, _groundCheck[2].position.y + 0.1f),
+                                    Vector2.down,Color.blue,0.1f);
+            Debug.Log((_rayResult.SlopeAngle - 90) * ( IsFacingRight? 1:-1) );
         }
 
         public void Move(float move, bool crouch, bool jump)
@@ -117,15 +136,12 @@ namespace Ritualist
             {
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(move));
-
                 // Move the character
-                _lastFloatMoveValue = move;
-                var xSpeedVelocity = _lastFloatMoveValue * _maxSpeed;
-                _myRigidBody2D.velocity = new Vector2( xSpeedVelocity , _myRigidBody2D.velocity.y);
+                _myRigidBody2D.velocity = new Vector2( move * _maxSpeed, _myRigidBody2D.velocity.y);
             }
 
             // If the player should jump...
-            if (_isGrounded && jump && _characterAnimator.GetBool(CharacterIsGrounded))
+            if (_isGrounded && jump)
             {
                 // Add a vertical force to the player.
                 _isGrounded = false;
@@ -134,22 +150,11 @@ namespace Ritualist
                 _myRigidBody2D.AddForce(new Vector2(0f, _jumpForce));
             }
 
-            if ( jump && _isGrounded == false && _characterAnimator.GetBool(CharacterIsGrounded) == false && DoubleJump == false)
+            if ( jump && _isGrounded == false && _characterAnimator.GetBool(CharacterIsGrounded) == false && _doubleJump == false)
             {
                 _myRigidBody2D.velocity = new Vector2(0, _doubleJumpPower);
-                DoubleJump = true;
+                _doubleJump = true;
             }
-        }
-
-        private void Flip()
-        {
-            // Multiply the player's x local scale by -1.
-            Vector3 theScale = transform.localScale;
-            theScale.z *= -1;
-            transform.localScale = theScale;
-            Vector3 theRotation = transform.localEulerAngles;
-            theRotation.y = theScale.z > 0 ? 0 : 180;
-            transform.localEulerAngles = theRotation;
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using DevilMind;
-using UnityStandardAssets._2D;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 
@@ -12,7 +9,7 @@ namespace Ritualist.Controller
     {
 
         [SerializeField] private bool _jump;
-        [SerializeField] private PlatformerCharacter2D _characterAnimationController;
+        [SerializeField] private CharacterController _characterAnimationController;
 
         private float _xAxisMoveValue;
 

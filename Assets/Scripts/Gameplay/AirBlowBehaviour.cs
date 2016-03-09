@@ -15,7 +15,6 @@ namespace Ritualist
                 var velo = collider.gameObject.GetComponent<Rigidbody2D>().velocity;
                 velo.y = velo.y > 0 ? velo.y + BlowPower : BlowPower;
                 collider.gameObject.GetComponent<Rigidbody2D>().velocity = velo;
-                collider.gameObject.GetComponent<PlatformerCharacter2D>().DoubleJump = false;
             }   
         }
     }
