@@ -8,20 +8,61 @@ namespace Ritualist
         private struct SlopeRayResult
         {
             public RaycastHit2D CenterBottomHit;
+            public RaycastHit2D BackBottomHit;
+            public RaycastHit2D FrontBottomHit;
+
+            public float LeftHitAngle
+            {
+                get
+                {
+                    return BackBottomHit.collider != null
+                        ? DevilMath.GetAngleBeetwenPoints(BackBottomHit.normal.x, BackBottomHit.normal.y ) - 90
+                        : 0;
+                }
+            }
+
+            public float RightHitAngle
+            {
+                get
+                {
+                    return FrontBottomHit.collider != null
+                        ? DevilMath.GetAngleBeetwenPoints(FrontBottomHit.normal.x, FrontBottomHit.normal.y) - 90
+                        : 0;
+                }
+            }
+
+            public bool IsGrounded
+            {
+                get { return CenterBottomHit.collider != null && CenterBottomHit.distance < 0.5f; }
+            }
 
             public float SlopeAngle
             {
-                get { return Mathf.Abs(DevilMath.GetAngleBeetwenPoints(CenterBottomHit.normal.x, CenterBottomHit.normal.y)); }
+                get
+                {
+                    return CenterBottomHit.collider != null ?
+                        DevilMath.GetAngleBeetwenPoints(CenterBottomHit.normal.x, CenterBottomHit.normal.y) - 90:
+                        0 ;
+                }
+            }
+
+            public override string ToString()
+            {
+                return
+                    "LeftHitAngle : " + LeftHitAngle + "\n" +
+                    "RightHitAngle : " + RightHitAngle + "\n" +
+                    "SlopeHitAngle : " + SlopeAngle;
             }
         }
 
         private const string CharacterHorizontalSpeed = "HorizontalSpeed";
         private const string CharacterVerticalSpeed = "VerticalSpeed";
         private const string CharacterIsGrounded = "IsGrounded";
-        private const float GroundCheckRadius = .1f;
+
         private const float MaximalWalkingSpeed = 0.5f;
         private const float MinimalWalkingSpeed = 0.01f;
 
+        [Range(0, 90)] [SerializeField] private int _slopeAngleOffset = 10;
         [Range(1f, 4f)] [SerializeField] private float _runningAnimationSpeed;
         [Range(1f, 4f)] [SerializeField] private float _walkingAnimationSpeed;
         [Range(1, 15f)] [SerializeField] private float _doubleJumpPower;
@@ -31,43 +72,29 @@ namespace Ritualist
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _jumpForce = 400f;
         [SerializeField] private bool _airControl = false;
+
+        [SerializeField] private Transform _centerRayPosition;
+        [SerializeField] private Transform _leftRayPosition;
+        [SerializeField] private Transform _rightRayPosition;
+
         [SerializeField] private LayerMask _whatIsGround;     
         [SerializeField] private Rigidbody2D _myRigidBody2D;
-        [SerializeField] private Transform _backCheck;
-        [SerializeField] private Transform _frontCheck;
-        [SerializeField] private Transform[] _groundCheck;
         [SerializeField] private Animator _characterAnimator;
-        [SerializeField] private BoxCollider2D _boxCollider;
 
-        private bool _doubleJump;
-        private bool _handIsVisible;
         private bool _isGrounded;
-        private float _lastFloatMoveValue;
-        private SlopeRayResult _rayResult = new SlopeRayResult();
+        private SlopeRayResult _rayResult;
 
         private bool IsFacingRight
         {
             get { return transform.localScale.z > 0; }
         }
-
+        
         private void Update()
         {
-            SetupClipSpeedBasedOnVelocity();
             SetRaysResult();
-        }
-
-        private void FixedUpdate()
-        {
-            _isGrounded = false;
-            for (int i = 0, c = _groundCheck.Length; i < c; ++i)
-            {
-                if (Physics2D.OverlapCircle(_groundCheck[i].position, GroundCheckRadius + 1, _whatIsGround))
-                {
-                    _isGrounded = true;
-                    _doubleJump = false;
-                }
-            }
-
+            ConsoleText.Instance.UpdateText(_rayResult.ToString());
+            SetupClipSpeedBasedOnVelocity();
+            _isGrounded = _rayResult.IsGrounded;
             _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
             _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
         }
@@ -111,17 +138,24 @@ namespace Ritualist
 
         private void SetRaysResult()
         {
-            var centerBottomPosition = new Vector2(_groundCheck[2].position.x, _groundCheck[2].position.y + 0.1f);
-            var rayCenterResult = Physics2D.Raycast(centerBottomPosition, Vector2.down, 1f, _whatIsGround);
+            var rayCenterResult = Physics2D.Raycast(_centerRayPosition.position, Vector2.down, 2f, _whatIsGround);
             _rayResult.CenterBottomHit = rayCenterResult;
-            Debug.DrawRay(new Vector2(_groundCheck[2].position.x, _groundCheck[2].position.y + 0.1f),
-                                    Vector2.down,Color.blue,0.1f);
-            Debug.Log((_rayResult.SlopeAngle - 90) * ( IsFacingRight? 1:-1) );
+
+            var leftRayResult = Physics2D.Raycast(_leftRayPosition.position, new Vector3(IsFacingRight ? -1 : 1, -0.5f, 0), 2f, _whatIsGround);
+            _rayResult.BackBottomHit = leftRayResult;
+
+            var rightRayResult = Physics2D.Raycast(_rightRayPosition.position, new Vector3(IsFacingRight ? 1 : -1, -0.5f,0), 2f, _whatIsGround);
+            _rayResult.FrontBottomHit = rightRayResult;
+
+            Debug.Log(IsFacingRight ? _rayResult.SlopeAngle : -_rayResult.SlopeAngle);
+            Debug.DrawRay(new Vector2(_centerRayPosition.position.x, _centerRayPosition.position.y), Vector2.down*2,Color.red,0.1f);
+            Debug.DrawRay(new Vector2(_leftRayPosition.position.x, _leftRayPosition.position.y), new Vector3(IsFacingRight ? -1 : 1, -0.5f, 0), Color.red, 0.1f);
+            Debug.DrawRay(new Vector2(_rightRayPosition.position.x, _rightRayPosition.position.y), new Vector3(IsFacingRight ? 1 : -1, -0.5f, 0), Color.red, 0.1f);
+            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + _myRigidBody2D.velocity, Color.cyan);
         }
 
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(float move, bool jump)
         {
-
             if (move > 0 && IsFacingRight == false)
             {
                 Flip();
@@ -131,30 +165,66 @@ namespace Ritualist
                 Flip();
             }
 
-           //only control the player if grounded or airControl is turned on
-            if (_isGrounded || _airControl )
+            if (_isGrounded && jump == false)
             {
-                // The Speed animator parameter is set to the absolute value of the horizontal input.
-                _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(move));
-                // Move the character
-                _myRigidBody2D.velocity = new Vector2( move * _maxSpeed, _myRigidBody2D.velocity.y);
+                if (Mathf.Abs(move) < 0.02f)
+                {
+                    _myRigidBody2D.velocity = new Vector2(0, _myRigidBody2D.velocity.y);
+                }
+                else
+                {
+                    SetGroundedVelocity(move);
+                }
+            }
+        }
+
+
+        
+
+        private void SetGroundedVelocity(float move)
+        {
+            Vector2 moveVector = new Vector2(move*_maxSpeed, 0);
+
+
+            int angle = (int) (IsFacingRight ? _rayResult.SlopeAngle : -_rayResult.SlopeAngle);
+
+            //////////////////////////////////////
+            var y = _myRigidBody2D.velocity.y;
+            if (y > 2 && angle < 0)
+            {
+                Debug.Log("Dupa");
+            }
+            //////////////////////////////////////
+            if (angle < 10)
+            {
+                Vector2 velocity = _myRigidBody2D.velocity;
+                velocity.x = moveVector.x;
+                _myRigidBody2D.velocity = velocity;
+                return;
             }
 
-            // If the player should jump...
-            if (_isGrounded && jump)
+            int frontAngle = (int) (IsFacingRight ? _rayResult.RightHitAngle : -_rayResult.RightHitAngle);
+            if (angle > 0 &&
+                angle > frontAngle &&
+                angle - frontAngle > _slopeAngleOffset)
             {
-                // Add a vertical force to the player.
-                _isGrounded = false;
-                _characterAnimator.SetBool(CharacterIsGrounded, false);
-                jump = false;
-                _myRigidBody2D.AddForce(new Vector2(0f, _jumpForce));
+                moveVector += Physics2D.gravity*Time.deltaTime*_myRigidBody2D.mass;
+                _myRigidBody2D.velocity = moveVector;
+                return;
             }
 
-            if ( jump && _isGrounded == false && _characterAnimator.GetBool(CharacterIsGrounded) == false && _doubleJump == false)
+            if (angle >= 10)
             {
-                _myRigidBody2D.velocity = new Vector2(0, _doubleJumpPower);
-                _doubleJump = true;
+                moveVector = DevilMath.RotateVectorZByAngle(moveVector, IsFacingRight ? angle : - angle);
+                Vector2 velocity = _myRigidBody2D.velocity;
+                velocity.y = moveVector.y;
+                velocity.x = moveVector.x;
+                _myRigidBody2D.velocity = velocity;
+                return;
             }
+
+
+
         }
     }
 }

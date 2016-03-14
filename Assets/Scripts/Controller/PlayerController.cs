@@ -52,7 +52,7 @@ namespace Ritualist.Controller
         private void Move()
         {
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
-            _characterAnimationController.Move(_xAxisMoveValue, false, _jump);
+            _characterAnimationController.Move(_xAxisMoveValue, _jump);
             _jump = false;
         }
     }
