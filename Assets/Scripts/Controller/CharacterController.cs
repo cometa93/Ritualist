@@ -95,8 +95,10 @@ namespace Ritualist
             ConsoleText.Instance.UpdateText(_rayResult.ToString());
             SetupClipSpeedBasedOnVelocity();
             _isGrounded = _rayResult.IsGrounded;
+
             _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
             _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
+            _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(_myRigidBody2D.velocity.x));
         }
         
         private void SetupClipSpeedBasedOnVelocity()
