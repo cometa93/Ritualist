@@ -2,9 +2,6 @@
 {
     public enum SkillEffect
     {
-        Catch,
-        Stunt,
-        Damage,
-        Freeze
+        Catch
     }
 }

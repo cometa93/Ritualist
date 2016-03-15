@@ -165,6 +165,14 @@ namespace Ritualist
                 Flip();
             }
 
+            if (_isGrounded && jump)
+            {
+                _isGrounded = false;
+                _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
+                //_myRigidBody2D.velocity = new Vector2(_myRigidBody2D.velocity.x, 10);
+                return;
+            }
+
             if (_isGrounded && jump == false)
             {
                 if (Mathf.Abs(move) < 0.02f)
@@ -178,23 +186,12 @@ namespace Ritualist
             }
         }
 
-
-        
-
         private void SetGroundedVelocity(float move)
         {
             Vector2 moveVector = new Vector2(move*_maxSpeed, 0);
 
 
             int angle = (int) (IsFacingRight ? _rayResult.SlopeAngle : -_rayResult.SlopeAngle);
-
-            //////////////////////////////////////
-            var y = _myRigidBody2D.velocity.y;
-            if (y > 2 && angle < 0)
-            {
-                Debug.Log("Dupa");
-            }
-            //////////////////////////////////////
             if (angle < 10)
             {
                 Vector2 velocity = _myRigidBody2D.velocity;

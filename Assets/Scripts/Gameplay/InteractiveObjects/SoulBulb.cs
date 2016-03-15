@@ -38,6 +38,11 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
 
         protected override void OnFinished()
         {
+            for (int i = 0, c = MyTargetPoints.Count; i < c; ++i)
+            {
+                iTween.Stop(MyTargetPoints[i].gameObject);
+                MyTargetPoints[i].gameObject.FadeTo(0, 0.5f, 0);
+            }
             GameMaster.Hero.Stats.Power += (int) EffectValue;
             _animator.SetBool(IsFinished, true);
             Destroy(gameObject, 3f);

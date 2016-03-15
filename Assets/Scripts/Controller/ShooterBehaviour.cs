@@ -12,11 +12,7 @@ namespace Ritualist.Controller
 {
     public class ShooterBehaviour : DevilBehaviour
     {
-        
-        [SerializeField] private Transform _catchFieldGeneratorPrefab;
-        [SerializeField] private Transform _runePrefab;
-        [SerializeField] private Transform _spawnPoint;
-        [SerializeField] private Transform _worldParent;
+        [SerializeField] private Transform _catchPointPrefab;
         
         protected override void Awake()
         {
@@ -41,12 +37,6 @@ namespace Ritualist.Controller
                 case SkillEffect.Catch:
                     ShootCatchPoint();
                     break;
-                case SkillEffect.Stunt:
-                    break;
-                case SkillEffect.Damage:
-                    break;
-                case SkillEffect.Freeze:
-                    break;
             }
         }
 
@@ -54,7 +44,7 @@ namespace Ritualist.Controller
 
         private CatchPoint PrepareCatchPoint()
         {
-            Transform spawnedPrefab = Instantiate(_runePrefab, _spawnPoint.position, Quaternion.identity) as Transform;
+            Transform spawnedPrefab = Instantiate(_catchPointPrefab, transform.position, Quaternion.identity) as Transform;
             if (spawnedPrefab == null)
             {
                 Log.Error(MessageGroup.Gameplay, "Spawned prefab is null");
@@ -76,13 +66,13 @@ namespace Ritualist.Controller
                 Debug.LogWarning("prepared rune is null");
                 return;
             }
-            catchPoint.transform.parent = _worldParent;
+
+            catchPoint.transform.parent = transform.root;
             var currentSkill = GameMaster.Hero.CurrentHeroSkill;
             var targets = GetPossibleTargets(currentSkill);
             catchPoint.Shoot(targets.Count > 0 ? targets[0].Position : GetMissShoot(GameMaster.Hero.CurrentHeroSkill));
             GameMaster.Hero.Stats.Power  -= currentSkill.PowerCost;
         }
-
 
         private List<SkillTarget> GetPossibleTargets(HeroSkill currentSkill)
         {
@@ -98,7 +88,6 @@ namespace Ritualist.Controller
                 default:
                     return null;
             }
-            //TODO IMPLEMENT MORE !
         }
 
         private List<SkillTarget> GetCatchPointsTargets(float range)
@@ -108,14 +97,14 @@ namespace Ritualist.Controller
             for (int i = 0, c = possibleTargets.Count; i < c; ++i)
             {
                 var target = possibleTargets[i];
-                if (range >= target.Distance(_spawnPoint.position))
+                if (range >= target.Distance(transform.position))
                 {
                     list.Add(target);
                 }
             }
             list.Sort((target1, target2) =>
             {
-                return target1.Distance(_spawnPoint.position) >= target2.Distance(_spawnPoint.position) ? 1 : -1;
+                return target1.Distance(transform.position) >= target2.Distance(transform.position) ? 1 : -1;
             });
             return list;
         }
