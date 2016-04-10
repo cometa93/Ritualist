@@ -58,13 +58,15 @@ namespace Ritualist
         private const string CharacterHorizontalSpeed = "HorizontalSpeed";
         private const string CharacterVerticalSpeed = "VerticalSpeed";
         private const string CharacterIsGrounded = "IsGrounded";
+        private const int CharacterAirLayerIndex = 1;
+        private const int CharacterGroundLayerIndex = 0;
 
-        private const float MaximalWalkingSpeed = 0.5f;
-        private const float MinimalWalkingSpeed = 0.01f;
+        private const float MaximalWalkingSpeed = 3.1f;
+        private const float MinimalWalkingSpeed = 0.05f;
 
         [Range(0, 90)] [SerializeField] private int _slopeAngleOffset = 10;
-        [Range(1f, 4f)] [SerializeField] private float _runningAnimationSpeed;
-        [Range(1f, 4f)] [SerializeField] private float _walkingAnimationSpeed;
+        [Range(0.5f, 2.5f)] [SerializeField] private float _runningAnimationSpeed;
+        [Range(0.5f, 2.5f)] [SerializeField] private float _walkingAnimationSpeed;
         [Range(1, 15f)] [SerializeField] private float _doubleJumpPower;
         [Range(0.1f, 1f)] [SerializeField] private float _airControllPowerModyfier;
         [Range(0f, 10f)] [SerializeField] private float _minimumAirControllSpeed;
@@ -81,7 +83,12 @@ namespace Ritualist
         [SerializeField] private Rigidbody2D _myRigidBody2D;
         [SerializeField] private Animator _characterAnimator;
 
+        private float _currentAirAnimationLayerWeight;
+        private int _jumpInitialDirection;
+        private float _currentGroundAnimationLayerWeight = 1f;
         private bool _isGrounded;
+        private bool _jumped;
+        private float _lastAirHorizontalSpeed = 0;
         private SlopeRayResult _rayResult;
 
         private bool IsFacingRight
@@ -92,24 +99,45 @@ namespace Ritualist
         private void Update()
         {
             SetRaysResult();
-            ConsoleText.Instance.UpdateText(_rayResult.ToString());
-            SetupClipSpeedBasedOnVelocity();
-            _isGrounded = _rayResult.IsGrounded;
+            if (ConsoleText.Instance != null)
+            {
+                ConsoleText.Instance.UpdateText(_rayResult.ToString());
+            }
+            _isGrounded = _rayResult.IsGrounded && _jumped == false;
+            if (_isGrounded)
+            {
+                _jumpInitialDirection = IsFacingRight ? 1:-1;
+                _lastAirHorizontalSpeed = 0;
+            }
 
-            _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
+            SetupClipSpeedBasedOnVelocity();
+            SetAnimationLayersWeight();
+
             _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
+            _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
             _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(_myRigidBody2D.velocity.x));
         }
         
         private void SetupClipSpeedBasedOnVelocity()
         {
-            float velocity = _characterAnimator.GetFloat(CharacterHorizontalSpeed);
+            float velocity = Mathf.Abs(_myRigidBody2D.velocity.x);
+            if (velocity <= 0.05f && _characterAnimator.IsInTransition(0))
+            {
+                _characterAnimator.speed = 2.5f;
+                return;
+            }else if (velocity <= 0.05f)
+            {
+
+                _characterAnimator.speed = 1;
+                return;
+            }
+            
             bool isRunning = velocity > MaximalWalkingSpeed && _isGrounded;
             bool isWalking = isRunning == false && velocity >= MinimalWalkingSpeed && _isGrounded;
-
+            
             if (isRunning)
             {
-                float currentMaxSpeedPercent = (velocity - MaximalWalkingSpeed)/(1f - MaximalWalkingSpeed);
+                float currentMaxSpeedPercent = (velocity - MaximalWalkingSpeed)/(_maxSpeed - MaximalWalkingSpeed);
                 float currentClipSpeed = Mathf.Lerp(1f, _runningAnimationSpeed, currentMaxSpeedPercent);
 
                 _characterAnimator.speed = currentClipSpeed;
@@ -124,8 +152,6 @@ namespace Ritualist
                 _characterAnimator.speed = currentClipSpeed;
                 return;
             }
-
-            _characterAnimator.speed = 1;
         }
         
         private void Flip()
@@ -148,16 +174,22 @@ namespace Ritualist
 
             var rightRayResult = Physics2D.Raycast(_rightRayPosition.position, new Vector3(IsFacingRight ? 1 : -1, -0.5f,0), 2f, _whatIsGround);
             _rayResult.FrontBottomHit = rightRayResult;
-
-            Debug.Log(IsFacingRight ? _rayResult.SlopeAngle : -_rayResult.SlopeAngle);
+            
             Debug.DrawRay(new Vector2(_centerRayPosition.position.x, _centerRayPosition.position.y), Vector2.down*2,Color.red,0.1f);
             Debug.DrawRay(new Vector2(_leftRayPosition.position.x, _leftRayPosition.position.y), new Vector3(IsFacingRight ? -1 : 1, -0.5f, 0), Color.red, 0.1f);
             Debug.DrawRay(new Vector2(_rightRayPosition.position.x, _rightRayPosition.position.y), new Vector3(IsFacingRight ? 1 : -1, -0.5f, 0), Color.red, 0.1f);
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + _myRigidBody2D.velocity, Color.cyan);
         }
 
+        public void JumpAnimationEventAction()
+        {
+            _jumped = false;
+            _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
+        }
+
         public void Move(float move, bool jump)
         {
+
             if (move > 0 && IsFacingRight == false)
             {
                 Flip();
@@ -167,15 +199,14 @@ namespace Ritualist
                 Flip();
             }
 
-            if (_isGrounded && jump)
+            if (_isGrounded && jump && _jumped == false)
             {
                 _isGrounded = false;
-                _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
-                //_myRigidBody2D.velocity = new Vector2(_myRigidBody2D.velocity.x, 10);
+                _jumped = true;
                 return;
             }
 
-            if (_isGrounded && jump == false)
+            if (_isGrounded && jump == false && _jumped == false)
             {
                 if (Mathf.Abs(move) < 0.02f)
                 {
@@ -184,6 +215,30 @@ namespace Ritualist
                 else
                 {
                     SetGroundedVelocity(move);
+                }
+            }
+
+            if (_isGrounded == false && _airControl)
+            {
+                if (Mathf.Abs(move) < 0.02f)
+                {
+                    _myRigidBody2D.velocity = new Vector2(0, _myRigidBody2D.velocity.y);
+                }
+                else
+                {
+                    if (Mathf.Abs(_lastAirHorizontalSpeed) < 0.2f)
+                    {
+                        _jumpInitialDirection = IsFacingRight ? 1 : -1;
+                        _lastAirHorizontalSpeed = _maxSpeed*move;
+                        return;
+                    }
+                    var velo = _myRigidBody2D.velocity;
+                    var front = move < 0 ? _jumpInitialDirection * -1 : _jumpInitialDirection * 1;
+                    _lastAirHorizontalSpeed = Mathf.Lerp(_lastAirHorizontalSpeed, _minimumAirControllSpeed, Time.deltaTime/2);
+                    velo.x = _lastAirHorizontalSpeed;
+                    velo.x *= front;
+                    Debug.Log("Velocity x :" + velo.x);
+                    _myRigidBody2D.velocity = velo;
                 }
             }
         }
@@ -219,11 +274,27 @@ namespace Ritualist
                 velocity.y = moveVector.y;
                 velocity.x = moveVector.x;
                 _myRigidBody2D.velocity = velocity;
-                return;
+            }
+        }
+
+        private void SetAnimationLayersWeight()
+        {
+            _currentAirAnimationLayerWeight = Mathf.Lerp(_currentAirAnimationLayerWeight, _isGrounded ? 0f : 1f, 5 * Time.deltaTime);
+
+            if (_currentAirAnimationLayerWeight > 0.98f)
+            {
+                _currentAirAnimationLayerWeight = 1f;
+            }
+            else if (_currentAirAnimationLayerWeight < 0.02f)
+            {
+                _currentAirAnimationLayerWeight = 0f;
             }
 
+            Debug.Log("CURRENT AIR WEIGHT:" + _currentAirAnimationLayerWeight);
+            _currentGroundAnimationLayerWeight = 1f - _currentAirAnimationLayerWeight;
 
-
+            _characterAnimator.SetLayerWeight(CharacterAirLayerIndex, _currentAirAnimationLayerWeight);
+            _characterAnimator.SetLayerWeight(CharacterGroundLayerIndex, _currentGroundAnimationLayerWeight);
         }
     }
 }
