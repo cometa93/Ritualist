@@ -4,6 +4,5 @@
     {
         Unknown,
         Alert,
-        VictoryPopup,
     }
 }

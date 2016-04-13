@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DevilMind.Utils;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DevilMind
 {
@@ -47,6 +49,11 @@ namespace DevilMind
 
             var buttonName = ButtonsPaths[type];
             return Load<GameObject>(_prefabsFolder +_buttonsPath + buttonName);
+        }
+
+        public static TextAsset LoadGameSave()
+        {
+            return Load<TextAsset>("GameStateSave");
         }
 
         public static GameObject LoadMagicField()

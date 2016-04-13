@@ -183,6 +183,11 @@ namespace Ritualist
 
         public void JumpAnimationEventAction()
         {
+            if (_jumped == false)
+            {
+                return;
+            }
+
             _jumped = false;
             _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
         }

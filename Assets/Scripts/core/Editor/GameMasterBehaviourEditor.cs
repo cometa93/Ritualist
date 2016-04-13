@@ -66,16 +66,15 @@ namespace DevilMind.EditorGUI
 
         private void ReadVersion()
         {
-                TextAsset textFile = Resources.Load("version", typeof(TextAsset)) as TextAsset;
-                Debug.Log(textFile.text);
-                if (textFile == null)
-                {
-                    Log.Exception(MessageGroup.Common, "Couldn't get game version");
-                    //TODO: RESET HARD APPLICATION AND DOWNLOAD NEWEST VERSION WITH ASSET BUNDLES 
-                }
-                VersionParser parser = new VersionParser(textFile.text);
-                Bundle = parser.Bundle;
-                Resources.UnloadAsset(textFile);
+            TextAsset textFile = Resources.Load("version", typeof(TextAsset)) as TextAsset;
+            if (textFile == null)
+            {
+                return;
+            }
+            Debug.Log(textFile.text);
+            VersionParser parser = new VersionParser(textFile.text);
+            Bundle = parser.Bundle;
+            Resources.UnloadAsset(textFile);
         }
 
         private void GenerateVersionFile()
@@ -83,10 +82,10 @@ namespace DevilMind.EditorGUI
             string parsedGameVarsion = JsonConvert.SerializeObject(Bundle);
 
             File.WriteAllText("Assets/Resources/version.txt",parsedGameVarsion);
-            StreamWriter streamWriter = new StreamWriter("Assets/Resources/version.txt");
             Debug.Log(parsedGameVarsion);
-            streamWriter.Write(parsedGameVarsion);
-            streamWriter.Close();
+//            StreamWriter streamWriter = new StreamWriter("Assets/Resources/version.txt");
+//            streamWriter.Write(parsedGameVarsion);
+//            streamWriter.Close();
             _buildingVersion = false;
         }
     }

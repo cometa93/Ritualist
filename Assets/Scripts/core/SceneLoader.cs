@@ -17,18 +17,27 @@ namespace DevilMind
         private static SceneLoader _instance;
         public static SceneLoader Instance
         {
-            get { return _instance; }
+            get
+            {
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("Scene Loader");
+                    var loader = go.AddComponent<SceneLoader>();
+                    _instance = loader;
+                    _instance.CreateLoadingScreen();
+                }
+                return _instance;
+            }
         }
 
-        private void Awake()
-        {
-            _instance = this;
-        }
+//        private void Awake()
+//        {
+//            _instance = this;
+//        }
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            CreateLoadingScreen();
         }
 
         private void CreateLoadingScreen()
