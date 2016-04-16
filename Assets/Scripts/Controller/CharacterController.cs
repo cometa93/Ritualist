@@ -33,7 +33,10 @@ namespace Ritualist
 
             public bool IsGrounded
             {
-                get { return CenterBottomHit.collider != null && CenterBottomHit.distance < 0.5f; }
+                get { return ( CenterBottomHit.collider != null && CenterBottomHit.distance < 0.5f) ||
+                             ( BackBottomHit.collider != null && BackBottomHit.distance < 0.5f) ||
+                             ( FrontBottomHit.collider != null && FrontBottomHit.distance < 0.5f);
+                } 
             }
 
             public float SlopeAngle
@@ -169,27 +172,16 @@ namespace Ritualist
             var rayCenterResult = Physics2D.Raycast(_centerRayPosition.position, Vector2.down, 2f, _whatIsGround);
             _rayResult.CenterBottomHit = rayCenterResult;
 
-            var leftRayResult = Physics2D.Raycast(_leftRayPosition.position, new Vector3(IsFacingRight ? -1 : 1, -0.5f, 0), 2f, _whatIsGround);
+            var leftRayResult = Physics2D.Raycast(_leftRayPosition.position, new Vector3(IsFacingRight ? -1 : 1, -0.75f, 0), 3f, _whatIsGround);
             _rayResult.BackBottomHit = leftRayResult;
 
-            var rightRayResult = Physics2D.Raycast(_rightRayPosition.position, new Vector3(IsFacingRight ? 1 : -1, -0.5f,0), 2f, _whatIsGround);
+            var rightRayResult = Physics2D.Raycast(_rightRayPosition.position, new Vector3(IsFacingRight ? 1 : -1, -0.75f,0), 3f, _whatIsGround);
             _rayResult.FrontBottomHit = rightRayResult;
             
             Debug.DrawRay(new Vector2(_centerRayPosition.position.x, _centerRayPosition.position.y), Vector2.down*2,Color.red,0.1f);
-            Debug.DrawRay(new Vector2(_leftRayPosition.position.x, _leftRayPosition.position.y), new Vector3(IsFacingRight ? -1 : 1, -0.5f, 0), Color.red, 0.1f);
-            Debug.DrawRay(new Vector2(_rightRayPosition.position.x, _rightRayPosition.position.y), new Vector3(IsFacingRight ? 1 : -1, -0.5f, 0), Color.red, 0.1f);
+            Debug.DrawRay(new Vector2(_leftRayPosition.position.x, _leftRayPosition.position.y), new Vector3(IsFacingRight ? -1 : 1, -0.75f, 0), Color.red, 0.1f);
+            Debug.DrawRay(new Vector2(_rightRayPosition.position.x, _rightRayPosition.position.y), new Vector3(IsFacingRight ? 1 : -1, -0.75f, 0), Color.red, 0.1f);
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + _myRigidBody2D.velocity, Color.cyan);
-        }
-
-        public void JumpAnimationEventAction()
-        {
-            if (_jumped == false)
-            {
-                return;
-            }
-
-            _jumped = false;
-            _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
         }
 
         public void Move(float move, bool jump)
@@ -204,14 +196,14 @@ namespace Ritualist
                 Flip();
             }
 
-            if (_isGrounded && jump && _jumped == false)
+            if (_isGrounded && jump)
             {
                 _isGrounded = false;
-                _jumped = true;
+                _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
                 return;
             }
 
-            if (_isGrounded && jump == false && _jumped == false)
+            if (_isGrounded && jump == false)
             {
                 if (Mathf.Abs(move) < 0.02f)
                 {
@@ -284,7 +276,7 @@ namespace Ritualist
 
         private void SetAnimationLayersWeight()
         {
-            _currentAirAnimationLayerWeight = Mathf.Lerp(_currentAirAnimationLayerWeight, _isGrounded ? 0f : 1f, 5 * Time.deltaTime);
+            _currentAirAnimationLayerWeight = Mathf.Lerp(_currentAirAnimationLayerWeight, _isGrounded ? 0f : 1f, 3 * Time.deltaTime);
 
             if (_currentAirAnimationLayerWeight > 0.98f)
             {

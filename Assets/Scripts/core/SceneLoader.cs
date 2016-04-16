@@ -12,7 +12,7 @@ namespace DevilMind
 
         private const string StagePrefix = "_STAGE";
         private bool _isLoadingStage;
-        private string _currentScene;
+        public int CurrentStage { private set; get; }
         private LoadingScreenBehaviour _loadingScren;
         private static SceneLoader _instance;
         public static SceneLoader Instance
@@ -29,11 +29,6 @@ namespace DevilMind
                 return _instance;
             }
         }
-
-//        private void Awake()
-//        {
-//            _instance = this;
-//        }
 
         private void Start()
         {
@@ -85,7 +80,6 @@ namespace DevilMind
 
         private void OnLoadingScreenHided()
         {
-            
         }
 
         private void OnProgress(float progress)
@@ -102,7 +96,6 @@ namespace DevilMind
                 yield return null;
             }
 
-            _currentScene = scene;
             async.allowSceneActivation = true;
             yield return new WaitForSeconds(0.5f);
 
@@ -125,6 +118,7 @@ namespace DevilMind
         {
             ShowLoadingStageScene(() =>
             {
+                CurrentStage = number;
                 StartCoroutine(LoadSceneAsync(number + StagePrefix, OnProgress, OnSceneLoaded));
             });
         }

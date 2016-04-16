@@ -53,7 +53,7 @@ namespace Assets.Scripts.Gameplay.Settings
 //            return null;
         }
 
-        private void SaveCurrentGameProgress()
+        public void SaveCurrentGameProgress()
         {
             var saveInText = JsonConvert.SerializeObject(SaveSlots, Formatting.Indented);
             File.WriteAllText("Assets/Resources/GameStateSave.txt", saveInText);

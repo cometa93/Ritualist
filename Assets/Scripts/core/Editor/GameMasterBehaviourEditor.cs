@@ -83,9 +83,6 @@ namespace DevilMind.EditorGUI
 
             File.WriteAllText("Assets/Resources/version.txt",parsedGameVarsion);
             Debug.Log(parsedGameVarsion);
-//            StreamWriter streamWriter = new StreamWriter("Assets/Resources/version.txt");
-//            streamWriter.Write(parsedGameVarsion);
-//            streamWriter.Close();
             _buildingVersion = false;
         }
     }
