@@ -28,7 +28,7 @@ namespace Assets.Scripts.Gameplay.Settings
             {
                 SlotNumber = slotNumber;
                 StageNumber = 1;
-                Checkpoint = 0;
+                Checkpoint = 1;
             }
         }
 

@@ -136,6 +136,11 @@ namespace Ritualist
                 var save = GameMaster.GameSave.CurrentSave;
                 if (save != null)
                 {
+                    if (save.Checkpoint == 0)
+                    {
+                        Log.Warning(MessageGroup.Common, "save checkpoint is equal 0. Checkpoints are starting from 1");
+                        return;
+                    }
                     if (_checkPoints.Count > save.Checkpoint - 1)
                     {
                         indexOfCheckpoint = save.Checkpoint - 1;

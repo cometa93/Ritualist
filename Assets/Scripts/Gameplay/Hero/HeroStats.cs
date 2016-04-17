@@ -16,6 +16,11 @@ namespace Ritualist
                     _power = MaxPower;
                 }
                 GameMaster.Events.Rise(EventType.HeroPowerChanged);
+
+                if (_power <= 0)
+                {
+                    GameMaster.Events.Rise(EventType.CharacterDied);
+                }
             }
             get { return _power; }   
         }

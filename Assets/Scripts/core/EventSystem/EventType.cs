@@ -9,9 +9,9 @@
         RightTriggerReleased,
         LeftTriggerClicked,
         LeftTriggerReleased,
-        GenerateMagicField,
         HeroPowerChanged,
-        DamageByStaticObjectDone
+        DamageByStaticObjectDone,
+        CharacterDied,
     }
 
 }
