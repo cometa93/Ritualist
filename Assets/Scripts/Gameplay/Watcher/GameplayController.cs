@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using DevilMind.Utils;
+using Ritualist.UI;
 using EventType = DevilMind.EventType;
 
 namespace Ritualist
@@ -34,6 +35,7 @@ namespace Ritualist
             SetupCheckPoints();
             SetupMagicFieldPrefab();
             SetupGameplayGui();
+            SetupGameplayMenu();
             SetupCharacterObject();
             SetupTargets();
             SceneLoader.Instance.StageLoaded();
@@ -190,6 +192,23 @@ namespace Ritualist
             {
                 Log.Error(MessageGroup.Gameplay, "Couldn't instantiate gui");
             }
+        }
+
+        private void SetupGameplayMenu()
+        {
+            if (GameplayMenuBehaviour.GameplayMenuCreated)
+            {
+                return;
+            }
+
+            var prefab = ResourceLoader.LoadGameplayMenu();
+            if (prefab == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't get gameplaymenu object");
+                return;
+            }
+            
+            Instantiate(prefab);
         }
 
         public void RegisterTarget(SkillTarget target)

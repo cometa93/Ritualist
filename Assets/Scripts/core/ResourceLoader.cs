@@ -71,6 +71,11 @@ namespace DevilMind
             return Load<GameObject>("Prefabs/GameplayGUI/LoadingScreen");
         }
 
+        public static GameObject LoadGameplayMenu()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/GameplayMenu");
+        }
+
         public static GameObject LoadCharacter()
         {
             return Load<GameObject>("Prefabs/Character/CharacterTransform");

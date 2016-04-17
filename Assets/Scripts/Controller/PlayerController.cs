@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Remoting.Messaging;
+using UnityEngine;
 using DevilMind;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
@@ -7,7 +8,7 @@ namespace Ritualist.Controller
 {
     public class PlayerController : DevilBehaviour
     {
-
+        [SerializeField] private bool _characterMovementEnabled = true;
         [SerializeField] private bool _jump;
         [SerializeField] private CharacterController _characterAnimationController;
 
@@ -19,12 +20,19 @@ namespace Ritualist.Controller
             EventsToListen.Add(EventType.ButtonReleased);
             EventsToListen.Add(EventType.RightTriggerReleased);
             EventsToListen.Add(EventType.RightTriggerClicked);
+            EventsToListen.Add(EventType.CharacterDied);
             base.Awake();
         }
 
         protected override void OnEvent(Event gameEvent)
         {
-           if (gameEvent.Type == EventType.ButtonClicked)
+            if (gameEvent.Type == EventType.CharacterDied)
+            {
+                _characterMovementEnabled = false;
+                
+            }
+
+            if (gameEvent.Type == EventType.ButtonClicked)
             {
                 switch ((InputButton) gameEvent.Parameter)
                 {
@@ -46,11 +54,20 @@ namespace Ritualist.Controller
 
         private void Jump()
         {
+            if (_characterMovementEnabled == false)
+            {
+                return;
+            }
             _jump = true;
         }
 
         private void Move()
         {
+            if (_characterMovementEnabled == false)
+            {
+                _characterAnimationController.Move(0, false);
+                return;
+            }
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
             _characterAnimationController.Move(_xAxisMoveValue, _jump);
             _jump = false;
