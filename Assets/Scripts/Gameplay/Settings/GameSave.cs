@@ -2,6 +2,7 @@
 using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
+using Ritualist;
 
 namespace Assets.Scripts.Gameplay.Settings
 {
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Gameplay.Settings
             {
                 SlotNumber = slotNumber;
                 StageNumber = 1;
-                Checkpoint = 1;
+                Checkpoint = 0;
             }
         }
 
@@ -53,10 +54,23 @@ namespace Assets.Scripts.Gameplay.Settings
 //            return null;
         }
 
-        public void SaveCurrentGameProgress()
+        public string SaveCurrentGameProgress()
         {
             var saveInText = JsonConvert.SerializeObject(SaveSlots, Formatting.Indented);
             File.WriteAllText("Assets/Resources/GameStateSave.txt", saveInText);
+            return saveInText;
+        }
+
+        public void LoadCurrentGame()
+        {
+            if (CurrentSave == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't load game Current save is null");
+                return;
+            }
+            
+            GameplayController.SetupFromGameSave();
+            SceneLoader.Instance.LoadStage(CurrentSave.StageNumber);
         }
 
         private void LoadSaveSlots()

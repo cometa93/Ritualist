@@ -10,6 +10,9 @@ namespace Ritualist
 {
     public class GameplayController : DevilBehaviour
     {
+        private static bool _isLoadingFromSave = false;
+        private static bool _isEnteringFromBack = false;
+
         private GameObject _magicFieldPrefab;
         private GameObject _gameplayGui;
         private MagicField.Config _config;
@@ -121,7 +124,37 @@ namespace Ritualist
                 return;
             }
 
-            characterObj.transform.position = _checkPoints[0].position;
+            int indexOfCheckpoint = 0;
+            if (_isEnteringFromBack)
+            {
+                indexOfCheckpoint = _checkPoints.Count - 1;
+            }
+
+            if (_isLoadingFromSave)
+            {
+                _isLoadingFromSave = false;
+                var save = GameMaster.GameSave.CurrentSave;
+                if (save != null)
+                {
+                    if (_checkPoints.Count > save.Checkpoint - 1)
+                    {
+                        indexOfCheckpoint = save.Checkpoint - 1;
+                    }
+                }
+            }
+
+
+            characterObj.transform.position = _checkPoints[indexOfCheckpoint].position;
+            if (_isEnteringFromBack)
+            {
+                Vector3 theScale = characterObj.transform.localScale;
+                theScale.z *= -1;
+                characterObj.transform.localScale = theScale;
+                Vector3 theRotation = characterObj.transform.localEulerAngles;
+                theRotation.y = theScale.z > 0 ? 0 : 180;
+                characterObj.transform.localEulerAngles = theRotation;
+                _isEnteringFromBack = false;
+            }
         }
 
         private void SetupMagicFieldPrefab()
@@ -215,5 +248,16 @@ namespace Ritualist
             }
         }
         #endregion
+
+
+        public static void SetupFromGameSave()
+        {
+            _isLoadingFromSave = true;
+        }
+
+        public static void SetupFromBack()
+        {
+            _isEnteringFromBack = true;
+        }
     }
 }
