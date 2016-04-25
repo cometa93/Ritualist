@@ -20,7 +20,7 @@ namespace DevilMind
 
         private static readonly Dictionary<EnemyType,string> Enemies = new Dictionary<EnemyType, string>()
         {
-            {EnemyType.Ghost,  "Ghost"},
+            {EnemyType.BurningSoul,  "BurningSoul"},
         }; 
         
         public static void SetLayer(Transform t, int layer)
@@ -54,11 +54,6 @@ namespace DevilMind
         public static TextAsset LoadGameSave()
         {
             return Load<TextAsset>("GameStateSave");
-        }
-
-        public static GameObject LoadMagicField()
-        {
-            return Load<GameObject>("Prefabs/MagicField/MagicFieldGenerator");
         }
 
         public static GameObject LoadGameplayGUI()

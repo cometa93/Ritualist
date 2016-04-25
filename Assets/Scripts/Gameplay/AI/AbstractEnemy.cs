@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using DevilMind.Utils;
 using UnityEngine;
 
 namespace Ritualist.AI
 {
-    public abstract class AbstractEnemy : DevilBehaviour
+    public abstract class AbstractEnemy : SkillTarget
     {
-        [SerializeField] protected Transform Player;
+        protected Transform Player;
 
         public EnemyType EnemyType;
         public string Name;
@@ -33,16 +34,22 @@ namespace Ritualist.AI
 
         protected virtual void FixedUpdate()
         {
-            LookoutFortrap();
         }
 
-        protected abstract void Setup();
+        protected virtual void Setup()
+        {
+            var playerGo = GameObject.FindGameObjectWithTag("Character");
+            if (playerGo == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Current enemy can't find player game object");
+                return;
+            }
+
+            Player = playerGo.transform;
+        }
 
         protected abstract void Move();
 
         protected abstract void Attack();
-
-        protected abstract void LookoutFortrap();
-
     }
 }

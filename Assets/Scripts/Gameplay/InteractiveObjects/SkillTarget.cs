@@ -9,6 +9,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
     {
         None,
         CatchPoint,
+        Enemy
     }
 
     public class SkillTarget : DevilBehaviour

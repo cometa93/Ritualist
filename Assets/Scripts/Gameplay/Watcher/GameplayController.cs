@@ -16,7 +16,6 @@ namespace Ritualist
 
         private GameObject _magicFieldPrefab;
         private GameObject _gameplayGui;
-        private MagicField.Config _config;
         private readonly List<Transform> _checkPoints = new List<Transform>();
         private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>(); 
         
@@ -33,7 +32,6 @@ namespace Ritualist
         {
             _instance = GetComponent<GameplayController>();
             SetupCheckPoints();
-            SetupMagicFieldPrefab();
             SetupGameplayGui();
             SetupGameplayMenu();
             SetupCharacterObject();
@@ -164,15 +162,6 @@ namespace Ritualist
             }
         }
 
-        private void SetupMagicFieldPrefab()
-        {
-            _magicFieldPrefab = ResourceLoader.LoadMagicField();
-            if (_magicFieldPrefab == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "MagicField prefab is null");
-            }
-        }
-
         private void SetupGameplayGui()
         {
             var prefab = ResourceLoader.LoadGameplayGUI();
@@ -246,33 +235,6 @@ namespace Ritualist
 
             return _targets[type];
         } 
-
-        #region Catch Skill Helper
-        public void PlacePoint(CatchPoint point)
-        {
-            var config = _config ?? ( _config = new MagicField.Config()
-            {
-                LongLife = GameMaster.Hero.Skills[SkillEffect.Catch].LongLife,
-                CatchPoints = new List<CatchPoint>()
-            });
-
-            config.CatchPoints.Add(point);
-
-            if (config.IsFull)
-            {
-                _config = null;
-                var magicField = Instantiate(_magicFieldPrefab);
-                var goPosition = magicField.transform.position;
-                goPosition.z = 15;
-                magicField.transform.position = goPosition;
-                StartCoroutine(TimeHelper.RunAfterFrames(5, () =>
-                {
-                    magicField.GetComponent<MagicField>().Setup(config);
-                }));
-            }
-        }
-        #endregion
-
 
         public static void SetupFromGameSave()
         {

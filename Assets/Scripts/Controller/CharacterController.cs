@@ -102,10 +102,7 @@ namespace Ritualist
         private void Update()
         {
             SetRaysResult();
-            if (ConsoleText.Instance != null)
-            {
-                ConsoleText.Instance.UpdateText(_rayResult.ToString());
-            }
+
             _isGrounded = _rayResult.IsGrounded && _jumped == false;
             if (_isGrounded)
             {
@@ -119,6 +116,20 @@ namespace Ritualist
             _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
             _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
             _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(_myRigidBody2D.velocity.x));
+
+            UpdateConsoleText();
+        }
+
+        private void UpdateConsoleText()
+        {
+
+            if (ConsoleText.Instance != null)
+            {
+                ConsoleText.Instance.UpdateText(
+                    _rayResult + "\n" +
+                    "CURRENT AIR WEIGHT:" + _currentAirAnimationLayerWeight
+                );
+            }
         }
         
         private void SetupClipSpeedBasedOnVelocity()
@@ -199,6 +210,9 @@ namespace Ritualist
             if (_isGrounded && jump)
             {
                 _isGrounded = false;
+                var velo = _myRigidBody2D.velocity;
+                velo.y = 0;
+                _myRigidBody2D.velocity = velo;
                 _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
                 return;
             }
@@ -234,7 +248,6 @@ namespace Ritualist
                     _lastAirHorizontalSpeed = Mathf.Lerp(_lastAirHorizontalSpeed, _minimumAirControllSpeed, Time.deltaTime/2);
                     velo.x = _lastAirHorizontalSpeed;
                     velo.x *= front;
-                    Debug.Log("Velocity x :" + velo.x);
                     _myRigidBody2D.velocity = velo;
                 }
             }
@@ -286,8 +299,6 @@ namespace Ritualist
             {
                 _currentAirAnimationLayerWeight = 0f;
             }
-
-            Debug.Log("CURRENT AIR WEIGHT:" + _currentAirAnimationLayerWeight);
             _currentGroundAnimationLayerWeight = 1f - _currentAirAnimationLayerWeight;
 
             _characterAnimator.SetLayerWeight(CharacterAirLayerIndex, _currentAirAnimationLayerWeight);
