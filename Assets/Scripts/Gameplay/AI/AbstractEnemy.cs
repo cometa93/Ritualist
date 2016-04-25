@@ -8,7 +8,26 @@ namespace Ritualist.AI
 {
     public abstract class AbstractEnemy : SkillTarget
     {
-        protected Transform Player;
+        private Transform _player;
+        protected Transform Player
+        {
+            get
+            {
+                if (_player == null)
+                {
+                    var playerGo = GameObject.FindGameObjectWithTag("Player");
+                    if (playerGo == null)
+                    {
+                        Log.Error(MessageGroup.Gameplay, "Current enemy can't find player game object");
+                        return null;
+                    }
+
+                    _player = playerGo.transform;
+                }
+
+                return _player;
+            }   
+        }
 
         public EnemyType EnemyType;
         public string Name;
@@ -37,15 +56,7 @@ namespace Ritualist.AI
         }
 
         protected virtual void Setup()
-        {
-            var playerGo = GameObject.FindGameObjectWithTag("Character");
-            if (playerGo == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Current enemy can't find player game object");
-                return;
-            }
-
-            Player = playerGo.transform;
+        { 
         }
 
         protected abstract void Move();

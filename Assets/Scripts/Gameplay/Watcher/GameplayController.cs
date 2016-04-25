@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
-using DevilMind.Utils;
 using Ritualist.UI;
-using EventType = DevilMind.EventType;
 
 namespace Ritualist
 {
@@ -61,8 +58,7 @@ namespace Ritualist
                 RegisterTarget(target);
             }
         }
-
-        //TODO Make spawna points checkpoints and save character state;
+        
         private void SetupCheckPoints()
         {
             var go = GameObject.FindGameObjectWithTag("SpawnPoint");

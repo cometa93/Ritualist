@@ -14,7 +14,9 @@ namespace Ritualist.AI.Enemies
         [Header("Enemy Setup")]
         [SerializeField] private float _attackRange;
         [SerializeField] private GameObject _arrowPrefab;
-        
+        [Range(0, 5f)] [SerializeField] private float _attackCooldown;
+
+        private float _currentAttackTime;
         private int _currentPointIndex;
         private long _stopFrame = 0;
 
@@ -48,7 +50,18 @@ namespace Ritualist.AI.Enemies
         {
             if (IsTargetInRange() == false)
             {
+                _currentAttackTime = 0;
                 return;
+            }
+
+            if (_currentAttackTime <= 0.01f)
+            {
+                ShootToPlayer();
+            }
+            _currentAttackTime += Time.deltaTime;
+            if (_currentAttackTime > _attackCooldown)
+            {
+                _currentAttackTime = 0;
             }
         }
 
@@ -108,14 +121,14 @@ namespace Ritualist.AI.Enemies
 
         private void ShootToPlayer()
         {
-            BurningSoulMissle catchPoint = SpawnMissle();
-            if (catchPoint == null)
+            BurningSoulMissle burningSoulMissle = SpawnMissle();
+            if (burningSoulMissle == null)
             {
                 Debug.LogWarning("prepared rune is null");
                 return;
             }
 
-            catchPoint.Shoot(Player.position);
+            burningSoulMissle.Shoot(Player.position);
         }
 
 
