@@ -14,17 +14,24 @@ namespace Ritualist
 
         void OnWizardCreate()
         {
-            Transform[] transforms = Selection.GetTransforms(SelectionMode.DeepAssets | SelectionMode.Unfiltered | SelectionMode.Deep);
+            foreach (Transform t in Selection.activeTransform)
+            {
+                SetOrderLayer(t);
+            }
+        }
 
-            foreach (Transform t in transforms)
-            { 
-                Renderer renderer = t.GetComponent<Renderer>();
-                if (renderer  == null)
-                {
-                    continue;
-                }
+        private void SetOrderLayer(Transform t)
+        {
+            Renderer renderer = t.GetComponent<Renderer>();
+            if (renderer != null)
+            {
                 renderer.sortingOrder = (int)(-t.position.z * 100f);
                 Debug.Log(t.name + " sorting order changed");
+            }
+
+            foreach (Transform child in t)
+            {
+                SetOrderLayer(child);
             }
         }
     }

@@ -43,22 +43,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: SecondPlan
+    locked: 1
+  - name: Background
+    uniqueID: 894048489
+    locked: 1
+  - name: Second
     uniqueID: 1845353423
-    locked: 0
+    locked: 1
+  - name: Mask
+    uniqueID: 782545585
+    locked: 1
   - name: Ground
     uniqueID: 3298057753
     locked: 0
   - name: Character Graphics
     uniqueID: 2401172091
-    locked: 0
-  - name: FirstPlane
+    locked: 1
+  - name: First
     uniqueID: 3099911485
     locked: 0
   - name: Bones
     uniqueID: 638891049
-    locked: 0
+    locked: 1
   - name: Controls
     uniqueID: 2220450041
-    locked: 0
+    locked: 1
