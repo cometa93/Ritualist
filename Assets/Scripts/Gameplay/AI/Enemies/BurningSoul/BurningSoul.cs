@@ -105,17 +105,18 @@ namespace Ritualist.AI.Enemies
 
         private BurningSoulMissle SpawnMissle()
         {
-            Transform spawnedPrefab = Instantiate(_arrowPrefab, transform.position, Quaternion.identity) as Transform;
+            GameObject spawnedPrefab = Instantiate(_arrowPrefab, transform.position, Quaternion.identity) as GameObject;
             if (spawnedPrefab == null)
             {
                 Log.Error(MessageGroup.Gameplay, "Spawned prefab is null");
                 return null;
             }
 
-            spawnedPrefab.transform.parent = transform;
-            spawnedPrefab.localScale = Vector3.one;
-            spawnedPrefab.localPosition = Vector3.zero;
-            spawnedPrefab.localEulerAngles = Vector3.zero;
+            spawnedPrefab.gameObject.SetActive(true);
+            spawnedPrefab.transform.parent = transform.root;
+            spawnedPrefab.transform.localScale = Vector3.one;
+            spawnedPrefab.transform.position = transform.position;
+            spawnedPrefab.transform.localEulerAngles = Vector3.zero;
             return spawnedPrefab.GetComponent<BurningSoulMissle>();
         }
 

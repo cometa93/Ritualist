@@ -6,7 +6,8 @@ namespace Ritualist.AI.Enemies
 {
     public class BurningSoulMissle : ShootableObject
     {
-        private const float TimeForOneUnit = 1f;
+        [SerializeField] private GameObject _particleToSpawn;
+        private const float TimeForOneUnit = 0.1f;
         private const int BurningMissleDamage = 10;
 
         protected override Hashtable ShootItweenAnimation()
@@ -15,7 +16,7 @@ namespace Ritualist.AI.Enemies
             
             return new Hashtable()
             {
-                {iT.MoveTo.easetype, EaseType.easeInQuart },
+                {iT.MoveTo.easetype, iTween.EaseType.easeInCubic},
                 {iT.MoveTo.time, time },
             };
         }
@@ -24,6 +25,34 @@ namespace Ritualist.AI.Enemies
         {
             base.OnShootHitThePlayer();
             GameMaster.Hero.Stats.Power -= BurningMissleDamage;
+            DestroyMe();
+        }
+
+        protected override void OnShootMissed()
+        {
+            base.OnShootMissed();
+            DestroyMe();
+        }
+
+        protected override void OnTargetReached()
+        {
+            base.OnTargetReached();
+            DestroyMe();
+        }
+
+        private void DestroyMe()
+        {
+            var go = Instantiate(_particleToSpawn, transform.position, Quaternion.identity) as GameObject;
+            if (go != null)
+            {
+                go.SetActive(true);
+                Destroy(go, 2f);
+            }
+            else
+            {
+                Log.Warning(MessageGroup.Gameplay, "Burning soul missle destroy particles are not set");
+            }
+            Destroy(this.gameObject, 0.5f);
         }
     }
 }
