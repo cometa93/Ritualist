@@ -15,6 +15,11 @@ namespace Ritualist.Controller
         private static bool _rightTriggerClicked;
         private static bool _leftTriggerClicked;
 
+        private static bool IsInputDeviceConnected
+        {
+            get { return Input.GetJoystickNames().Length > 0; }
+        }
+
         private static readonly Dictionary<InputAxis, string> AxisNames = new Dictionary<InputAxis, string>
         {
             {InputAxis.LeftStickX, "LeftX"},
@@ -22,14 +27,16 @@ namespace Ritualist.Controller
             {InputAxis.LeftStickY, "LeftY"},
             {InputAxis.RightStickY, "RightY" },
             {InputAxis.LeftTrigger, "LeftTrigger" },
-            {InputAxis.RightTrigger, "RightTrigger" }
+            {InputAxis.RightTrigger, "RightTrigger" },
+            {InputAxis.SkillXAxis, "SkillXAxis" },
+            {InputAxis.SkillYAxis, "SkillYAxis" }
         };
 
         private static readonly Dictionary<InputButton, string> ButtonNames = new Dictionary<InputButton, string>
         {
             {InputButton.A, "A" },
             {InputButton.B, "B" },
-            {InputButton.X, "X" }
+            {InputButton.X, "X" },
         };
 
         private static readonly Dictionary<InputAxis, string> AxisKeyboardNames = new Dictionary<InputAxis, string>
@@ -65,6 +72,22 @@ namespace Ritualist.Controller
             return Math.Abs(input) > 0.05f ? input : GetKeyboardAxis(axis);
         }
 
+        public static int GetRawAxis(InputAxis axis)
+        {
+            if (IsInputDeviceConnected)
+            {
+                return (int) Input.GetAxisRaw(AxisNames[axis]);
+            }
+
+            if (axis == InputAxis.SkillXAxis ||
+                axis == InputAxis.SkillYAxis)
+            {
+                return (int) GetKeyboardSkillValue(axis);
+            }
+
+            return (int) Mathf.Round(GetKeyboardAxis(axis));
+        }
+
         private static void RegisterController()
         {
             for (int i = 1, c = (int)InputButton.Count; i < c; ++i)
@@ -75,6 +98,10 @@ namespace Ritualist.Controller
                     ButtonsHoldingTime.Add(i, 0);
                 }
             }
+            ClickedButtons.Add((int) InputButton.SkillButton1, false);
+            ClickedButtons.Add((int) InputButton.SkillButton2, false);
+            ClickedButtons.Add((int) InputButton.SkillButton3, false);
+            ClickedButtons.Add((int) InputButton.SkillButton4, false);
             _controllerRegistered = true;
         }
 
@@ -99,6 +126,11 @@ namespace Ritualist.Controller
                     break;
             }
 
+            return 0f;
+        }
+
+        private static float GetKeyboardSkillValue(InputAxis axis)
+        {
             return 0f;
         }
 
@@ -171,6 +203,11 @@ namespace Ritualist.Controller
                 RegisterController();
                 return;
             }
+
+            IsSkillButtonDown(InputButton.SkillButton1);
+            IsSkillButtonDown(InputButton.SkillButton2);
+            IsSkillButtonDown(InputButton.SkillButton3);
+            IsSkillButtonDown(InputButton.SkillButton4);
 
             //Actions for each button.
             for (int i = 1, c = (int) InputButton.Count; i < c; ++i)
@@ -257,6 +294,44 @@ namespace Ritualist.Controller
             float yPosition = -rightStickY*Radius;
 
             return new Vector3(xPosition, yPosition);
+        }
+
+        private static void IsSkillButtonDown(InputButton buttonType)
+        {
+            if (buttonType != InputButton.SkillButton1 &&
+                buttonType != InputButton.SkillButton2 &&
+                buttonType != InputButton.SkillButton3 &&
+                buttonType != InputButton.SkillButton4)
+            {
+                return;
+            }
+
+            var axis =  buttonType == InputButton.SkillButton1 ||
+                        buttonType == InputButton.SkillButton3 ?
+                        InputAxis.SkillYAxis :
+                        InputAxis.SkillXAxis;
+
+            int positiveValue = buttonType == InputButton.SkillButton1 || buttonType == InputButton.SkillButton2 ? 1 : -1;
+            var buttonKeyIndex = (int) buttonType;
+
+            if ( GetRawAxis(axis) == 0)
+            {
+                if (ClickedButtons[buttonKeyIndex])
+                {
+                    GameMaster.Events.Rise(EventType.ButtonReleased, buttonType);
+                }
+                ButtonsHoldingTime[buttonKeyIndex] = 0;
+                ClickedButtons[buttonKeyIndex] = false;
+            }
+            else if (ClickedButtons[buttonKeyIndex] == false && GetRawAxis(axis) == positiveValue)
+            {
+                ClickedButtons[buttonKeyIndex] = true;
+                GameMaster.Events.Rise(EventType.ButtonClicked, buttonType);
+            }
+            else if (ClickedButtons[buttonKeyIndex] && GetRawAxis(axis) == positiveValue)
+            {
+                ButtonsHoldingTime[buttonKeyIndex] += Time.deltaTime;
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using Assets.Scripts.Gameplay.Settings;
 using Ritualist;
+using Ritualist.Settings;
 using UnityEngine;
 
 namespace DevilMind

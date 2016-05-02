@@ -2,9 +2,8 @@
 using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
-using Ritualist;
 
-namespace Assets.Scripts.Gameplay.Settings
+namespace Ritualist.Settings
 {
     public class GameSave
     {

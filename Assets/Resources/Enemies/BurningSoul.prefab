@@ -528,9 +528,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   _attackRange: 5
   _arrowPrefab: {fileID: 146652}
-  _attackCooldown: 4
+  _attackCooldown: 3
+  _pingPongMoving: 1
 --- !u!198 &19826342
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -18089,7 +18091,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1893795205
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 2
@@ -18253,7 +18255,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1893795205
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 2

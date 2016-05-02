@@ -56,6 +56,11 @@ namespace DevilMind
             return Load<TextAsset>("GameStateSave");
         }
 
+        public static TextAsset LoadGameSettings()
+        {
+            return Load<TextAsset>("GameSettings");
+        }
+
         public static GameObject LoadGameplayGUI()
         {
             return Load<GameObject>("Prefabs/GameplayGUI/GameplayGUI");

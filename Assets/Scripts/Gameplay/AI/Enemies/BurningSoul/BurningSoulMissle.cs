@@ -7,7 +7,7 @@ namespace Ritualist.AI.Enemies
     public class BurningSoulMissle : ShootableObject
     {
         [SerializeField] private GameObject _particleToSpawn;
-        private const float TimeForOneUnit = 0.1f;
+        [SerializeField] private float TimeForOneUnit = 0.3f;
         private const int BurningMissleDamage = 10;
 
         protected override Hashtable ShootItweenAnimation()

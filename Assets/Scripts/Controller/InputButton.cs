@@ -10,6 +10,8 @@ namespace Ritualist.Controller
         RightStickY,
         LeftTrigger,
         RightTrigger,
+        SkillXAxis,
+        SkillYAxis,
     }
 
     public enum InputButton
@@ -18,6 +20,14 @@ namespace Ritualist.Controller
         A,
         B,
         X,
-        Count
+        Count,
+
+        //SkillButtonTypes Are fake 
+        //button types used by axis
+
+        SkillButton1,
+        SkillButton2,
+        SkillButton3,
+        SkillButton4,
     }
 }

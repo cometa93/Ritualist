@@ -15,10 +15,12 @@ namespace Ritualist.AI.Enemies
         [SerializeField] private float _attackRange;
         [SerializeField] private GameObject _arrowPrefab;
         [Range(0, 5f)] [SerializeField] private float _attackCooldown;
+        [SerializeField] private bool _pingPongMoving;
 
         private float _currentAttackTime;
         private int _currentPointIndex;
         private long _stopFrame = 0;
+        private bool _reversing;
 
         protected override void Setup()
         {
@@ -91,6 +93,38 @@ namespace Ritualist.AI.Enemies
 
         private void OnMovePointReached()
         {
+
+            if (_pingPongMoving)
+            {
+                if (_reversing)
+                {
+                    if (_currentPointIndex <= 0)
+                    {
+                        _reversing = false;
+                        _currentPointIndex++;
+                    }
+                    else
+                    {
+                        _currentPointIndex--;
+                    }
+                }
+                else
+                {
+                    if (_currentPointIndex == _pointsToMoveWithin.Count - 1)
+                    {
+                        _currentPointIndex--;
+                        _reversing = true;
+                    }
+                    else
+                    {
+                        _currentPointIndex++;
+                    }
+                }
+
+                _stopFrame = Time.frameCount;
+                return;
+            }
+
             if (_currentPointIndex == _pointsToMoveWithin.Count - 1)
             {
                 _currentPointIndex = 0;
