@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using DevilMind;
 using UnityEngine;
+using Event = DevilMind.Event;
+using EventType = DevilMind.EventType;
 
 namespace Ritualist.AI.Enemies
 {
@@ -21,14 +23,33 @@ namespace Ritualist.AI.Enemies
         private int _currentPointIndex;
         private long _stopFrame = 0;
         private bool _reversing;
+        private bool _isPlayerDead;
+
+        protected override void Awake()
+        {
+            EventsToListen.Add(EventType.CharacterDied);
+            base.Awake();
+        }
+
+        protected override void OnEvent(Event gameEvent)
+        {
+            switch (gameEvent.Type)
+            {
+                case EventType.CharacterDied:
+                    _isPlayerDead = true;
+                    break;
+            }
+            base.OnEvent(gameEvent);
+        }
 
         protected override void Setup()
         {
+            _isPlayerDead = false;
         }
 
         protected override void Move()
         {
-            if (IsTargetInRange())
+            if (IsTargetInRange() && _isPlayerDead == false)
             {
                 _stopFrame = Time.frameCount;
                 StopMoving();

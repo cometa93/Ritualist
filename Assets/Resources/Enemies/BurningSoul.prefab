@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 480934}
   - 198: {fileID: 19849018}
   - 199: {fileID: 19919468}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Stamp_pfireball01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 4: {fileID: 476632}
   - 198: {fileID: 19891408}
   - 199: {fileID: 19914038}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Stamp_pfireball01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   - 4: {fileID: 487566}
   - 198: {fileID: 19872996}
   - 199: {fileID: 19911712}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Stamp_pfireball01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - 4: {fileID: 457170}
   - 114: {fileID: 11468686}
   - 58: {fileID: 5861898}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: BurningSoulMissle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - 4: {fileID: 464504}
   - 198: {fileID: 19826342}
   - 199: {fileID: 19952342}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: Stretch PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - 4: {fileID: 478418}
   - 198: {fileID: 19849996}
   - 199: {fileID: 19963956}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: L_Ghost_fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - 4: {fileID: 474064}
   - 198: {fileID: 19867384}
   - 199: {fileID: 19992504}
-  m_Layer: 9
+  m_Layer: 19
   m_Name: _u1 Toon Explosion 01 PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - 4: {fileID: 496192}
   - 198: {fileID: 19878880}
   - 199: {fileID: 19954906}
-  m_Layer: 11
+  m_Layer: 19
   m_Name: Stamp_pfireball01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d070e0cf7c3645f40b3e9d02c9056c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myCollider2D: {fileID: 5861898}
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   _particleToSpawn: {fileID: 196230}
+  TimeForOneUnit: 0.3
 --- !u!114 &11492934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -522,8 +527,8 @@ MonoBehaviour:
   Name: BurningSoul
   Health: 50
   ProteciveField: 0
-  FrameOffsetBetweenStartAndStop: 15
-  TimeForOneUnit: 2
+  FrameOffsetBetweenStartAndStop: 2
+  TimeForOneUnit: 1
   _pointsToMoveWithin:
   - {fileID: 0}
   - {fileID: 0}

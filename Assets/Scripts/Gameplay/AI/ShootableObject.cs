@@ -6,8 +6,34 @@ namespace Ritualist.AI
 {
     public class ShootableObject : MonoBehaviour
     {
+        private const string EnemyMissleLayerName = "EnemyMissle";
         private bool _lock;
         protected Vector3 Target { get; set; }
+        private Transform _myTransform;
+        [SerializeField] private CircleCollider2D _myCollider2D;
+        [SerializeField] private LayerMask _playerLayerMask;
+
+        private void Awake()
+        {
+            gameObject.layer = LayerMask.NameToLayer(EnemyMissleLayerName);
+            _myTransform = transform;
+        }
+
+        private void LateUpdate()
+        {
+            if (_lock)
+            {
+                return;
+            }
+
+            var result = Physics2D.OverlapCircle(_myTransform.position, _myCollider2D.radius, _playerLayerMask);
+            if (result != null)
+            {
+                _lock = true;
+                iTween.Stop(gameObject);
+                OnShootHitThePlayer();
+            }
+        }
 
         public void OnCollisionEnter2D(Collision2D coll)
         {
@@ -17,13 +43,7 @@ namespace Ritualist.AI
             }
 
             iTween.Stop(gameObject);
-            if (coll.gameObject.CompareTag("Player") == false)
-            {
-               OnShootMissed();
-                return;
-            }
-
-            OnShootHitThePlayer();
+            OnShootMissed();
         }
 
         protected virtual void OnShootMissed()
