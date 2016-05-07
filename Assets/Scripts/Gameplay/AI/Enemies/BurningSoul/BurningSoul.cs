@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using DevilMind;
 using UnityEngine;
 using Event = DevilMind.Event;
@@ -11,7 +12,8 @@ namespace Ritualist.AI.Enemies
         [Header("Move Animation Helpers")]
         [Range(0,100)][SerializeField] private int FrameOffsetBetweenStartAndStop;
         [SerializeField] private float TimeForOneUnit;
-        [SerializeField] private System.Collections.Generic.List<Transform> _pointsToMoveWithin;
+        [SerializeField] private List<Transform> _pointsToMoveWithin;
+        [SerializeField] private GameObject _pointsToMoveParentGameObject;
 
         [Header("Enemy Setup")]
         [SerializeField] private float _attackRange;
@@ -86,6 +88,27 @@ namespace Ritualist.AI.Enemies
             {
                 _currentAttackTime = 0;
             }
+        }
+
+        protected override void OnProtectionFieldHitTaken()
+        {
+        }
+
+        protected override void OnProtectionFieldDestroyed()
+        {
+        }
+
+        protected override void OnHitTaken()
+        {
+        }
+
+        protected override void OnDied()
+        {
+            //TODO Leave energy balls !
+            iTween.Stop(gameObject);
+            gameObject.ScaleTo(Vector3.zero, 2f, 0f, EaseType.easeOutBounce);
+            Destroy(gameObject, 3f);
+            Destroy(_pointsToMoveParentGameObject, 3f);
         }
 
         private bool IsTargetInRange()

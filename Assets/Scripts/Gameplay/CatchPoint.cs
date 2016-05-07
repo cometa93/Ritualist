@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DevilMind;
 using DevilMind.Utils;
+using Ritualist.AI;
 
 namespace Ritualist
 {
@@ -11,6 +12,7 @@ namespace Ritualist
         [SerializeField] private const float TimeToTarget = 1.5f;
 
         [SerializeField] private LayerMask _collideAbleObjectsMask;
+        [SerializeField] private LayerMask _enemyLayerMask;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private CircleCollider2D _collider2D;
         [SerializeField] private GameObject _particlesOnCollision;
@@ -21,18 +23,44 @@ namespace Ritualist
 
         private void FixedUpdate()
         {
+            if (_alreadyDocked)
+            {
+                return;
+            }
+
             Collider2D[] result = new Collider2D[1];
             if (Physics2D.OverlapCircleNonAlloc(transform.position, _collider2D.radius, result, _collideAbleObjectsMask) > 0)
             {
                 iTween.Stop(gameObject, true);
-                if (_alreadyDocked)
-                {
-                    return;
-                }
-
                 _alreadyDocked = true;
                 Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
                 StartCoroutine(TimeHelper.RunAfterSeconds(1f, DestroyMe));
+                return;
+            }
+            
+            if (Physics2D.OverlapCircleNonAlloc(transform.position, _collider2D.radius, result, _enemyLayerMask) > 0)
+            {
+                iTween.Stop(gameObject, true);
+                _alreadyDocked = true;
+                Instantiate(_particlesOnCollision, transform.position, Quaternion.identity);
+                StartCoroutine(TimeHelper.RunAfterSeconds(1f, DestroyMe));
+                MakeDamageToEnemy(result[0]);
+            }
+        }
+
+        public void MakeDamageToEnemy(Collider2D result)
+        {
+            var enemy = result.GetComponent<AbstractEnemy>();
+            if (enemy != null)
+            {
+                var skill = GameMaster.Hero.Skills[SkillEffect.Catch];
+                if (skill == null)
+                {
+                    Log.Error(MessageGroup.Gameplay, "Can't retrieve skill from hero");
+                    return;
+                }
+                enemy.Hit(skill.Damage);
+
             }
         }
 

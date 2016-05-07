@@ -9,6 +9,7 @@ namespace Ritualist.Skills
             Effect = SkillEffect.Catch;
             Range = 10f;
             PowerCost = 2;
+            Damage = 10;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Gameplay.InteractiveObjects;
+﻿using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using DevilMind.Utils;
 using UnityEngine;
@@ -33,12 +32,12 @@ namespace Ritualist.AI
         public string Name;
         public int Health;
         public int ProteciveField;
-        protected bool IsAlive;
-        protected Attack NormalAttack;
 
-        protected readonly List<Attack> SpecialAttacks = new List<Attack>();
-        protected readonly List<Defence> Defences = new List<Defence>();
-
+        protected bool IsAlive
+        {
+            get { return Health > 0; }
+        }
+        
         protected override void Awake()
         {
             Setup();
@@ -47,12 +46,20 @@ namespace Ritualist.AI
 
         protected override void Update()
         {
+            if (IsAlive == false)
+            {
+                return;
+            }
             Move();
             Attack();
         }
 
         protected virtual void FixedUpdate()
         {
+            if (IsAlive == false)
+            {
+                return;
+            }
         }
 
         protected virtual void Setup()
@@ -62,5 +69,36 @@ namespace Ritualist.AI
         protected abstract void Move();
 
         protected abstract void Attack();
+
+        protected abstract void OnProtectionFieldHitTaken();
+
+        protected abstract void OnProtectionFieldDestroyed();
+
+        protected abstract void OnHitTaken();
+
+        protected abstract void OnDied();
+
+        public void Hit(int damage)
+        {
+            if (ProteciveField > 0)
+            {
+                ProteciveField -= damage;
+                if (ProteciveField < 0)
+                {
+                    OnProtectionFieldDestroyed();
+                    return;
+                }
+                OnProtectionFieldHitTaken();
+                return;
+            }
+
+            Health -= damage;
+            if (Health < 0)
+            {
+                OnDied();
+                return;
+            }
+            OnHitTaken();
+        }
     }
 }

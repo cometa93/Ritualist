@@ -88,6 +88,10 @@ namespace Ritualist.Controller
 
         public void ActivateSkill()
         {
+            if (_characterControllerLocked)
+            {
+                return;
+            }
             var currentSkill = GameMaster.Hero.CurrentHeroSkill;
             switch (currentSkill.Effect)
             {
@@ -155,10 +159,21 @@ namespace Ritualist.Controller
         private List<SkillTarget> GetCatchPointsTargets(float range)
         {
             var list = new List<SkillTarget>();
-            var possibleTargets = GameplayController.Instance.GetTargets(SkillTargetType.CatchPoint);
-            for (int i = 0, c = possibleTargets.Count; i < c; ++i)
+            var targets = new List<SkillTarget>();
+            //TODO: Test and change if needed
+            var enemyTargets = GameplayController.Instance.GetTargets(SkillTargetType.Enemy);
+            if (enemyTargets != null && enemyTargets.Count > 0)
             {
-                var target = possibleTargets[i];
+                targets = enemyTargets;
+            }
+            else
+            {
+                targets = GameplayController.Instance.GetTargets(SkillTargetType.CatchPoint);
+            }
+            
+            for (int i = 0, c = targets.Count; i < c; ++i)
+            {
+                var target = targets[i];
                 if (range >= target.Distance(transform.position))
                 {
                     list.Add(target);
