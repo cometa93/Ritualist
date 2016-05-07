@@ -13,12 +13,14 @@ namespace Ritualist
         private const string BackgroundObjectName = "Background";
         private const string WorldObjectName = "World";
         private const string GroundMaskObjectName = "GroundMask";
+        private const string GameplayObjects = "GameplayObjects";
 
         private const string GroundLayer = "Ground";
         private const string FirstLayer = "First";
         private const string SecondLayer = "Second";
         private const string BackgroundLayer = "Background";
         private const string Mask = "Mask";
+        private const string CharacterLayer = "Character Graphics";
 
         private readonly Dictionary<string, string> ObjectNameToLayerName = new Dictionary<string, string>
         {
@@ -26,7 +28,8 @@ namespace Ritualist
             {FirstplaneObjectName, FirstLayer },
             {SecondPlaneObjectName, SecondLayer },
             {BackgroundLayer, BackgroundLayer },
-            {GroundMaskObjectName, Mask }
+            {GroundMaskObjectName, Mask },
+            {GameplayObjects,  CharacterLayer}
         }; 
 
         private GameObject _world;
@@ -47,30 +50,46 @@ namespace Ritualist
                 Debug.LogWarning("Couldn't find gameobject with name World on scen Fix It");
                 return;
             }
+            
+            string layerName = "";
+            foreach (var keyValue in ObjectNameToLayerName)
+            {
+                //skipping backgrounds
+                if (keyValue.Key == BackgroundObjectName)
+                {
+                    continue;
+                }
+                Transform child = _world.transform.FindChild(keyValue.Key);
+                
+                var go = child != null ? child.gameObject : null;
+                SetupLayer(go, keyValue.Value, keyValue.Key);
+            }
 
+            //TODO setting layers for skipped before backgrounds 
             foreach (Transform child in _world.transform)
             {
-                string layerName = "";
-                if (ObjectNameToLayerName.TryGetValue(child.name, out layerName))
+                if (child.name == BackgroundObjectName && 
+                    ObjectNameToLayerName.TryGetValue(child.name,out layerName))
                 {
-                    if (child.name == GroundMaskObjectName)
-                    {
-                        var position = child.position;
-                        position.z = 0.5f;
-                        child.position = position;
-                        return;
-                    }
-
-                    SetupLayer(child.gameObject, layerName);
+                    SetupLayer(child.gameObject, layerName, child.name);
                 }
             }
+
         }
 
-        private void SetupLayer(GameObject go, string layer)
+        private void SetupLayer(GameObject go, string layer, string objectName)
         {
             if (go == null)
             {
-                Debug.LogWarning("Couldn't find object with name " + name + "in world object");
+                Debug.LogWarning("Couldn't find object with name " +  objectName + " in world object");
+                return;
+            }
+
+            if (go.name == GroundMaskObjectName)
+            {
+                var position = go.transform.position;
+                position.z = 0.5f;
+                go.transform.position = position;
                 return;
             }
 
