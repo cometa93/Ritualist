@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Ritualist.Skills
+namespace Fading.Skills
 {
     public class CatchSkill : HeroSkill
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using DevilMind;
 
-namespace Ritualist
+namespace Fading
 {
     public class CameraFollower : DevilBehaviour
     {

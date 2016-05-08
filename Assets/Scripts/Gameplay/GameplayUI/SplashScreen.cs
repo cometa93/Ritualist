@@ -1,7 +1,7 @@
 ﻿using DevilMind;
 using UnityEngine;
 
-namespace Ritualist.UI
+namespace Fading.UI
 {
     public class SplashScreen : MonoBehaviour
     {

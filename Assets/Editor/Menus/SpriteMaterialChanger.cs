@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-namespace Ritualist
+namespace Fading
 {
 
     public class SpriteMaterialChanger : ScriptableWizard

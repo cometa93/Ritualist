@@ -1,4 +1,4 @@
-﻿namespace Ritualist
+﻿namespace Fading
 {
     public class HeroSkill
     {

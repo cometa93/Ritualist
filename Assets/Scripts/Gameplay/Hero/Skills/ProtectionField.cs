@@ -1,4 +1,4 @@
-﻿namespace Ritualist.Skills
+﻿namespace Fading.Skills
 {
     public class ProtectionField : HeroSkill
     {

@@ -2,7 +2,7 @@
 using DevilMind;
 using UnityEngine;
 
-namespace Ritualist.AI
+namespace Fading.AI
 {
     public class ShootableObject : MonoBehaviour
     {

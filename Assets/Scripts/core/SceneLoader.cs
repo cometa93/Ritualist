@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Ritualist.UI;
+using Fading.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DevilMind;
-using Ritualist.UI;
+using Fading.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.InteractiveObjects

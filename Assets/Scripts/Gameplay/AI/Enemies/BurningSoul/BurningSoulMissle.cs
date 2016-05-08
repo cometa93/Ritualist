@@ -2,7 +2,7 @@
 using DevilMind;
 using UnityEngine;
 
-namespace Ritualist.AI.Enemies
+namespace Fading.AI.Enemies
 {
     public class BurningSoulMissle : ShootableObject
     {

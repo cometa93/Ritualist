@@ -4,7 +4,7 @@ using DevilMind;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 
-namespace Ritualist.Controller 
+namespace Fading.Controller 
 {
     public class PlayerController : DevilBehaviour
     {
@@ -21,6 +21,7 @@ namespace Ritualist.Controller
             EventsToListen.Add(EventType.RightTriggerReleased);
             EventsToListen.Add(EventType.RightTriggerClicked);
             EventsToListen.Add(EventType.CharacterDied);
+            EventsToListen.Add(EventType.CharacterChanged);
             base.Awake();
         }
 
@@ -29,7 +30,11 @@ namespace Ritualist.Controller
             if (gameEvent.Type == EventType.CharacterDied)
             {
                 _characterMovementEnabled = false;
-                
+            }
+
+            if (gameEvent.Type == EventType.CharacterChanged)
+            {
+                _characterMovementEnabled = !_characterMovementEnabled;
             }
 
             if (gameEvent.Type == EventType.ButtonClicked)

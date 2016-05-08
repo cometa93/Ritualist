@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 
-namespace Ritualist.UI
+namespace Fading.UI
 {
     public class PowerBar : DevilBehaviour
     {

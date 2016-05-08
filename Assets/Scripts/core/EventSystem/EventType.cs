@@ -12,7 +12,8 @@
         HeroPowerChanged,
         DamageByStaticObjectDone,
         CharacterDied,
-        HeroSkillChanged
+        HeroSkillChanged,
+        CharacterChanged,
     }
 
 }

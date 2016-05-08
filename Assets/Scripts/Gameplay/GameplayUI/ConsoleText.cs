@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     public class ConsoleText : MonoBehaviour
     {

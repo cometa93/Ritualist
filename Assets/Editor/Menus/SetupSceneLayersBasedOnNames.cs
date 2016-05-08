@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using UnityEditor;
 using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     public class SetupSceneLayersBasedOnNames : ScriptableWizard
     {

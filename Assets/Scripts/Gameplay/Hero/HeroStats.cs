@@ -1,7 +1,7 @@
 ﻿using DevilMind;
 using EventType = DevilMind.EventType;
 
-namespace Ritualist
+namespace Fading
 {
     public class HeroStats
     {

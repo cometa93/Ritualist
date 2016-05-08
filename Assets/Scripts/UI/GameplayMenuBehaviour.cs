@@ -4,7 +4,7 @@ using UnityEngine;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 
-namespace Ritualist.UI
+namespace Fading.UI
 {
     public class GameplayMenuBehaviour : DevilBehaviour
     {

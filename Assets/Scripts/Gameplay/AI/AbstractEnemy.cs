@@ -3,7 +3,7 @@ using DevilMind;
 using DevilMind.Utils;
 using UnityEngine;
 
-namespace Ritualist.AI
+namespace Fading.AI
 {
     public abstract class AbstractEnemy : SkillTarget
     {

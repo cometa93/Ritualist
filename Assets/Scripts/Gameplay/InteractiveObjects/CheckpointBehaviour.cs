@@ -1,7 +1,7 @@
 ﻿using DevilMind;
 using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class CheckpointBehaviour : MonoBehaviour

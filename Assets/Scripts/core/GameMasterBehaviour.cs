@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using Ritualist.Controller;
+using Fading.Controller;
 using UnityEngine;
 
 namespace DevilMind

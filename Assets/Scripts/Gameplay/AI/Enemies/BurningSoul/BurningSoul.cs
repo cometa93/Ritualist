@@ -5,7 +5,7 @@ using UnityEngine;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 
-namespace Ritualist.AI.Enemies
+namespace Fading.AI.Enemies
 {
     public class BurningSoul : AbstractEnemy
     {

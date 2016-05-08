@@ -294,38 +294,6 @@ InputManager:
     axis: 9
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Submit
-    descriptiveName: submit button
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: enter
-    altNegativeButton: 
-    altPositiveButton: joystick button 0
-    gravity: 0
-    dead: 0.15
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 9
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: Cancel
-    descriptiveName: cancel button
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: escape
-    altNegativeButton: 
-    altPositiveButton: joystick button 1
-    gravity: 0
-    dead: 0.15
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 9
-    joyNum: 0
-  - serializedVersion: 3
     m_Name: SkillXAxis
     descriptiveName: SkillAxis
     descriptiveNegativeName: 
@@ -355,5 +323,85 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: CharacterChange
+    descriptiveName: changing the character from main to soul
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: c
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Skill1Button
+    descriptiveName: Changing current skill
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Skill2Button
+    descriptiveName: Changing current skill
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 2
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Skill3Button
+    descriptiveName: Changing current skill
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 3
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Skill4Button
+    descriptiveName: Changing current skill
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 4
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
     axis: 6
     joyNum: 0

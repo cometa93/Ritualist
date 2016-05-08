@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using DevilMind;
 using DevilMind.Utils;
-using Ritualist.AI;
+using Fading.AI;
 
-namespace Ritualist
+namespace Fading
 {
     public class CatchPoint : MonoBehaviour
     {

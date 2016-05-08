@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
-using Ritualist.Settings;
+using Fading.Settings;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
 using Random = UnityEngine.Random;
 
-namespace Ritualist.Controller
+namespace Fading.Controller
 {
     public class SkillManager : DevilBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using DevilMind;
-using Ritualist;
+using Fading;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.InteractiveObjects

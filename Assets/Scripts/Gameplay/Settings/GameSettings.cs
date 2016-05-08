@@ -3,7 +3,7 @@ using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
 
-namespace Ritualist.Settings
+namespace Fading.Settings
 {
     public class GameSettings
     {

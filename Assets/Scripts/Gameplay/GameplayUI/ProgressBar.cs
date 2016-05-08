@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ritualist.UI
+namespace Fading.UI
 {
     public class ProgressBar : MonoBehaviour
     {

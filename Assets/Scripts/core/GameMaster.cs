@@ -1,6 +1,6 @@
 ﻿using System;
-using Ritualist;
-using Ritualist.Settings;
+using Fading;
+using Fading.Settings;
 using UnityEngine;
 
 namespace DevilMind

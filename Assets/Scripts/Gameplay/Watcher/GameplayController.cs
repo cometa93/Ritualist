@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
-using Ritualist.UI;
+using Fading.UI;
 
-namespace Ritualist
+namespace Fading
 {
     public class GameplayController : DevilBehaviour
     {

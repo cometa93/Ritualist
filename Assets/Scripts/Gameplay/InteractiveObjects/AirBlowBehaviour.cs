@@ -1,7 +1,7 @@
-﻿using Ritualist;
+﻿using Fading;
 using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     public class AirBlowBehaviour : MonoBehaviour
     {

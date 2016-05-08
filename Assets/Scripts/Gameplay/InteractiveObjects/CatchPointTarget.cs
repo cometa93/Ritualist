@@ -1,4 +1,4 @@
-﻿using Ritualist;
+﻿using Fading;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.InteractiveObjects

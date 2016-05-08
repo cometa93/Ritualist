@@ -1,7 +1,7 @@
 using DevilMind;
 using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     public class CharacterController : MonoBehaviour
     {

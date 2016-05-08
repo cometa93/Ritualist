@@ -5,7 +5,7 @@ using DevilMind;
 using EventType = DevilMind.EventType;
 
 // ReSharper disable once CheckNamespace
-namespace Ritualist.Controller
+namespace Fading.Controller
 {
     public static class MyInputManager
     {
@@ -117,6 +117,7 @@ namespace Ritualist.Controller
                     return GetKeyboardUpDownValue();
 
                 case InputAxis.LeftTrigger:
+                    return Input.GetButton("CharacterChange") ? 1f : 0f;
                     break;
                 case InputAxis.RightTrigger:
                     return Input.GetButton("Shoot") ? 1f : 0f;

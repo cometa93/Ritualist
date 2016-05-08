@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using DevilMind;
-using Ritualist.AI;
-using Ritualist.Skills;
+using Fading.Skills;
+using Fading.AI;
 
-namespace Ritualist
+namespace Fading
 {
     public class Hero
     {

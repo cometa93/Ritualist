@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Ritualist
+namespace Fading
 {
     public class SetZposition : ScriptableWizard
     {
