@@ -19,7 +19,7 @@ namespace Fading
             {
                 return;
             }
-            _myTransform.position = Vector2.Lerp(_myTransform.position, _transformToFollow.position, Time.deltaTime*2);
+            _myTransform.position = Vector2.Lerp(_myTransform.position, _transformToFollow.position, Time.deltaTime*4);
             base.Update();
         }
     }

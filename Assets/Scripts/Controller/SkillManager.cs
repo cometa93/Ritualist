@@ -15,6 +15,7 @@ namespace Fading.Controller
     {
         [SerializeField] private Transform _catchPointPrefab;
         [SerializeField] private GameObject _protectionSkillObject;
+        [SerializeField] private Transform _characterTransform;
 
         private bool _protectionFieldActivated;
         private bool _characterControllerLocked;
@@ -45,6 +46,7 @@ namespace Fading.Controller
             EventsToListen.Add(EventType.RightTriggerClicked);
             EventsToListen.Add(EventType.ButtonReleased);
             EventsToListen.Add(EventType.CharacterDied);
+            EventsToListen.Add(EventType.CharacterChanged);
             Setup();
             base.Awake();
         }
@@ -63,12 +65,19 @@ namespace Fading.Controller
                 case EventType.RightTriggerClicked:
                     ActivateSkill();
                     break;
+
                 case EventType.RightTriggerReleased:
                     DeactivateSkill();
                     break;
+
+                case EventType.CharacterChanged:
+                    _characterControllerLocked = !_characterControllerLocked;
+                    break;
+
                 case EventType.CharacterDied:
                     _characterControllerLocked = true;
                     break;
+
                 case EventType.ButtonReleased:
                     ChangeSkill((InputButton)gameEvent.Parameter);
                     break;
@@ -160,7 +169,6 @@ namespace Fading.Controller
         {
             var list = new List<SkillTarget>();
             var targets = new List<SkillTarget>();
-            //TODO: Test and change if needed
             var enemyTargets = GameplayController.Instance.GetTargets(SkillTargetType.Enemy);
             if (enemyTargets != null && enemyTargets.Count > 0)
             {
@@ -174,14 +182,15 @@ namespace Fading.Controller
             for (int i = 0, c = targets.Count; i < c; ++i)
             {
                 var target = targets[i];
-                if (range >= target.Distance(transform.position))
+                if (range >= target.Distance(_characterTransform.position))
                 {
                     list.Add(target);
                 }
             }
+
             list.Sort((target1, target2) =>
             {
-                return target1.Distance(transform.position) >= target2.Distance(transform.position) ? 1 : -1;
+                return target1.Distance(_characterTransform.position) >= target2.Distance(_characterTransform.position) ? 1 : -1;
             });
             return list;
         }

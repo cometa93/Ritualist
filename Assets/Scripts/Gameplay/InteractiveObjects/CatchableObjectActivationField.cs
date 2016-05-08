@@ -1,17 +1,17 @@
 ﻿using Fading;
+using Fading.Controller;
 using UnityEngine;
 
 namespace Assets.Scripts.Gameplay.InteractiveObjects
 {
-    public class CatchPointTarget : SkillTarget
+    public class CatchableObjectActivationField : MonoBehaviour
     {
         private bool _isActivated;
         [SerializeField] private CatchAbleObject _parent;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-            gameObject.FadeTo( 0.2f, 2f, Random.Range(0.5f,1.5f), LoopType.pingPong);
+            gameObject.FadeTo(0.1f, Random.Range(2f, 4f), Random.Range(0f, 1f), LoopType.pingPong);
         }
 
         public bool IsActive
@@ -29,16 +29,19 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
             }
         }
 
-        protected override void OnTriggerEnter2D(Collider2D collider2D)
+        private void OnTriggerEnter2D(Collider2D collider2D)
         {
-            var catchPoint = collider2D.GetComponent<CatchPoint>();
-            if (catchPoint == null)
+            var goodSoulController = collider2D.GetComponent<GoodSoulController>();
+            if (goodSoulController == null)
             {
                 return;
             }
 
+            iTween.Stop(gameObject);
+            Color color = Color.green;
+            color.a = 1;
+            iTween.ColorTo(gameObject, color, 1.5f);
             IsActive = true;
-            base.OnTriggerEnter2D(collider2D);
         }
     }
 }

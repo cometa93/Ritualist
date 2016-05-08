@@ -20,7 +20,7 @@ TagManager:
   - Character
   - MagicField
   - Enemy
-  - CatchPoints
+  - CharacterMissle
   - CatchableObjects
   - Targets
   - DealingDamageObjects
@@ -29,7 +29,7 @@ TagManager:
   - Checkpoint
   - EnemyMissle
   - ProtectiveField
-  - 
+  - GoodSoul
   - 
   - 
   - 

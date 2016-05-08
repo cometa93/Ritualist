@@ -10,7 +10,7 @@ namespace Fading.Controller
     {
         [SerializeField] private bool _characterMovementEnabled = true;
         [SerializeField] private bool _jump;
-        [SerializeField] private CharacterController _characterAnimationController;
+        [SerializeField] private MyCharacterController _myCharacterAnimationController;
 
         private float _xAxisMoveValue;
 
@@ -31,7 +31,6 @@ namespace Fading.Controller
             {
                 _characterMovementEnabled = false;
             }
-
             if (gameEvent.Type == EventType.CharacterChanged)
             {
                 _characterMovementEnabled = !_characterMovementEnabled;
@@ -70,11 +69,11 @@ namespace Fading.Controller
         {
             if (_characterMovementEnabled == false)
             {
-                _characterAnimationController.Move(0, false);
+                _myCharacterAnimationController.Move(0, false);
                 return;
             }
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
-            _characterAnimationController.Move(_xAxisMoveValue, _jump);
+            _myCharacterAnimationController.Move(_xAxisMoveValue, _jump);
             _jump = false;
         }
     }

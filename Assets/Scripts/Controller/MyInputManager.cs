@@ -39,11 +39,6 @@ namespace Fading.Controller
             {InputButton.X, "X" },
         };
 
-        private static readonly Dictionary<InputAxis, string> AxisKeyboardNames = new Dictionary<InputAxis, string>
-        {
-            {InputAxis.RightTrigger, "Shoot"}
-        }; 
-
         private static readonly Dictionary<InputButton, string> ButtonKeyboardNames = new Dictionary
             <InputButton, string>
         {
@@ -76,7 +71,11 @@ namespace Fading.Controller
         {
             if (IsInputDeviceConnected)
             {
-                return (int) Input.GetAxisRaw(AxisNames[axis]);
+                var result = (int) Input.GetAxisRaw(AxisNames[axis]);
+                if (result != 0)
+                {
+                    return result;
+                }
             }
 
             if (axis == InputAxis.SkillXAxis ||
@@ -118,7 +117,7 @@ namespace Fading.Controller
 
                 case InputAxis.LeftTrigger:
                     return Input.GetButton("CharacterChange") ? 1f : 0f;
-                    break;
+
                 case InputAxis.RightTrigger:
                     return Input.GetButton("Shoot") ? 1f : 0f;
 
@@ -132,7 +131,32 @@ namespace Fading.Controller
 
         private static float GetKeyboardSkillValue(InputAxis axis)
         {
-            return 0f;
+            switch (axis)
+            {
+                case InputAxis.SkillXAxis:
+                    if (Input.GetButton("Skill2Button"))
+                    {
+                        return 1f;
+                    }
+                    if (Input.GetButton("Skill4Button"))
+                    {
+                        return -1f;
+                    }
+                    return 0;
+
+                case InputAxis.SkillYAxis:
+                    if (Input.GetButton("Skill1Button"))
+                    {
+                        return 1f;
+                    }
+                    if (Input.GetButton("Skill3Button"))
+                    {
+                        return -1f;
+                    }
+                    return 0;
+            }
+
+            return 0;
         }
 
         private static float GetKeyboardMoveValue()
@@ -172,7 +196,7 @@ namespace Fading.Controller
                 initValue *= SpeedModyfierValue;
             }
 
-            return initValue;
+            return -initValue;
         }
 
         public static bool IsButtonDown(InputButton buttonType)
@@ -299,23 +323,17 @@ namespace Fading.Controller
 
         private static void IsSkillButtonDown(InputButton buttonType)
         {
-            if (buttonType != InputButton.SkillButton1 &&
-                buttonType != InputButton.SkillButton2 &&
-                buttonType != InputButton.SkillButton3 &&
-                buttonType != InputButton.SkillButton4)
+            if (buttonType != InputButton.SkillButton1 && buttonType != InputButton.SkillButton2 && buttonType != InputButton.SkillButton3 && buttonType != InputButton.SkillButton4)
             {
                 return;
             }
 
-            var axis =  buttonType == InputButton.SkillButton1 ||
-                        buttonType == InputButton.SkillButton3 ?
-                        InputAxis.SkillYAxis :
-                        InputAxis.SkillXAxis;
+            var axis = buttonType == InputButton.SkillButton1 || buttonType == InputButton.SkillButton3 ? InputAxis.SkillYAxis : InputAxis.SkillXAxis;
 
             int positiveValue = buttonType == InputButton.SkillButton1 || buttonType == InputButton.SkillButton2 ? 1 : -1;
             var buttonKeyIndex = (int) buttonType;
 
-            if ( GetRawAxis(axis) == 0)
+            if (GetRawAxis(axis) == 0)
             {
                 if (ClickedButtons[buttonKeyIndex])
                 {

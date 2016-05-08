@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Fading
 {
-    public class CharacterController : MonoBehaviour
+    public class MyCharacterController : MonoBehaviour
     {
         private struct SlopeRayResult
         {
@@ -75,7 +75,7 @@ namespace Fading
         [Range(0f, 10f)] [SerializeField] private float _minimumAirControllSpeed;
 
         [SerializeField] private float _maxSpeed = 10f;
-        [SerializeField] private float _jumpForce = 400f;
+        [SerializeField] private float _jumpForce = 25f;
         [SerializeField] private bool _airControl = false;
 
         [SerializeField] private Transform _centerRayPosition;
@@ -90,7 +90,6 @@ namespace Fading
         private int _jumpInitialDirection;
         private float _currentGroundAnimationLayerWeight = 1f;
         private bool _isGrounded;
-        private bool _jumped;
         private float _lastAirHorizontalSpeed = 0;
         private SlopeRayResult _rayResult;
 
@@ -103,7 +102,7 @@ namespace Fading
         {
             SetRaysResult();
 
-            _isGrounded = _rayResult.IsGrounded && _jumped == false;
+            _isGrounded = _rayResult.IsGrounded;
             if (_isGrounded)
             {
                 _jumpInitialDirection = IsFacingRight ? 1:-1;
@@ -213,7 +212,7 @@ namespace Fading
                 var velo = _myRigidBody2D.velocity;
                 velo.y = 0;
                 _myRigidBody2D.velocity = velo;
-                _myRigidBody2D.AddRelativeForce(Vector2.up * 20, ForceMode2D.Impulse);
+                _myRigidBody2D.AddRelativeForce(Vector2.up *_jumpForce, ForceMode2D.Impulse);
                 return;
             }
 

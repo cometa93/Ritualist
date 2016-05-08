@@ -19,7 +19,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
 
         [SerializeField] protected float EffectValue = 1f;
         [SerializeField] protected bool HasProgressBar;
-        [SerializeField] protected List<CatchPointTarget> MyTargetPoints;
+        [SerializeField] protected List<CatchableObjectActivationField> MyTargetPoints;
         [SerializeField] private Transform _progressBarParent;
         [SerializeField] private GameObject _progressBarPrefab;
 
@@ -119,7 +119,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
         {
         }
 
-        public virtual void CatchPointTargetActivated()
+        public virtual void ActivationFieldActivated()
         {
             bool isCatched = true;
             for (int i = 0, c = MyTargetPoints.Count; i < c; ++i)
