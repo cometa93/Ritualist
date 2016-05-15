@@ -90,7 +90,6 @@ namespace Fading
                 var position = go.transform.position;
                 position.z = 0.5f;
                 go.transform.position = position;
-                return;
             }
 
             SetOrderLayerInTransform(go.transform, layer);

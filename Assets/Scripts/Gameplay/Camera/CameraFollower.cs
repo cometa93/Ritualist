@@ -9,7 +9,7 @@ namespace Fading
 {
     public class CameraFollower : DevilBehaviour
     {
-        [SerializeField] [Range(0f, 1f)] private float _overtakeMultiplier;
+        [SerializeField] [Range(0f, 4f)] private float _overtakeMultiplier;
         [SerializeField] private Transform _goodSoulTransform;
         [SerializeField] private Transform _charTransform;
         [SerializeField] private float _minCameraZ;
@@ -27,6 +27,7 @@ namespace Fading
         {
             _myTransform = transform;
             SetObjectToFollow(_charTransform);
+            _myTransform.position = _objectToFollow.position;
             EventsToListen.Add(EventType.CharacterChanged);
             base.Awake();
         }
@@ -47,19 +48,19 @@ namespace Fading
         {
             if (_possibleRigidbody2D != null)
             {
-                var position = Vector3.Lerp(_myTransform.position, _objectToFollow.position + new Vector3(_possibleRigidbody2D.velocity.x, _possibleRigidbody2D.velocity.y) *_overtakeMultiplier*2.5f, Time.deltaTime*0.7f);
+                var position = Vector3.Lerp(_myTransform.position, _objectToFollow.position + new Vector3(_possibleRigidbody2D.velocity.x, _possibleRigidbody2D.velocity.y) *_overtakeMultiplier, Time.deltaTime*0.4f);
                 var velocityLenght = _possibleRigidbody2D.velocity.magnitude;
                 var calculatedZ = _minCameraZ;
                 if (velocityLenght >= _offsetDepthStartingMove)
                 {
                     var percent = Mathf.Clamp01(velocityLenght/_objectMaxSpeed);
                     calculatedZ = Mathf.Lerp(_minCameraZ, _maxCameraZ, percent);
-                    position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.4f);
+                    position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.3f);
                     _myTransform.position = position;
                     return;
                 }
 
-                position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.2f);
+                position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.3f);
                 _myTransform.position = position;
                 return;
             }

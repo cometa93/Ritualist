@@ -10,7 +10,6 @@ namespace Fading.AI.Enemies
     public class BurningSoul : AbstractEnemy
     {
         [Header("Move Animation Helpers")]
-        [Range(0,100)][SerializeField] private int FrameOffsetBetweenStartAndStop;
         [SerializeField] private float TimeForOneUnit;
         [SerializeField] private List<Transform> _pointsToMoveWithin;
         [SerializeField] private GameObject _pointsToMoveParentGameObject;
@@ -51,19 +50,18 @@ namespace Fading.AI.Enemies
 
         protected override void Move()
         {
-            if (IsTargetInRange() && _isPlayerDead == false)
+            if (_isPlayerDead)
+            {
+                return;
+            }
+
+            if (IsTargetInRange())
             {
                 _stopFrame = Time.frameCount;
                 StopMoving();
                 return;
             }
-
-            if (Time.frameCount - _stopFrame < FrameOffsetBetweenStartAndStop)
-            {
-                return;
-            }
-
-            if (iTween.Count(gameObject) > 0)
+            if (_stopFrame == Time.frameCount)
             {
                 return;
             }
@@ -73,12 +71,15 @@ namespace Fading.AI.Enemies
 
         protected override void Attack()
         {
-            if (IsTargetInRange() == false)
+            if (_isPlayerDead)
             {
-                _currentAttackTime = 0;
                 return;
             }
 
+            if (IsTargetInRange() == false)
+            {
+                return;
+            }
             if (_currentAttackTime <= 0.01f)
             {
                 ShootToPlayer();
@@ -88,6 +89,7 @@ namespace Fading.AI.Enemies
             {
                 _currentAttackTime = 0;
             }
+
         }
 
         protected override void OnProtectionFieldHitTaken()
@@ -113,7 +115,12 @@ namespace Fading.AI.Enemies
 
         private bool IsTargetInRange()
         {
-            return Vector2.Distance(Player.position, Position) <= _attackRange;
+            var distance = Vector2.Distance(Player.position, Position);
+            if (distance > _attackRange*1.5f)
+            {
+                _currentAttackTime = 0;
+            }
+            return  distance <= _attackRange;
         }
 
         private void StopMoving()
