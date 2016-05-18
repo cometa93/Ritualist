@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using DevilMind;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
@@ -9,6 +7,8 @@ namespace Fading
 {
     public class CameraFollower : DevilBehaviour
     {
+        public static CameraFollower Camera;
+
         [SerializeField] [Range(0f, 4f)] private float _overtakeMultiplier;
         [SerializeField] private Transform _goodSoulTransform;
         [SerializeField] private Transform _charTransform;
@@ -22,12 +22,22 @@ namespace Fading
         private Rigidbody2D _possibleRigidbody2D;
         private bool _isCharacterNow = true;
 
-        
+        public static void ResetCameraPosition()
+        {
+            if (Camera == null)
+            {
+                Log.Warning(MessageGroup.Gameplay, "Camera instance is null");
+                return;
+            }
+
+            Camera._myTransform.position = Camera._objectToFollow.position;
+        }
+
         protected override void Awake()
         {
+            Camera = this;
             _myTransform = transform;
             SetObjectToFollow(_charTransform);
-            _myTransform.position = _objectToFollow.position;
             EventsToListen.Add(EventType.CharacterChanged);
             base.Awake();
         }

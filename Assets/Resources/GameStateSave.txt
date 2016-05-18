@@ -2,6 +2,10 @@
   {
     "SlotNumber": 1,
     "StageNumber": 1,
-    "Checkpoint": 1
+    "Checkpoint": 1,
+    "HeroStats": {
+      "Power": 100,
+      "MaxPower": 100
+    }
   }
 ]

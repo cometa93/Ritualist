@@ -13,6 +13,7 @@ namespace Fading.AI.Enemies
         [SerializeField] private float TimeForOneUnit;
         [SerializeField] private List<Transform> _pointsToMoveWithin;
         [SerializeField] private GameObject _pointsToMoveParentGameObject;
+        [SerializeField] private List<ParticleSystem> _burningSoulParticles;
 
         [Header("Enemy Setup")]
         [SerializeField] private float _attackRange;
@@ -108,9 +109,44 @@ namespace Fading.AI.Enemies
         {
             //TODO Leave energy balls !
             iTween.Stop(gameObject);
-            gameObject.ScaleTo(Vector3.zero, 2f, 0f, EaseType.easeOutBounce);
-            Destroy(gameObject, 3f);
-            Destroy(_pointsToMoveParentGameObject, 3f);
+            StartCoroutine(AnimateParticlesOnDeath(0.5f));
+        }
+
+        private IEnumerator AnimateParticlesOnDeath(float time)
+        {
+            var counter = time;
+            List<float> _initialValues = new List<float>();
+            for (int i = 0, c = _burningSoulParticles.Count; i < c; ++i)
+            {
+                var particles = _burningSoulParticles[i];
+                if (particles == null)
+                {
+                    continue;
+                }
+                _initialValues.Add(particles.startSize);
+            }
+            yield return null;
+            while (counter > 0)
+            {
+                counter -= Time.deltaTime;
+
+                for (int i = 0, c = _burningSoulParticles.Count; i < c; ++i)
+                {
+                    var particles = _burningSoulParticles[i];
+                    if (particles == null)
+                    {
+                        continue;
+                    }
+
+                    var sizeValue = Mathf.Lerp(0, _initialValues[i], counter);
+                    particles.startSize = sizeValue;
+                }
+                yield return null;
+            }
+
+
+            Destroy(gameObject);
+            Destroy(_pointsToMoveParentGameObject);
         }
 
         private bool IsTargetInRange()

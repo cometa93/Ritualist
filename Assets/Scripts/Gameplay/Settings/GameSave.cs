@@ -2,6 +2,7 @@
 using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Fading.Settings
 {
@@ -22,12 +23,14 @@ namespace Fading.Settings
             public readonly int SlotNumber;
             public int StageNumber;
             public int Checkpoint;
+            public HeroStats HeroStats;
 
             public Save(int slotNumber)
             {
                 SlotNumber = slotNumber;
                 StageNumber = 1;
                 Checkpoint = 1;
+                HeroStats = new HeroStats();
             }
         }
 
@@ -55,6 +58,10 @@ namespace Fading.Settings
 
         public string SaveCurrentGameProgress()
         {
+            if (CurrentSave != null)
+            {
+                CurrentSave.HeroStats = GameMaster.Hero.Stats.CurrentStats();
+            }
             var saveInText = JsonConvert.SerializeObject(SaveSlots, Formatting.Indented);
             File.WriteAllText("Assets/Resources/GameStateSave.txt", saveInText);
             return saveInText;

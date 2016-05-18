@@ -16,8 +16,8 @@ namespace Fading.AI.Enemies
             
             return new Hashtable()
             {
-                {iT.MoveTo.easetype, iTween.EaseType.easeInCubic},
                 {iT.MoveTo.time, time },
+                {iT.MoveTo.easetype, EaseType.linear }
             };
         }
 

@@ -115,7 +115,8 @@ namespace Fading
         {
             Instantiate(_destroyParticles, transform.position, Quaternion.identity);
             iTween.Stop(gameObject, true);
-            Destroy(gameObject, 1f);
+            //SPAWN HIT PARTICLES
+            Destroy(gameObject);
         }
     }
 }

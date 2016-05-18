@@ -5,9 +5,14 @@ using Fading.AI;
 
 namespace Fading
 {
+    /// <summary>
+    /// Hero object is shared between gamesaves it is responsible for setting up player skills
+    /// Stats are not shared but loaded personally for each save slot;
+    /// </summary>
     public class Hero
     {
-        public readonly HeroStats Stats = new HeroStats();
+
+        public HeroStats Stats { get { return GameMaster.GameSave.CurrentSave.HeroStats; } } 
         private SkillEffect _currentSkillEffect;
         public HeroSkill CurrentHeroSkill;
         public readonly Dictionary<SkillEffect, HeroSkill> Skills = new Dictionary<SkillEffect, HeroSkill>();

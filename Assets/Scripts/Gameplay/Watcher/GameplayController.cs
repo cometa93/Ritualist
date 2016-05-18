@@ -37,6 +37,12 @@ namespace Fading
             base.Awake();
         }
 
+        protected override void Start()
+        {
+            CameraFollower.ResetCameraPosition();
+            base.Start();
+        }
+
         private void SetupTargets()
         {
             var gos = GameObject.FindGameObjectsWithTag("Target");
