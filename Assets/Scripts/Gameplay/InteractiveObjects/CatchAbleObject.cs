@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DevilMind;
+using DevilMind.Utils;
 using Fading.UI;
 using UnityEngine;
 
@@ -30,10 +31,8 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
             if (HasProgressBar)
             {
                 var go = Instantiate(_progressBarPrefab);
-                ResourceLoader.SetLayer(go.transform, gameObject.layer);
-                go.transform.parent = _progressBarParent;
-                go.transform.localScale = Vector3.one;
-                go.transform.localPosition = Vector3.zero;
+                go.transform.SetLayer(_progressBarParent.gameObject);
+                go.transform.SetParent(_progressBarParent);
                 _myProgressBar = go.GetComponent<ProgressBar>();
             }
 

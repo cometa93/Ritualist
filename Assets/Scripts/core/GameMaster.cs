@@ -1,6 +1,7 @@
 ﻿using System;
 using Fading;
 using Fading.Settings;
+using Fading.UI;
 using UnityEngine;
 
 namespace DevilMind

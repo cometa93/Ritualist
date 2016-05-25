@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using Fading;
 using Fading.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +9,15 @@ namespace DevilMind
 {
     public class SceneLoader : MonoBehaviour
     {
+        //TODO ADD VALIDATION IF IT IS GAMEPLAY SCENE OR OTHER
+        public bool IsOnStage
+        {
+            get
+            {
+                var sceneIndex = SceneManager.GetActiveScene().buildIndex;
+                return  sceneIndex > 1; 
+            }
+        }
 
         private const string StagePrefix = "_STAGE";
         private bool _isLoadingStage;
@@ -61,6 +70,14 @@ namespace DevilMind
             {
                 Log.Error(MessageGroup.Gameplay, "Loading screen dont have behaviour");
             }
+
+#if UNITY_EDITOR
+            // Only for initialization of gameplay controller on first scene while testing.
+            if (IsOnStage)
+            {
+                GameplayController.CreateGameplayControllerOnStageLoaded();
+            }
+#endif
         }
 
         private void ShowLoadingStageScene(Action onSceneShow)
@@ -72,6 +89,7 @@ namespace DevilMind
         {
             if (_isLoadingStage)
             {
+                GameplayController.CreateGameplayControllerOnStageLoaded();
                 return;
             }
 
@@ -118,6 +136,7 @@ namespace DevilMind
         {
             ShowLoadingStageScene(() =>
             {
+                _isLoadingStage = true;
                 CurrentStage = number;
                 StartCoroutine(LoadSceneAsync(number + StagePrefix, OnProgress, OnSceneLoaded));
             });

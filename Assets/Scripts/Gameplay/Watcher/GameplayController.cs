@@ -14,8 +14,21 @@ namespace Fading
         private GameObject _magicFieldPrefab;
         private GameObject _gameplayGui;
         private readonly List<Transform> _checkPoints = new List<Transform>();
-        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>(); 
+        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>();
         
+        public static void CreateGameplayControllerOnStageLoaded()
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("GameplayController");
+                _instance = go.AddComponent<GameplayController>();
+                if (_instance == null)
+                {
+                    Log.Warning(MessageGroup.Gameplay, "Gameplay controller is null buuu....");
+                }
+            }
+        }
+
         private static GameplayController _instance;
         public static GameplayController Instance
         {
@@ -28,6 +41,7 @@ namespace Fading
         protected override void Awake()
         {
             _instance = GetComponent<GameplayController>();
+            SetupEventSystem();
             SetupCheckPoints();
             SetupGameplayGui();
             SetupGameplayMenu();
@@ -200,6 +214,11 @@ namespace Fading
             }
             
             Instantiate(prefab);
+        }
+
+        private void SetupEventSystem()
+        {
+            
         }
 
         public void RegisterTarget(SkillTarget target)

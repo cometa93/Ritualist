@@ -26,6 +26,7 @@ namespace Fading
         }
 
         private Collider2D _collider2D;
+
         private void Awake()
         {
             _collider2D = GetComponent<Collider2D>();
