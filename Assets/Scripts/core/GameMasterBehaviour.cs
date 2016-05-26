@@ -17,7 +17,7 @@ namespace DevilMind
             {
                 var go = new GameObject("GameMaster(DONTDESTROY)");
                 go.transform.SetAsFirstSibling();
-                GameMasterBehaviour gm = go.AddComponent<GameMasterBehaviour>();
+                go.AddComponent<GameMasterBehaviour>();
             }
         }
 
