@@ -5,6 +5,7 @@
         Unkown,
         GameplayMenu,
         LoadingScreen,
+        GameplayConsole,
         //Have to be last
         Count,
     }

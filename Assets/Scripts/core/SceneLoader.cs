@@ -22,31 +22,39 @@ namespace DevilMind
         private const string StagePrefix = "_STAGE";
         private bool _isLoadingStage;
         public int CurrentStage { private set; get; }
-        private LoadingScreenBehaviour _loadingScren;
+
+        private LoadingScreenBehaviour _loadingScreen;
+        private LoadingScreenBehaviour LoadingScreen
+        {
+            get
+            {
+                if (_instance._loadingScreen == null)
+                {
+                    CreateLoadingScreen();
+                }
+                return _loadingScreen;
+            }
+        }
+
         private static SceneLoader _instance;
+
+        private void Awake()
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+
         public static SceneLoader Instance
         {
             get
             {
-                if (_instance == null)
-                {
-                    GameObject go = new GameObject("Scene Loader");
-                    var loader = go.AddComponent<SceneLoader>();
-                    _instance = loader;
-                    _instance.CreateLoadingScreen();
-                }
                 return _instance;
             }
         }
 
-        private void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         private void CreateLoadingScreen()
         {
-            if (_loadingScren != null)
+            if (_loadingScreen != null)
             {
                 return;
             }
@@ -58,15 +66,14 @@ namespace DevilMind
                 return;
             }
 
-            go = Instantiate(go);
+            go = MainCanvasBehaviour.RegisterPanel(UIType.LoadingScreen, go);
             if (go == null)
             {
-                Log.Error(MessageGroup.Gameplay, "Cant instantiate loading screen prefab");
                 return;
             }
 
-            _loadingScren = go.GetComponent<LoadingScreenBehaviour>();
-            if (_loadingScren == null)
+            _loadingScreen = go.GetComponent<LoadingScreenBehaviour>();
+            if (_loadingScreen == null)
             {
                 Log.Error(MessageGroup.Gameplay, "Loading screen dont have behaviour");
             }
@@ -82,7 +89,7 @@ namespace DevilMind
 
         private void ShowLoadingStageScene(Action onSceneShow)
         {
-            _loadingScren.ShowLoadingScreen(onSceneShow);
+            LoadingScreen.ShowLoadingScreen(onSceneShow);
         }
 
         private void OnSceneLoaded()
@@ -93,7 +100,7 @@ namespace DevilMind
                 return;
             }
 
-            _loadingScren.HideLoadingScreen(OnLoadingScreenHided);
+            LoadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
         private void OnLoadingScreenHided()
@@ -129,7 +136,7 @@ namespace DevilMind
         public void StageLoaded()
         {
             _isLoadingStage = false;
-            _loadingScren.HideLoadingScreen(OnLoadingScreenHided);
+            LoadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
         public void LoadStage(int number)

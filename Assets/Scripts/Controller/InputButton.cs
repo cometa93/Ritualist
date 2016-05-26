@@ -4,10 +4,10 @@ namespace Fading.Controller
     public enum InputAxis
     {
         Unknown,
-        LeftStickX,
-        RightStickX,
-        LeftStickY,
-        RightStickY,
+        HorizontalMovement,
+        VerticalMovement,
+        HorizontalRightStick,
+        VerticalRightStick,
         LeftTrigger,
         RightTrigger,
         SkillXAxis,
@@ -17,17 +17,9 @@ namespace Fading.Controller
     public enum InputButton
     {
         Unknown,
-        A,
-        B,
-        X,
+        Jump,
+        SkillUse,
+        SpeedModyficator,
         Count,
-
-        //SkillButtonTypes Are fake 
-        //button types used by axis
-
-        SkillButton1,
-        SkillButton2,
-        SkillButton3,
-        SkillButton4,
     }
 }

@@ -10,9 +10,9 @@ namespace Fading
     {
         private static bool _isLoadingFromSave = false;
         private static bool _isEnteringFromBack = false;
-
-        private GameObject _magicFieldPrefab;
+        
         private GameObject _gameplayGui;
+
         private readonly List<Transform> _checkPoints = new List<Transform>();
         private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>();
         
@@ -44,7 +44,6 @@ namespace Fading
             SetupEventSystem();
             SetupCheckPoints();
             SetupGameplayGui();
-            SetupGameplayMenu();
             SetupCharacterObject();
             SetupTargets();
             SceneLoader.Instance.StageLoaded();
@@ -192,28 +191,13 @@ namespace Fading
                 return;
             }
 
-            _gameplayGui = Instantiate(prefab) as GameObject;
-            if (_gameplayGui == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Couldn't instantiate gui");
-            }
-        }
-
-        private void SetupGameplayMenu()
-        {
-            if (GameplayMenuBehaviour.GameplayMenuCreated)
+            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayConsole, out _gameplayGui))
             {
                 return;
             }
 
-            var prefab = ResourceLoader.LoadGameplayMenu();
-            if (prefab == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Can't get gameplaymenu object");
-                return;
-            }
-            
-            Instantiate(prefab);
+            var go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayConsole, prefab);
+            go.name = "Gameplay Console";
         }
 
         private void SetupEventSystem()

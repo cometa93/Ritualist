@@ -10,42 +10,31 @@ namespace Fading.Controller
     public static class MyInputManager
     {
         public const float Radius = 6f;
-        private const float SpeedModyfierValue = 0.3f;
         private static bool _controllerRegistered;
         private static bool _rightTriggerClicked;
         private static bool _leftTriggerClicked;
 
-        private static bool IsInputDeviceConnected
+        public static bool IsInputDeviceConnected
         {
             get { return Input.GetJoystickNames().Length > 0; }
         }
 
         private static readonly Dictionary<InputAxis, string> AxisNames = new Dictionary<InputAxis, string>
         {
-            {InputAxis.LeftStickX, "LeftX"},
-            {InputAxis.RightStickX, "RightX" },
-            {InputAxis.LeftStickY, "LeftY"},
-            {InputAxis.RightStickY, "RightY" },
-            {InputAxis.LeftTrigger, "LeftTrigger" },
-            {InputAxis.RightTrigger, "RightTrigger" },
-            {InputAxis.SkillXAxis, "SkillXAxis" },
-            {InputAxis.SkillYAxis, "SkillYAxis" }
+            {InputAxis.HorizontalMovement, "Horizontal Movement"},
+            {InputAxis.VerticalMovement, "Vertical Movement"},
+            {InputAxis.LeftTrigger, "Character Change" },
+            {InputAxis.RightTrigger, "Skill Use" },
+            {InputAxis.SkillXAxis, "Horizontal Skills" },
+            {InputAxis.SkillYAxis, "Vertical Skills" }
         };
 
         private static readonly Dictionary<InputButton, string> ButtonNames = new Dictionary<InputButton, string>
         {
-            {InputButton.A, "A" },
-            {InputButton.B, "B" },
-            {InputButton.X, "X" },
+            {InputButton.Jump, "Jump" },
+            {InputButton.SpeedModyficator, "Speed Modyficator" },
         };
 
-        private static readonly Dictionary<InputButton, string> ButtonKeyboardNames = new Dictionary
-            <InputButton, string>
-        {
-            {InputButton.A, "Aaction" },
-            {InputButton.B, "Baction" },
-            {InputButton.X, "Xaction" }
-        }; 
 
         private static readonly Dictionary<int, bool> ClickedButtons = new Dictionary<int, bool>(); 
         private static readonly Dictionary<int, float> ButtonsHoldingTime = new Dictionary<int, float>(); 
@@ -64,27 +53,13 @@ namespace Fading.Controller
                 return 0;
             }
             var input = Input.GetAxis(AxisNames[axis]);
-            return Math.Abs(input) > 0.05f ? input : GetKeyboardAxis(axis);
+            return Math.Abs(input) > 0.05f ? input : 0;
         }
 
         public static int GetRawAxis(InputAxis axis)
         {
-            if (IsInputDeviceConnected)
-            {
-                var result = (int) Input.GetAxisRaw(AxisNames[axis]);
-                if (result != 0)
-                {
-                    return result;
-                }
-            }
-
-            if (axis == InputAxis.SkillXAxis ||
-                axis == InputAxis.SkillYAxis)
-            {
-                return (int) GetKeyboardSkillValue(axis);
-            }
-
-            return (int) Mathf.Round(GetKeyboardAxis(axis));
+            var result = (int) Input.GetAxisRaw(AxisNames[axis]);
+            return result;
         }
 
         private static void RegisterController()
@@ -97,106 +72,7 @@ namespace Fading.Controller
                     ButtonsHoldingTime.Add(i, 0);
                 }
             }
-            ClickedButtons.Add((int) InputButton.SkillButton1, false);
-            ClickedButtons.Add((int) InputButton.SkillButton2, false);
-            ClickedButtons.Add((int) InputButton.SkillButton3, false);
-            ClickedButtons.Add((int) InputButton.SkillButton4, false);
             _controllerRegistered = true;
-        }
-
-        private static float GetKeyboardAxis(InputAxis axis)
-        {
-            switch (axis)
-            {
-               
-                case InputAxis.LeftStickX:
-                    return GetKeyboardMoveValue();
-
-                case InputAxis.LeftStickY:
-                    return GetKeyboardUpDownValue();
-
-                case InputAxis.LeftTrigger:
-                    return Input.GetButton("CharacterChange") ? 1f : 0f;
-
-                case InputAxis.RightTrigger:
-                    return Input.GetButton("Shoot") ? 1f : 0f;
-
-                default:
-                    Log.Error(MessageGroup.Common, axis + "dont have represenatation on keyboard");
-                    break;
-            }
-
-            return 0f;
-        }
-
-        private static float GetKeyboardSkillValue(InputAxis axis)
-        {
-            switch (axis)
-            {
-                case InputAxis.SkillXAxis:
-                    if (Input.GetButton("Skill2Button"))
-                    {
-                        return 1f;
-                    }
-                    if (Input.GetButton("Skill4Button"))
-                    {
-                        return -1f;
-                    }
-                    return 0;
-
-                case InputAxis.SkillYAxis:
-                    if (Input.GetButton("Skill1Button"))
-                    {
-                        return 1f;
-                    }
-                    if (Input.GetButton("Skill3Button"))
-                    {
-                        return -1f;
-                    }
-                    return 0;
-            }
-
-            return 0;
-        }
-
-        private static float GetKeyboardMoveValue()
-        {
-            var initValue = 0f;
-            if (Input.GetButton("Right"))
-            {
-                initValue += 1f;
-            }
-            if (Input.GetButton("Left"))
-            {
-                initValue -= 1f;
-            }
-
-            if (Input.GetButton("Speed Modyficator"))
-            {
-                initValue *= SpeedModyfierValue;
-            }
-
-            return initValue;
-        }
-
-        private static float GetKeyboardUpDownValue()
-        {
-            var initValue = 0f;
-            if (Input.GetButton("Up"))
-            {
-                initValue += 1f;
-            }
-            if (Input.GetButton("Down"))
-            {
-                initValue -= 1f;
-            }
-
-            if (Input.GetButton("Speed Modyficator"))
-            {
-                initValue *= SpeedModyfierValue;
-            }
-
-            return -initValue;
         }
 
         public static bool IsButtonDown(InputButton buttonType)
@@ -212,13 +88,8 @@ namespace Fading.Controller
                 return false;
             }
 
-            if (ButtonKeyboardNames.ContainsKey(buttonType) == false)
-            {
-                Debug.LogWarning("There is no button key name in dict. " + buttonType);
-                return false;
-            }
 
-            return Input.GetButtonDown(ButtonNames[buttonType]) || Input.GetButtonDown(ButtonKeyboardNames[buttonType]);
+            return Input.GetButtonDown(ButtonNames[buttonType]);
         }
 
         public static void Update()
@@ -228,12 +99,6 @@ namespace Fading.Controller
                 RegisterController();
                 return;
             }
-
-            IsSkillButtonDown(InputButton.SkillButton1);
-            IsSkillButtonDown(InputButton.SkillButton2);
-            IsSkillButtonDown(InputButton.SkillButton3);
-            IsSkillButtonDown(InputButton.SkillButton4);
-
             //Actions for each button.
             for (int i = 1, c = (int) InputButton.Count; i < c; ++i)
             {
@@ -298,11 +163,11 @@ namespace Fading.Controller
         public static Vector3 GetLeftStickPosition()
         {
             {
-                float leftStickX = GetAxis(InputAxis.LeftStickX);
+                float leftStickX = GetAxis(InputAxis.HorizontalMovement);
 
                 float xPosition = leftStickX*Radius;
 
-                float leftStickY = GetAxis(InputAxis.LeftStickY);
+                float leftStickY = GetAxis(InputAxis.VerticalMovement);
                 float yPosition = -leftStickY*Radius;
 
                 return new Vector3(xPosition, yPosition);
@@ -311,46 +176,14 @@ namespace Fading.Controller
 
         public static Vector3 GetRightStickPosition()
         {
-            float rightStickX = GetAxis(InputAxis.RightStickX);
+            float rightStickX = GetAxis(InputAxis.HorizontalRightStick);
 
             float xPosition = rightStickX*Radius;
 
-            float rightStickY = GetAxis(InputAxis.RightStickY);
+            float rightStickY = GetAxis(InputAxis.VerticalRightStick);
             float yPosition = -rightStickY*Radius;
 
             return new Vector3(xPosition, yPosition);
-        }
-
-        private static void IsSkillButtonDown(InputButton buttonType)
-        {
-            if (buttonType != InputButton.SkillButton1 && buttonType != InputButton.SkillButton2 && buttonType != InputButton.SkillButton3 && buttonType != InputButton.SkillButton4)
-            {
-                return;
-            }
-
-            var axis = buttonType == InputButton.SkillButton1 || buttonType == InputButton.SkillButton3 ? InputAxis.SkillYAxis : InputAxis.SkillXAxis;
-
-            int positiveValue = buttonType == InputButton.SkillButton1 || buttonType == InputButton.SkillButton2 ? 1 : -1;
-            var buttonKeyIndex = (int) buttonType;
-
-            if (GetRawAxis(axis) == 0)
-            {
-                if (ClickedButtons[buttonKeyIndex])
-                {
-                    GameMaster.Events.Rise(EventType.ButtonReleased, buttonType);
-                }
-                ButtonsHoldingTime[buttonKeyIndex] = 0;
-                ClickedButtons[buttonKeyIndex] = false;
-            }
-            else if (ClickedButtons[buttonKeyIndex] == false && GetRawAxis(axis) == positiveValue)
-            {
-                ClickedButtons[buttonKeyIndex] = true;
-                GameMaster.Events.Rise(EventType.ButtonClicked, buttonType);
-            }
-            else if (ClickedButtons[buttonKeyIndex] && GetRawAxis(axis) == positiveValue)
-            {
-                ButtonsHoldingTime[buttonKeyIndex] += Time.deltaTime;
-            }
         }
     }
 }

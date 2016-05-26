@@ -83,8 +83,8 @@ namespace Fading.Controller
                 GameMaster.Events.Rise(EventType.CharacterChanged);
                 return;
             }
-            var xVelocityValue = MyInputManager.GetAxis(InputAxis.LeftStickX)*MaxSpeed;
-            var yVelocityValue = MyInputManager.GetAxis(InputAxis.LeftStickY)*MaxSpeed;
+            var xVelocityValue = MyInputManager.GetAxis(InputAxis.HorizontalMovement)*MaxSpeed;
+            var yVelocityValue = MyInputManager.GetAxis(InputAxis.VerticalMovement)*MaxSpeed;
             _myRigidBody.velocity = new Vector2(xVelocityValue, -yVelocityValue);
         }
     }

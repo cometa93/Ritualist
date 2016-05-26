@@ -8,15 +8,12 @@ namespace Fading.UI
 {
     public class GameplayMenuBehaviour : DevilBehaviour
     {
-        public static bool GameplayMenuCreated = false;
         [SerializeField] private CanvasRenderer _characterDiedMenu;
 
         protected override void Start()
         {
             _characterDiedMenu.SetAlpha(0);
             _characterDiedMenu.gameObject.SetActive(false);
-            DontDestroyOnLoad(this);
-            GameplayMenuCreated = true;
             base.Start();
         }
 

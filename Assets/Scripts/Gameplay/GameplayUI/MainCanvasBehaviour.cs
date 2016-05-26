@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
 using DevilMind;
 using DevilMind.Utils;
+using SRF;
 using UnityEngine;
 
 namespace Fading.UI
 {
     public class MainCanvasBehaviour : MonoBehaviour
     {
+        [SerializeField]Transform _canvasParent;
+
         private static MainCanvasBehaviour _instance;
         public static MainCanvasBehaviour Instance { get { return _instance;} }
-
-        public void Register()
+    
+        private readonly Dictionary<UIType,GameObject> _registeredPanels = new Dictionary<UIType, GameObject>();
+        
+        public void Setup()
         {
             if (_instance != null)
             {
@@ -21,28 +26,31 @@ namespace Fading.UI
             DontDestroyOnLoad(this);
         }
 
-        private readonly Dictionary<UIType,GameObject> _registeredPanels = new Dictionary<UIType, GameObject>();
-
-        [SerializeField] Transform _canvasParent;
-
-        public static void RegisterPanel(UIType panelType, GameObject prefab)
+        public static GameObject RegisterPanel(UIType panelType, GameObject prefab)
         {
             if (_instance._registeredPanels.ContainsKey(panelType))
             {
                 Log.Warning(MessageGroup.Gui, "UI panel already registered type : " + panelType);
-                return;
+                return null;
             }
             var gameObject = Instantiate(prefab);
             if (gameObject == null)
             {
                 Log.Error(MessageGroup.Common, "Cant instantiate gameobject panel");
-                return;
+                return null;
             }
 
             DontDestroyOnLoad(gameObject);
             _instance._registeredPanels[panelType] = gameObject;
-            gameObject.transform.SetLayer(gameObject);
-            gameObject.transform.SetParent(_instance._canvasParent);
+            gameObject.transform.SetLayer(_instance.gameObject);
+            gameObject.transform.SetParent(_instance._canvasParent,false);
+          
+            return gameObject;
+        }
+
+        public static bool TryGetRegisteredPanel(UIType panelType, out GameObject panel)
+        {
+            return _instance._registeredPanels.TryGetValue(panelType, out panel);
         }
 
         public static void DisablePanel(UIType panelType)
