@@ -32,6 +32,7 @@ namespace Fading.Controller
         private static readonly Dictionary<InputButton, string> ButtonNames = new Dictionary<InputButton, string>
         {
             {InputButton.Jump, "Jump" },
+            {InputButton.SkillUse, "Skill Use" },
             {InputButton.SpeedModyficator, "Speed Modyficator" },
         };
 
@@ -82,6 +83,7 @@ namespace Fading.Controller
                 Debug.LogWarning("Given axis is unknown");
                 return false;
             }
+
             if (ButtonNames.ContainsKey(buttonType) == false)
             {
                 Debug.LogWarning("There is no button key name in dict. " + buttonType);
