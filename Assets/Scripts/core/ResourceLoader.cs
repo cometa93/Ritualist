@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DevilMind.Utils;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DevilMind
 {
@@ -18,24 +20,9 @@ namespace DevilMind
 
         private static readonly Dictionary<EnemyType,string> Enemies = new Dictionary<EnemyType, string>()
         {
-            {EnemyType.Ghost,  "Ghost"},
+            {EnemyType.BurningSoul,  "BurningSoul"},
         }; 
         
-        public static void SetLayer(Transform t, int layer)
-        {
-            if (t == null)
-            {
-                return;
-            }
-
-            t.gameObject.layer = layer;
-
-            foreach (Transform child in t)
-            {
-                SetLayer(child, layer);
-            }
-        }
-
         #region Loading Helpers
 
         public static GameObject LoadButton(ButtonType type)
@@ -47,6 +34,41 @@ namespace DevilMind
 
             var buttonName = ButtonsPaths[type];
             return Load<GameObject>(_prefabsFolder +_buttonsPath + buttonName);
+        }
+
+        public static TextAsset LoadGameSave()
+        {
+            return Load<TextAsset>("GameStateSave");
+        }
+
+        public static TextAsset LoadGameSettings()
+        {
+            return Load<TextAsset>("GameSettings");
+        }
+
+        public static GameObject LoadMainCanvas()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/MainCanvas");
+        }
+
+        public static GameObject LoadGameplayGUI()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/GameplayGUI");
+        }
+
+        public static GameObject LoadLoadingScreen()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/LoadingScreen");
+        }
+
+        public static GameObject LoadGameplayMenu()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/GameplayMenu");
+        }
+
+        public static GameObject LoadCharacter()
+        {
+            return Load<GameObject>("Prefabs/Character/CharacterTransform");
         }
 
         public static GameObject LoadEnemy(EnemyType enemy)
@@ -77,7 +99,6 @@ namespace DevilMind
 
             return loadedObject as T;
         }
-
   
     }
 }

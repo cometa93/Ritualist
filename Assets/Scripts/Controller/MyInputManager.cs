@@ -1,38 +1,43 @@
-﻿using UnityEngine;
+﻿    using System;
+using UnityEngine;
 using System.Collections.Generic;
 using DevilMind;
 using EventType = DevilMind.EventType;
 
 // ReSharper disable once CheckNamespace
-namespace Ritualist.Controller
+namespace Fading.Controller
 {
     public static class MyInputManager
     {
         public const float Radius = 6f;
-        private static bool _controllerRegistered = false;
-        private static bool _rightTriggerClicked = false;
-        private static bool _leftTriggerClicked = false;
-        private static float _triggerHoldTime = 0;
+        private static bool _controllerRegistered;
+        private static bool _rightTriggerClicked;
+        private static bool _leftTriggerClicked;
+
+        public static bool IsInputDeviceConnected
+        {
+            get { return Input.GetJoystickNames().Length > 0; }
+        }
 
         private static readonly Dictionary<InputAxis, string> AxisNames = new Dictionary<InputAxis, string>
         {
-            {InputAxis.LeftStickX, "LeftX"},
-            {InputAxis.RightStickX, "RightX" },
-            {InputAxis.LeftStickY, "LeftY"},
-            {InputAxis.RightStickY, "RightY" },
-            {InputAxis.LeftTrigger, "LeftTrigger" },
-            {InputAxis.RightTrigger, "RightTrigger" }
+            {InputAxis.HorizontalMovement, "Horizontal Movement"},
+            {InputAxis.VerticalMovement, "Vertical Movement"},
+            {InputAxis.CharacterChange, "Character Change" },
+            {InputAxis.SkillUse, "Skill Use" },
+            {InputAxis.SkillXAxis, "Horizontal Skills" },
+            {InputAxis.SkillYAxis, "Vertical Skills" }
         };
 
         private static readonly Dictionary<InputButton, string> ButtonNames = new Dictionary<InputButton, string>
         {
-            {InputButton.A, "A" },
-            {InputButton.B, "B" },
-            {InputButton.X, "X" }
+            {InputButton.Jump, "Jump" },
+            {InputButton.SpeedModyficator, "Speed Modyficator" },
         };
 
-        private static Dictionary<int, bool> _clickedButtons = new Dictionary<int, bool>(); 
-        private static Dictionary<int, float> _buttonsHoldingTime = new Dictionary<int, float>(); 
+
+        private static readonly Dictionary<int, bool> ClickedButtons = new Dictionary<int, bool>(); 
+        private static readonly Dictionary<int, float> ButtonsHoldingTime = new Dictionary<int, float>(); 
 
 
         public static float GetAxis(InputAxis axis)
@@ -47,18 +52,34 @@ namespace Ritualist.Controller
                 Debug.LogWarning("There is no axis key name in dict.");
                 return 0;
             }
+            var input = Input.GetAxis(AxisNames[axis]);
+            return Math.Abs(input) > 0.05f ? input : 0;
+        }
 
-            return Input.GetAxis(AxisNames[axis]);
+        public static int GetRawAxis(InputAxis axis)
+        {
+            var result =  Input.GetAxisRaw(AxisNames[axis]);
+            if (Mathf.Abs(result) < 0.02)
+            {
+                return 0;
+            }
+
+            if (result < 0)
+            {
+                return -1;
+            }
+
+            return 1;
         }
 
         private static void RegisterController()
         {
             for (int i = 1, c = (int)InputButton.Count; i < c; ++i)
             {
-                if (_clickedButtons.ContainsKey(i) == false)
+                if (ClickedButtons.ContainsKey(i) == false)
                 {
-                    _clickedButtons.Add(i, false);
-                    _buttonsHoldingTime.Add(i, 0);
+                    ClickedButtons.Add(i, false);
+                    ButtonsHoldingTime.Add(i, 0);
                 }
             }
             _controllerRegistered = true;
@@ -71,11 +92,13 @@ namespace Ritualist.Controller
                 Debug.LogWarning("Given axis is unknown");
                 return false;
             }
+
             if (ButtonNames.ContainsKey(buttonType) == false)
             {
                 Debug.LogWarning("There is no button key name in dict. " + buttonType);
                 return false;
             }
+
 
             return Input.GetButtonDown(ButtonNames[buttonType]);
         }
@@ -87,33 +110,32 @@ namespace Ritualist.Controller
                 RegisterController();
                 return;
             }
-            
             //Actions for each button.
-            for (int i = 1, c = (int)InputButton.Count; i < c; ++i)
+            for (int i = 1, c = (int) InputButton.Count; i < c; ++i)
             {
-                if (IsButtonDown((InputButton)i) == false)
+                if (IsButtonDown((InputButton) i) == false)
                 {
-                    if (_clickedButtons[i])
+                    if (ClickedButtons[i])
                     {
                         GameMaster.Events.Rise(EventType.ButtonReleased, i);
                     }
-                    _buttonsHoldingTime[i] = 0;
-                    _clickedButtons[i] = false;
+                    ButtonsHoldingTime[i] = 0;
+                    ClickedButtons[i] = false;
                 }
-                else if (_clickedButtons[i] == false && IsButtonDown((InputButton)i))
+                else if (ClickedButtons[i] == false && IsButtonDown((InputButton) i))
                 {
-                    _clickedButtons[i] = true;
+                    ClickedButtons[i] = true;
                     GameMaster.Events.Rise(EventType.ButtonClicked, i);
                 }
-                else if (_clickedButtons[i] && IsButtonDown((InputButton) i))
+                else if (ClickedButtons[i] && IsButtonDown((InputButton) i))
                 {
-                    _buttonsHoldingTime[i] += Time.deltaTime;
+                    ButtonsHoldingTime[i] += Time.deltaTime;
                 }
             }
 
             //Clicking triggers
-            var trigger = GetAxis(InputAxis.LeftTrigger);
-            if (trigger != 0)
+            var trigger = GetAxis(InputAxis.CharacterChange);
+            if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _leftTriggerClicked == false)
                 {
@@ -130,8 +152,8 @@ namespace Ritualist.Controller
                 }
             }
 
-            trigger = GetAxis(InputAxis.RightTrigger);
-            if (trigger != 0)
+            trigger = GetAxis(InputAxis.SkillUse);
+            if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _rightTriggerClicked == false)
                 {
@@ -148,19 +170,50 @@ namespace Ritualist.Controller
                 }
             }
 
+            ManageSkillAxis();
+        }
 
-
+        private static void ManageSkillAxis()
+        {
+            var value = GetRawAxis(InputAxis.SkillXAxis);
+            if (value != 0)
+            {
+                if (value == -1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 4);
+                }
+                else if (value == 1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 2);
+                }
+                Input.ResetInputAxes();
+                return;
+            }
+            value = GetRawAxis(InputAxis.SkillYAxis);
+            if (value != 0)
+            {
+                if (value == -1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 3);
+                }
+                else if (value == 1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 1);
+                }
+                Input.ResetInputAxes();
+                return;
+            }
         }
 
         public static Vector3 GetLeftStickPosition()
         {
             {
-                float leftStickX = GetAxis(InputAxis.LeftStickX);
+                float leftStickX = GetAxis(InputAxis.HorizontalMovement);
 
-                float xPosition = leftStickX * Radius;
+                float xPosition = leftStickX*Radius;
 
-                float leftStickY = GetAxis(InputAxis.LeftStickY);
-                float yPosition = -leftStickY * Radius;
+                float leftStickY = GetAxis(InputAxis.VerticalMovement);
+                float yPosition = -leftStickY*Radius;
 
                 return new Vector3(xPosition, yPosition);
             }
@@ -168,12 +221,12 @@ namespace Ritualist.Controller
 
         public static Vector3 GetRightStickPosition()
         {
-            float rightStickX = GetAxis(InputAxis.RightStickX);
+            float rightStickX = GetAxis(InputAxis.HorizontalRightStick);
 
-            float xPosition = rightStickX * Radius;
+            float xPosition = rightStickX*Radius;
 
-            float rightStickY = GetAxis(InputAxis.RightStickY);
-            float yPosition = -rightStickY * Radius;
+            float rightStickY = GetAxis(InputAxis.VerticalRightStick);
+            float yPosition = -rightStickY*Radius;
 
             return new Vector3(xPosition, yPosition);
         }

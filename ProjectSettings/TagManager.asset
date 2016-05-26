@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SpawnPoint
+  - Target
+  - explosion
   layers:
   - Default
   - TransparentFX
@@ -17,16 +20,16 @@ TagManager:
   - Character
   - MagicField
   - Enemy
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - CharacterMissle
+  - CatchableObjects
+  - Targets
+  - DealingDamageObjects
+  - SceneSwitchers
+  - Decoration
+  - Checkpoint
+  - EnemyMissle
+  - ProtectiveField
+  - GoodSoul
   - 
   - 
   - 
@@ -41,3 +44,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 894048489
+    locked: 0
+  - name: Second
+    uniqueID: 1845353423
+    locked: 0
+  - name: Mask
+    uniqueID: 782545585
+    locked: 0
+  - name: Ground
+    uniqueID: 3298057753
+    locked: 0
+  - name: Character Graphics
+    uniqueID: 2401172091
+    locked: 0
+  - name: First
+    uniqueID: 3099911485
+    locked: 0
+  - name: Bones
+    uniqueID: 638891049
+    locked: 1
+  - name: Controls
+    uniqueID: 2220450041
+    locked: 1

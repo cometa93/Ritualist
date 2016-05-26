@@ -2,7 +2,6 @@
 {
     public class StateTransition
     {
-        private string _id;
         private readonly int _state;
         private readonly int _command;
         private readonly int _nextState;
@@ -18,7 +17,6 @@
             _transitionActionCallback = transitionActionCallback;
             _onStateChangeCallback = onStateChangeCallback;
             _nextState = finishState;
-            _id = state + "##" + command;
         }
 
         public void Destroy()

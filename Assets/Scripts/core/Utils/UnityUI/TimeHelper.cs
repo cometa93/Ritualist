@@ -23,7 +23,7 @@ namespace DevilMind.Utils
             action();
         }
 
-        public static IEnumerator RunAfterSeconds(int seconds, System.Action action)
+        public static IEnumerator RunAfterSeconds(float seconds, System.Action action)
         {
             if (action == null)
             {

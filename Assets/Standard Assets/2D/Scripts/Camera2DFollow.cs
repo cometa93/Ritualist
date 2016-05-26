@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -22,6 +21,7 @@ namespace UnityStandardAssets._2D
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
+            GetComponent<Camera>().transparencySortMode = TransparencySortMode.Orthographic;
         }
 
 

@@ -6,11 +6,11 @@ InputManager:
   serializedVersion: 2
   m_Axes:
   - serializedVersion: 3
-    m_Name: LeftX
+    m_Name: Horizontal Movement
     descriptiveName: x axis
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
+    negativeButton: a
+    positiveButton: b
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -22,11 +22,11 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: LeftY
+    m_Name: Vertical Movement
     descriptiveName: y axis
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
+    negativeButton: s
+    positiveButton: w
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
@@ -38,39 +38,7 @@ InputManager:
     axis: 1
     joyNum: 0
   - serializedVersion: 3
-    m_Name: RightX
-    descriptiveName: 4
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.1
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 2
-    axis: 3
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: RightY
-    descriptiveName: 5
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.1
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 2
-    axis: 4
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: LeftTrigger
+    m_Name: Character Change
     descriptiveName: leftTrigger
     descriptiveNegativeName: 
     negativeButton: 
@@ -86,7 +54,23 @@ InputManager:
     axis: 8
     joyNum: 0
   - serializedVersion: 3
-    m_Name: A
+    m_Name: Character Change
+    descriptiveName: leftTrigger
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: c
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 8
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Jump
     descriptiveName: joystick button 0
     descriptiveNegativeName: 
     negativeButton: 
@@ -102,40 +86,8 @@ InputManager:
     axis: 9
     joyNum: 0
   - serializedVersion: 3
-    m_Name: B
-    descriptiveName: joystick button 1
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick button 1
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.1
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 9
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: X
-    descriptiveName: joystick button 2
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick button 2
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.1
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 9
-    joyNum: 0
-  - serializedVersion: 3
-    m_Name: RightTrigger
-    descriptiveName: RightTrigger
+    m_Name: Skill Use
+    descriptiveName: Skill use on xbox controller
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -148,4 +100,164 @@ InputManager:
     invert: 0
     type: 2
     axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Skill Use
+    descriptiveName: Skill use on Keyboard
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: right shift
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Speed Modyficator
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: left shift
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Jump
+    descriptiveName: Makes character jump on keyboard
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: space
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Horizontal Movement
+    descriptiveName: ' Keyboard Horizontal Movement'
+    descriptiveNegativeName: 
+    negativeButton: a
+    positiveButton: d
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Vertical Movement
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: s
+    positiveButton: w
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 9
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Horizontal Skills
+    descriptiveName: 'Horizontal Skill '
+    descriptiveNegativeName: 
+    negativeButton: 4
+    positiveButton: 2
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 5
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Horizontal Skills
+    descriptiveName: SkillAxis
+    descriptiveNegativeName: 
+    negativeButton: 4
+    positiveButton: 2
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 1
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 5
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Vertical Skills
+    descriptiveName: Skill y Axis
+    descriptiveNegativeName: 
+    negativeButton: 3
+    positiveButton: 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Vertical Skills
+    descriptiveName: Skill y Axis
+    descriptiveNegativeName: 
+    negativeButton: 3
+    positiveButton: 1
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1
+    dead: 0.15
+    sensitivity: 1
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 6
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: CharacterChange
+    descriptiveName: changing the character from main to soul
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: c
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.15
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 6
     joyNum: 0

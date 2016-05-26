@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: SolidColor
-  m_Shader: {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -24,7 +24,42 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _MyMainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MySecTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _Detail
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ShadowTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _FalloffTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -33,19 +68,27 @@ Material:
       data:
         first:
           name: _Shininess
-        second: 0.078125
+        second: 0.719
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 0.117620856, g: 0.14267358, b: 0.32835823, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _SpecColor
-        second: {r: 1, g: 0, b: 0.9860139, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _Emission
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _MyColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _MySecColor
         second: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1002 &2100001
 EditorExtensionImpl:

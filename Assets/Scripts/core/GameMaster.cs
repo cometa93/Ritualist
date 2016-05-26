@@ -1,6 +1,7 @@
 ﻿using System;
-using DevilMind.Utils;
-using Ritualist;
+using Fading;
+using Fading.Settings;
+using Fading.UI;
 using UnityEngine;
 
 namespace DevilMind
@@ -13,11 +14,13 @@ namespace DevilMind
         #region Important static  Properties
         public static EventSystem.EventSystem Events { get { return Instance._events; } }
         public static Hero Hero { get { return Instance._hero; } }
+        public static GameSave GameSave { get { return Instance._saves; } }
         #endregion
 
         #region Important properties
         private EventSystem.EventSystem _events;
         private Hero _hero;
+        private GameSave _saves;
         #endregion
 
         private static GameMaster _instance;
@@ -32,10 +35,12 @@ namespace DevilMind
                     _instance.ReadGameVersion();
                     _instance._events = new EventSystem.EventSystem();
                     _instance._hero = new Hero();
+                    _instance._saves = new GameSave();
                 }
                 return _instance;
             }
         }
+
 
         public void MainLoop(float deltaTime)
         {

@@ -9,11 +9,12 @@
         RightTriggerReleased,
         LeftTriggerClicked,
         LeftTriggerReleased,
-        GenerateMagicField,
-        EnemyDied,
-        SpawnEnemy,
-        GameEnd,
-        HeroHurted,
+        HeroPowerChanged,
+        DamageByStaticObjectDone,
+        CharacterDied,
+        HeroSkillChanged,
+        CharacterChanged,
+        ChangeSkill,
     }
 
 }

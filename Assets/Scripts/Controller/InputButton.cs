@@ -1,23 +1,24 @@
 ﻿ // ReSharper disable once CheckNamespace
-namespace Ritualist.Controller
+namespace Fading.Controller
 {
     public enum InputAxis
     {
         Unknown,
-        LeftStickX,
-        RightStickX,
-        LeftStickY,
-        RightStickY,
-        LeftTrigger,
-        RightTrigger,
+        HorizontalMovement,
+        VerticalMovement,
+        HorizontalRightStick,
+        VerticalRightStick,
+        CharacterChange,
+        SkillUse,
+        SkillXAxis,
+        SkillYAxis,
     }
 
     public enum InputButton
     {
         Unknown,
-        A,
-        B,
-        X,
-        Count
+        Jump,
+        SpeedModyficator,
+        Count,
     }
 }
