@@ -23,8 +23,8 @@ namespace Fading.Controller
         {
             {InputAxis.HorizontalMovement, "Horizontal Movement"},
             {InputAxis.VerticalMovement, "Vertical Movement"},
-            {InputAxis.LeftTrigger, "Character Change" },
-            {InputAxis.RightTrigger, "Skill Use" },
+            {InputAxis.CharacterChange, "Character Change" },
+            {InputAxis.SkillUse, "Skill Use" },
             {InputAxis.SkillXAxis, "Horizontal Skills" },
             {InputAxis.SkillYAxis, "Vertical Skills" }
         };
@@ -32,7 +32,6 @@ namespace Fading.Controller
         private static readonly Dictionary<InputButton, string> ButtonNames = new Dictionary<InputButton, string>
         {
             {InputButton.Jump, "Jump" },
-            {InputButton.SkillUse, "Skill Use" },
             {InputButton.SpeedModyficator, "Speed Modyficator" },
         };
 
@@ -59,8 +58,18 @@ namespace Fading.Controller
 
         public static int GetRawAxis(InputAxis axis)
         {
-            var result = (int) Input.GetAxisRaw(AxisNames[axis]);
-            return result;
+            var result =  Input.GetAxisRaw(AxisNames[axis]);
+            if (Mathf.Abs(result) < 0.02)
+            {
+                return 0;
+            }
+
+            if (result < 0)
+            {
+                return -1;
+            }
+
+            return 1;
         }
 
         private static void RegisterController()
@@ -125,7 +134,7 @@ namespace Fading.Controller
             }
 
             //Clicking triggers
-            var trigger = GetAxis(InputAxis.LeftTrigger);
+            var trigger = GetAxis(InputAxis.CharacterChange);
             if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _leftTriggerClicked == false)
@@ -143,7 +152,7 @@ namespace Fading.Controller
                 }
             }
 
-            trigger = GetAxis(InputAxis.RightTrigger);
+            trigger = GetAxis(InputAxis.SkillUse);
             if (Math.Abs(trigger) > 0.01f)
             {
                 if (trigger > 0 && _rightTriggerClicked == false)
@@ -159,6 +168,40 @@ namespace Fading.Controller
                     _rightTriggerClicked = false;
                     GameMaster.Events.Rise(EventType.RightTriggerReleased);
                 }
+            }
+
+            ManageSkillAxis();
+        }
+
+        private static void ManageSkillAxis()
+        {
+            var value = GetRawAxis(InputAxis.SkillXAxis);
+            if (value != 0)
+            {
+                if (value == -1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 4);
+                }
+                else if (value == 1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 2);
+                }
+                Input.ResetInputAxes();
+                return;
+            }
+            value = GetRawAxis(InputAxis.SkillYAxis);
+            if (value != 0)
+            {
+                if (value == -1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 3);
+                }
+                else if (value == 1)
+                {
+                    GameMaster.Events.Rise(EventType.ChangeSkill, 1);
+                }
+                Input.ResetInputAxes();
+                return;
             }
         }
 

@@ -28,5 +28,12 @@ namespace DevilMind.Utils
                 child.SetLayerRecursive(go);
             }
         }
+
+        public static void ResetLocals(this Transform t)
+        {
+            t.localPosition = Vector3.zero;
+            t.localScale = Vector3.one;
+            t.eulerAngles = Vector3.zero;
+        }
     }
 }

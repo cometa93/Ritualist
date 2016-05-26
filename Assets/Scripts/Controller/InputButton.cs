@@ -8,8 +8,8 @@ namespace Fading.Controller
         VerticalMovement,
         HorizontalRightStick,
         VerticalRightStick,
-        LeftTrigger,
-        RightTrigger,
+        CharacterChange,
+        SkillUse,
         SkillXAxis,
         SkillYAxis,
     }
@@ -18,7 +18,6 @@ namespace Fading.Controller
     {
         Unknown,
         Jump,
-        SkillUse,
         SpeedModyficator,
         Count,
     }

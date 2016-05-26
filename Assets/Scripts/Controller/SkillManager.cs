@@ -46,6 +46,7 @@ namespace Fading.Controller
             EventsToListen.Add(EventType.RightTriggerClicked);
             EventsToListen.Add(EventType.CharacterDied);
             EventsToListen.Add(EventType.CharacterChanged);
+            EventsToListen.Add(EventType.ChangeSkill);
             Setup();
             base.Awake();
         }
@@ -77,6 +78,9 @@ namespace Fading.Controller
                     _characterControllerLocked = true;
                     break;
                     
+                case EventType.ChangeSkill:
+                    ChangeSkill((int) gameEvent.Parameter);
+                    break;
 
             }
             base.OnEvent(gameEvent);

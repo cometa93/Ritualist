@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Fading.Controller;
 using Fading.UI;
+using SRF;
 using UnityEngine;
 
 namespace DevilMind
@@ -55,6 +56,8 @@ namespace DevilMind
                     Log.Error(MessageGroup.Common, "Spawned main canvas is null");
                     return;
                 }
+
+                spawned.transform.ResetLocals();
                 spawned.name = "MainCanvas (DONT DESTROY)";
                 var canvasBehaviour = spawned.GetComponent<MainCanvasBehaviour>();
                 canvasBehaviour.Setup();

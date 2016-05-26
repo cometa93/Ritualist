@@ -20,7 +20,7 @@
         /// Reset all local values on a transform to identity
         /// </summary>
         /// <param name="t"></param>
-        public static void ResetLocal(this Transform t)
+        public static void ResetLocals(this Transform t)
         {
             t.localPosition = Vector3.zero;
             t.localRotation = Quaternion.identity;
@@ -37,7 +37,7 @@
         {
             var go = new GameObject(name);
             go.transform.parent = t;
-            go.transform.ResetLocal();
+            go.transform.ResetLocals();
             go.gameObject.layer = t.gameObject.layer;
 
             return go;
