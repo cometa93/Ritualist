@@ -14,7 +14,7 @@ namespace Fading.AI.Enemies
         {
             var time = Vector2.Distance(Target, transform.position) * TimeForOneUnit;
             
-            return new Hashtable()
+            return new Hashtable
             {
                 {iT.MoveTo.time, time },
                 {iT.MoveTo.easetype, EaseType.linear }

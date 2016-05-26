@@ -10,12 +10,25 @@ namespace Fading
     {
         private static bool _isLoadingFromSave = false;
         private static bool _isEnteringFromBack = false;
-
-        private GameObject _magicFieldPrefab;
-        private GameObject _gameplayGui;
-        private readonly List<Transform> _checkPoints = new List<Transform>();
-        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>(); 
         
+        private GameObject _gameplayGui;
+
+        private readonly List<Transform> _checkPoints = new List<Transform>();
+        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>();
+        
+        public static void CreateGameplayControllerOnStageLoaded()
+        {
+            if (_instance == null)
+            {
+                GameObject go = new GameObject("GameplayController");
+                _instance = go.AddComponent<GameplayController>();
+                if (_instance == null)
+                {
+                    Log.Warning(MessageGroup.Gameplay, "Gameplay controller is null buuu....");
+                }
+            }
+        }
+
         private static GameplayController _instance;
         public static GameplayController Instance
         {
@@ -28,9 +41,9 @@ namespace Fading
         protected override void Awake()
         {
             _instance = GetComponent<GameplayController>();
+            SetupEventSystem();
             SetupCheckPoints();
             SetupGameplayGui();
-            SetupGameplayMenu();
             SetupCharacterObject();
             SetupTargets();
             SceneLoader.Instance.StageLoaded();
@@ -178,28 +191,18 @@ namespace Fading
                 return;
             }
 
-            _gameplayGui = Instantiate(prefab) as GameObject;
-            if (_gameplayGui == null)
+            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayConsole, out _gameplayGui))
             {
-                Log.Error(MessageGroup.Gameplay, "Couldn't instantiate gui");
+                return;
             }
+
+            var go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayConsole, prefab);
+            go.name = "Gameplay Console";
         }
 
-        private void SetupGameplayMenu()
+        private void SetupEventSystem()
         {
-            if (GameplayMenuBehaviour.GameplayMenuCreated)
-            {
-                return;
-            }
-
-            var prefab = ResourceLoader.LoadGameplayMenu();
-            if (prefab == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Can't get gameplaymenu object");
-                return;
-            }
             
-            Instantiate(prefab);
         }
 
         public void RegisterTarget(SkillTarget target)

@@ -45,7 +45,7 @@ MonoBehaviour:
   _keyboardEscapeClose: 1
   _enableBackgroundTransparency: 1
   _collapseDuplicateLogEntries: 1
-  _richTextInConsole: 1
+  _richTextInConsole: 0
   _requireEntryCode: 0
   _requireEntryCodeEveryTime: 0
   _entryCode: 00000000000000000000000000000000

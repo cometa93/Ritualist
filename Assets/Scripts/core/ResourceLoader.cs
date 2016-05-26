@@ -23,21 +23,6 @@ namespace DevilMind
             {EnemyType.BurningSoul,  "BurningSoul"},
         }; 
         
-        public static void SetLayer(Transform t, int layer)
-        {
-            if (t == null)
-            {
-                return;
-            }
-
-            t.gameObject.layer = layer;
-
-            foreach (Transform child in t)
-            {
-                SetLayer(child, layer);
-            }
-        }
-
         #region Loading Helpers
 
         public static GameObject LoadButton(ButtonType type)
@@ -59,6 +44,11 @@ namespace DevilMind
         public static TextAsset LoadGameSettings()
         {
             return Load<TextAsset>("GameSettings");
+        }
+
+        public static GameObject LoadMainCanvas()
+        {
+            return Load<GameObject>("Prefabs/GameplayGUI/MainCanvas");
         }
 
         public static GameObject LoadGameplayGUI()
@@ -109,7 +99,6 @@ namespace DevilMind
 
             return loadedObject as T;
         }
-
   
     }
 }

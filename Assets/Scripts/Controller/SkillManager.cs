@@ -44,9 +44,9 @@ namespace Fading.Controller
         {
             EventsToListen.Add(EventType.RightTriggerReleased);
             EventsToListen.Add(EventType.RightTriggerClicked);
-            EventsToListen.Add(EventType.ButtonReleased);
             EventsToListen.Add(EventType.CharacterDied);
             EventsToListen.Add(EventType.CharacterChanged);
+            EventsToListen.Add(EventType.ChangeSkill);
             Setup();
             base.Awake();
         }
@@ -77,9 +77,9 @@ namespace Fading.Controller
                 case EventType.CharacterDied:
                     _characterControllerLocked = true;
                     break;
-
-                case EventType.ButtonReleased:
-                    ChangeSkill((InputButton)gameEvent.Parameter);
+                    
+                case EventType.ChangeSkill:
+                    ChangeSkill((int) gameEvent.Parameter);
                     break;
 
             }
@@ -234,23 +234,9 @@ namespace Fading.Controller
 
         #region Manager
 
-        private void ChangeSkill(InputButton type)
+        private void ChangeSkill(int SkillNumber)
         {
-            switch (type)
-            {
-                 case InputButton.SkillButton1:
-                    CurrentSkillIndex = 1;
-                    break;
-                 case InputButton.SkillButton2:
-                    CurrentSkillIndex = 2;
-                    break;
-                 case InputButton.SkillButton3:
-                    CurrentSkillIndex = 3;
-                    break;
-                 case InputButton.SkillButton4:
-                    CurrentSkillIndex = 4;
-                    break;
-            }
+            CurrentSkillIndex = SkillNumber;
         }
 
         #endregion

@@ -40,12 +40,8 @@ namespace Fading.Controller
             {
                 switch ((InputButton) gameEvent.Parameter)
                 {
-                    case InputButton.A:
+                    case InputButton.Jump:
                         Jump();
-                        break;
-                    case InputButton.B:
-                        break;
-                    case InputButton.X:
                         break;
                 }
             }
@@ -72,7 +68,7 @@ namespace Fading.Controller
                 _myCharacterAnimationController.Move(0, false);
                 return;
             }
-            _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.LeftStickX);
+            _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.HorizontalMovement);
             _myCharacterAnimationController.Move(_xAxisMoveValue, _jump);
             _jump = false;
         }
