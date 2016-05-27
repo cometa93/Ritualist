@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasParent: {fileID: 400060}
+  _uiEventSystem: {fileID: 11412488}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
