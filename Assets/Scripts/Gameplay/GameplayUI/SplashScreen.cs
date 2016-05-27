@@ -7,7 +7,7 @@ namespace Fading.UI
     {
         public void OnLoad()
         {
-            SceneLoader.Instance.LoadStage(1);
+            SceneLoader.Instance.LoadScene(GameSceneType.MainMenu);
         } 
     }
 }

@@ -85,7 +85,7 @@ namespace Fading.Controller
             }
             var xVelocityValue = MyInputManager.GetAxis(InputAxis.HorizontalMovement)*MaxSpeed;
             var yVelocityValue = MyInputManager.GetAxis(InputAxis.VerticalMovement)*MaxSpeed;
-            _myRigidBody.velocity = new Vector2(xVelocityValue, -yVelocityValue);
+            _myRigidBody.velocity = new Vector2(xVelocityValue, yVelocityValue);
         }
     }
 }
