@@ -3,24 +3,16 @@ using DevilMind;
 using DevilMind.Utils;
 using SRF;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Fading.UI
 {
     public class MainCanvasBehaviour : MonoBehaviour
     {
-        [SerializeField] Transform _canvasParent;
-        [SerializeField] EventSystem _uiEventSystem;
+        [SerializeField]Transform _canvasParent;
 
         private static MainCanvasBehaviour _instance;
         public static MainCanvasBehaviour Instance { get { return _instance;} }
-
-        public static EventSystem EventSystem
-        {
-            get { return _instance != null ? _instance._uiEventSystem : null; }
-        }
-
-
+    
         private readonly Dictionary<UIType,GameObject> _registeredPanels = new Dictionary<UIType, GameObject>();
         
         public void Setup()

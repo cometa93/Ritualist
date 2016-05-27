@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Fading;
 using Fading.UI;
 using UnityEngine;
@@ -19,13 +18,6 @@ namespace DevilMind
                 return  sceneIndex > 1; 
             }
         }
-
-        private readonly Dictionary<GameSceneType, string> SceneBuildNames= new Dictionary<GameSceneType, string>
-        {
-            { GameSceneType.MainMenu, "MainMenu"}
-        };
-
-        private GameSceneType CurrentScene = GameSceneType.Unknown;
 
         private const string StagePrefix = "_STAGE";
         private bool _isLoadingStage;
@@ -149,40 +141,12 @@ namespace DevilMind
 
         public void LoadStage(int number)
         {
-            CurrentScene = GameSceneType.Gameplay;
             ShowLoadingStageScene(() =>
             {
                 _isLoadingStage = true;
                 CurrentStage = number;
                 StartCoroutine(LoadSceneAsync(number + StagePrefix, OnProgress, OnSceneLoaded));
             });
-        }
-
-        public void LoadScene(GameSceneType type)
-        {
-            if (CurrentScene == type)
-            {
-                return;
-            }
-
-            if (type == GameSceneType.Gameplay)
-            {
-                Log.Error(MessageGroup.Common, "Wrong usage of function stage should be loaded by LoadStage function");
-                return;
-            }
-
-            CurrentScene = type;
-            string sceneName;
-            if (SceneBuildNames.TryGetValue(CurrentScene, out sceneName))
-            {
-
-                ShowLoadingStageScene(() =>
-                {
-                    _isLoadingStage = false;
-                    CurrentStage = 0;
-                    StartCoroutine(LoadSceneAsync(sceneName, OnProgress, OnSceneLoaded));
-                });
-            }
         }
 
     }
