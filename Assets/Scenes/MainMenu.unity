@@ -818,6 +818,7 @@ GameObject:
   - 224: {fileID: 38635364}
   - 222: {fileID: 38635366}
   - 114: {fileID: 38635365}
+  - 114: {fileID: 38635367}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -868,7 +869,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.16176468, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.18382353, g: 0.081098616, b: 0.081098616, a: 0.322}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0
+    m_FadeDuration: 0.2
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -902,6 +903,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 38635363}
+--- !u!114 &38635367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 38635363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!4 &39000836
 Transform:
   m_ObjectHideFlags: 0
@@ -8713,6 +8741,7 @@ GameObject:
   - 224: {fileID: 262813262}
   - 222: {fileID: 262813264}
   - 114: {fileID: 262813263}
+  - 114: {fileID: 262813265}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -8763,7 +8792,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.16176468, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.18382353, g: 0.081098616, b: 0.081098616, a: 0.322}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0
+    m_FadeDuration: 0.2
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -8797,6 +8826,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 262813261}
+--- !u!114 &262813265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 262813261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!1 &265779159
 GameObject:
   m_ObjectHideFlags: 0
@@ -15777,6 +15833,7 @@ GameObject:
   - 124: {fileID: 471606626}
   - 81: {fileID: 471606625}
   - 111: {fileID: 471606630}
+  - 114: {fileID: 471606631}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -15867,6 +15924,25 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &471606631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 471606624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5378998db5ba9488d08a4e3b80821a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Width: 640
+  m_Height: 360
+  m_AutoAspect: 1
+  m_FramePerSecond: 30
+  m_Repeat: 0
+  m_Quality: 15
+  m_BufferSize: 10
+  WorkerPriority: 1
 --- !u!1 &472745016
 GameObject:
   m_ObjectHideFlags: 0
@@ -43819,6 +43895,7 @@ GameObject:
   - 224: {fileID: 1291395130}
   - 222: {fileID: 1291395132}
   - 114: {fileID: 1291395131}
+  - 114: {fileID: 1291395133}
   m_Layer: 5
   m_Name: START GAME BUTTON
   m_TagString: Untagged
@@ -43869,7 +43946,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.16176468, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.18382353, g: 0.081098616, b: 0.081098616, a: 0.322}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0
+    m_FadeDuration: 0.2
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -43903,6 +43980,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1291395129}
+--- !u!114 &1291395133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1291395129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!1 &1293265514
 GameObject:
   m_ObjectHideFlags: 0
@@ -65622,6 +65726,7 @@ GameObject:
   - 224: {fileID: 1885082524}
   - 222: {fileID: 1885082526}
   - 114: {fileID: 1885082525}
+  - 114: {fileID: 1885082527}
   m_Layer: 5
   m_Name: CreditsButton
   m_TagString: Untagged
@@ -65672,7 +65777,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.16176468, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.18382353, g: 0.081098616, b: 0.081098616, a: 0.322}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0
+    m_FadeDuration: 0.2
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -65706,6 +65811,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1885082523}
+--- !u!114 &1885082527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1885082523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!1 &1885599793
 GameObject:
   m_ObjectHideFlags: 0
