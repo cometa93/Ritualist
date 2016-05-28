@@ -30,7 +30,9 @@ namespace Fading
                 return;
             }
 
-            Camera._myTransform.position = Camera._objectToFollow.position;
+            var position = Camera._objectToFollow.position;
+            position.z = Camera._minCameraZ;
+            Camera._myTransform.position = position;
         }
 
         protected override void Awake()
@@ -58,19 +60,20 @@ namespace Fading
         {
             if (_possibleRigidbody2D != null)
             {
-                var position = Vector3.Lerp(_myTransform.position, _objectToFollow.position + new Vector3(_possibleRigidbody2D.velocity.x, _possibleRigidbody2D.velocity.y) *_overtakeMultiplier, Time.deltaTime*0.4f);
+                var position = Vector3.Lerp(_myTransform.position, _objectToFollow.position + new Vector3(_possibleRigidbody2D.velocity.x, _possibleRigidbody2D.velocity.y/2) *_overtakeMultiplier, Time.deltaTime);
                 var velocityLenght = _possibleRigidbody2D.velocity.magnitude;
                 var calculatedZ = _minCameraZ;
                 if (velocityLenght >= _offsetDepthStartingMove)
                 {
                     var percent = Mathf.Clamp01(velocityLenght/_objectMaxSpeed);
                     calculatedZ = Mathf.Lerp(_minCameraZ, _maxCameraZ, percent);
-                    position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.3f);
+                    position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime);
                     _myTransform.position = position;
                     return;
                 }
 
-                position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime * 0.3f);
+                calculatedZ = Mathf.MoveTowards(position.z, calculatedZ, 0.5f);
+                position.z = Mathf.Lerp(_myTransform.position.z, calculatedZ, Time.deltaTime);
                 _myTransform.position = position;
                 return;
             }
