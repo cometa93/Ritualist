@@ -59,12 +59,30 @@ namespace DevilMind
         {
         }
 
-        protected void SaveState(OnObjectStateLoaded onObjectStateLoaded)
+        protected void LoadState(OnObjectStateLoaded onObjectStateLoaded)
         {
             if (onObjectStateLoaded != null)
             {
                 _onObjectStateLoaded = onObjectStateLoaded;
             }
+        }
+
+        protected void SaveState(object config)
+        {
+            if (string.IsNullOrEmpty(_uniqueID))
+            {
+                Log.Warning(MessageGroup.Common,
+                    gameObject.name + " is saveable but don't have created unique identifier");
+                return;
+            }
+            var gameSave = GameMaster.GameSave.CurrentSave;
+            if (gameSave == null)
+            {
+                Log.Error(MessageGroup.Common, "Can't get game save");
+                return;
+            }
+
+            gameSave.InteractiveObjectsStates[_uniqueID] = config;
         }
 
         private void LoadState()

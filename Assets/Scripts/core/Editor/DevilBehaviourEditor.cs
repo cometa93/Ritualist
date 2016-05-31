@@ -9,11 +9,7 @@ namespace DevilMind.EditorGUI
     {
         private SerializedProperty _uniqueIdProperty;
         private DevilBehaviour _targetBehaviour;
-
-        void OnEnable()
-        {
-        }
-
+        
         public override void OnInspectorGUI()
         {
 

@@ -14,14 +14,14 @@ namespace Fading
         [SerializeField] private ParticleSystem _checkpointActive;
         [SerializeField] private Animator _animator;
 
-        private bool _isActive;
-        private bool IsActive
+        private bool _isChecked;
+        private bool IsChecked
         {
-            get { return _isActive; }
+            get { return _isChecked; }
             set
             {
-                _isActive = value;
-                _animator.SetBool(AnimatorIsActiveParameterName,_isActive);
+                _isChecked = value;
+                _animator.SetBool(AnimatorIsActiveParameterName,_isChecked);
             }
         }
 
@@ -49,27 +49,28 @@ namespace Fading
             if (save == null)
             {
                 Log.Warning(MessageGroup.Gameplay, "Save is null");
-                IsActive = true;
+                IsChecked = true;
                 return;
             }
 
             if (save.StageNumber < SceneLoader.Instance.CurrentStage)
             {
-                IsActive = false;
+                IsChecked = false;
                 return;
             }
 
             if (save.Checkpoint < _checkpointNumber)
             {
-                IsActive = false;
+                IsChecked = false;
+                return;
             }
 
-            IsActive = true;
+            IsChecked = true;
         }
 
         private void OnAnimationEnd()
         {
-            IsActive = true;
+            IsChecked = true;
         }
 
         private void OnTriggerEnter2D(Collider2D collider2D)
@@ -77,7 +78,7 @@ namespace Fading
 
             if (collider2D.tag == "Player")
             {
-                if (IsActive)
+                if (IsChecked)
                 {
                     return;
                 }

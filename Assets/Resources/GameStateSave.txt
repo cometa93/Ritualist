@@ -2,10 +2,11 @@
   {
     "SlotNumber": 1,
     "StageNumber": 1,
-    "Checkpoint": 1,
+    "Checkpoint": 2,
     "HeroStats": {
-      "Power": 100,
+      "Power": 80,
       "MaxPower": 100
-    }
+    },
+    "InteractiveObjectsStates": {}
   }
 ]
