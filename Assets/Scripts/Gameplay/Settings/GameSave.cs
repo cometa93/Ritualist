@@ -2,7 +2,6 @@
 using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Fading.Settings
 {
