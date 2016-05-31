@@ -2,7 +2,6 @@
 using System.IO;
 using DevilMind;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Fading.Settings
 {
@@ -24,6 +23,7 @@ namespace Fading.Settings
             public int StageNumber;
             public int Checkpoint;
             public HeroStats HeroStats;
+            public readonly Dictionary<string, object> InteractiveObjectsStates;
 
             public Save(int slotNumber)
             {
@@ -31,6 +31,7 @@ namespace Fading.Settings
                 StageNumber = 1;
                 Checkpoint = 1;
                 HeroStats = new HeroStats();
+                InteractiveObjectsStates = new Dictionary<string, object>();
             }
         }
 
