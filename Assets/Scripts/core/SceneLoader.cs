@@ -128,7 +128,7 @@ namespace DevilMind
         private void CheckLoadedObjectsState()
         {
             if (_objectsToLoadStateRefCounter > 0 ||
-                _isLoadingStage == false)
+                _isLoadingStage)
             {
                 return;
             }
@@ -136,7 +136,7 @@ namespace DevilMind
             _loadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
-        private IEnumerator LoadSceneAsync(string scene, System.Action<float> onProgress, System.Action onLoaded)
+        private IEnumerator LoadSceneAsync(string scene, Action<float> onProgress, Action onLoaded)
         {
             var async = SceneManager.LoadSceneAsync(scene);
             async.allowSceneActivation = false;

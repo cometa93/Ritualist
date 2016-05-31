@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace DevilMind
 {
+    public delegate void OnObjectStateLoaded(object state);
     public class DevilBehaviour : MonoBehaviour
     {
-        private string _uniqueID;
-        private bool _saveable;
+        [SerializeField][HideInInspector] private string _uniqueID;
+        private OnObjectStateLoaded _onObjectStateLoaded;
 
         protected readonly List<EventType> EventsToListen = new List<EventType>(); 
 
@@ -29,10 +30,11 @@ namespace DevilMind
         protected virtual void Awake()
         {
             ListenEvents(EventsToListen);
+            LoadState();
         }
 
         protected virtual void Start()
-        {      
+        {    
         }
 
         protected virtual void OnEnable()
@@ -57,15 +59,25 @@ namespace DevilMind
         {
         }
 
-        private void SaveState()
+        protected void SaveState(OnObjectStateLoaded onObjectStateLoaded)
         {
-            _saveable = true;
+            if (onObjectStateLoaded != null)
+            {
+                _onObjectStateLoaded = onObjectStateLoaded;
+            }
         }
 
-        private void LoadState(System.Action<Object> onStateLoaded)
+        private void LoadState()
         {
-            if (_saveable == false)
+            if (_onObjectStateLoaded == null)
             {
+                return;
+            }
+            
+            if (string.IsNullOrEmpty(_uniqueID))
+            {
+                Log.Warning(MessageGroup.Common,
+                    gameObject.name + " is saveable but don't have created unique identifier");
                 return;
             }
 
@@ -77,11 +89,23 @@ namespace DevilMind
                 SceneLoader.ObjectsToLoadStateRefCounter--;
                 return;
             }
+
             object loadedState;
             if (gameSave.InteractiveObjectsStates.TryGetValue(_uniqueID, out loadedState) == false)
             {
-                onStateLoaded = null;
+                if (_onObjectStateLoaded != null)
+                {
+                    _onObjectStateLoaded(null);
+                }
+                SceneLoader.ObjectsToLoadStateRefCounter--;
+                return;
             }
+
+            if (_onObjectStateLoaded != null)
+            {
+                _onObjectStateLoaded(loadedState);
+            }
+            SceneLoader.ObjectsToLoadStateRefCounter--;
         }
     }
 }
