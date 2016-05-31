@@ -10,30 +10,46 @@ namespace DevilMind
 {
     public class SceneLoader : MonoBehaviour
     {
-        //TODO ADD VALIDATION IF IT IS GAMEPLAY SCENE OR OTHER
-        public bool IsOnStage
-        {
-            get
-            {
-                var sceneIndex = SceneManager.GetActiveScene().buildIndex;
-                return  sceneIndex > 1; 
-            }
-        }
+        private const string StagePrefix = "_STAGE";
 
-        private readonly Dictionary<GameSceneType, string> SceneBuildNames= new Dictionary<GameSceneType, string>
+        private static SceneLoader _instance;
+        private static int _objectsToLoadStateRefCounter;
+        private bool _isLoadingStage;
+        private LoadingScreenBehaviour _loadingScreen;
+        private GameSceneType _currentScene = GameSceneType.Unknown;
+
+        private readonly Dictionary<GameSceneType, string> _sceneBuildNames = new Dictionary<GameSceneType, string>
         {
             { GameSceneType.MainMenu, "MainMenu"}
         };
 
-        private GameSceneType CurrentScene = GameSceneType.Unknown;
+        public static int ObjectsToLoadStateRefCounter
+        {
+            get { return _objectsToLoadStateRefCounter; }
+            set
+            {
+                _objectsToLoadStateRefCounter = value;
+                Instance.CheckLoadedObjectsState();
+            }
+        }
+        
+        public bool IsOnStage
+        {
+            get { return _currentScene == GameSceneType.Gameplay; }
+        }
 
-        private const string StagePrefix = "_STAGE";
-        private bool _isLoadingStage;
         public int CurrentStage { private set; get; }
 
-        private LoadingScreenBehaviour _loadingScreen;
-        private LoadingScreenBehaviour LoadingScreen
+        public static SceneLoader Instance
         {
+            get
+            {
+                return _instance;
+            }
+        }
+        
+        private LoadingScreenBehaviour LoadingScreen
+        { 
             get
             {
                 if (_instance._loadingScreen == null)
@@ -43,21 +59,11 @@ namespace DevilMind
                 return _loadingScreen;
             }
         }
-
-        private static SceneLoader _instance;
-
+        
         private void Awake()
         {
             _instance = this;
             DontDestroyOnLoad(this);
-        }
-
-        public static SceneLoader Instance
-        {
-            get
-            {
-                return _instance;
-            }
         }
 
         private void CreateLoadingScreen()
@@ -85,14 +91,14 @@ namespace DevilMind
             {
                 Log.Error(MessageGroup.Gameplay, "Loading screen dont have behaviour");
             }
-
-#if UNITY_EDITOR
-            // Only for initialization of gameplay controller on first scene while testing.
-            if (IsOnStage)
-            {
-                GameplayController.CreateGameplayControllerOnStageLoaded();
-            }
-#endif
+//
+//#if UNITY_EDITOR
+//            // Only for initialization of gameplay controller on first scene while testing.
+//            if (IsOnStage)
+//            {
+//                GameplayController.CreateGameplayControllerOnStageLoaded();
+//            }
+//#endif
         }
 
         private void ShowLoadingStageScene(Action onSceneShow)
@@ -117,6 +123,17 @@ namespace DevilMind
 
         private void OnProgress(float progress)
         {
+        }
+
+        private void CheckLoadedObjectsState()
+        {
+            if (_objectsToLoadStateRefCounter > 0 ||
+                _isLoadingStage == false)
+            {
+                return;
+            }
+
+            _loadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
         private IEnumerator LoadSceneAsync(string scene, System.Action<float> onProgress, System.Action onLoaded)
@@ -144,12 +161,12 @@ namespace DevilMind
         public void StageLoaded()
         {
             _isLoadingStage = false;
-            LoadingScreen.HideLoadingScreen(OnLoadingScreenHided);
+            CheckLoadedObjectsState();
         }
 
         public void LoadStage(int number)
         {
-            CurrentScene = GameSceneType.Gameplay;
+            _currentScene = GameSceneType.Gameplay;
             ShowLoadingStageScene(() =>
             {
                 _isLoadingStage = true;
@@ -157,10 +174,10 @@ namespace DevilMind
                 StartCoroutine(LoadSceneAsync(number + StagePrefix, OnProgress, OnSceneLoaded));
             });
         }
-
+        
         public void LoadScene(GameSceneType type)
         {
-            if (CurrentScene == type)
+            if (_currentScene == type)
             {
                 return;
             }
@@ -171,9 +188,9 @@ namespace DevilMind
                 return;
             }
 
-            CurrentScene = type;
+            _currentScene = type;
             string sceneName;
-            if (SceneBuildNames.TryGetValue(CurrentScene, out sceneName))
+            if (_sceneBuildNames.TryGetValue(_currentScene, out sceneName))
             {
 
                 ShowLoadingStageScene(() =>

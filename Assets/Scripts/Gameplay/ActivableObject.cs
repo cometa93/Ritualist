@@ -42,6 +42,7 @@ namespace Fading.InteractiveObjects
         
         protected override void Awake()
         {
+            _myTransform = transform;
             _collider = GetComponent<CircleCollider2D>();
             _rigidbody = GetComponent<Rigidbody2D>();
             SetupCollider();
