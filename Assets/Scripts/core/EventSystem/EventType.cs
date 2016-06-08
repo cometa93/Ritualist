@@ -15,6 +15,7 @@
         HeroSkillChanged,
         CharacterChanged,
         ChangeSkill,
+        PauseGame
     }
 
 }

@@ -939,7 +939,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.076786585, w: 0.9970476}
   m_LocalPosition: {x: 18.38, y: -11.12, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8.8077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 474241410}
   - {fileID: 1447831500}
@@ -29901,7 +29901,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.039414424, w: 0.999223}
   m_LocalPosition: {x: -5.53, y: -0.16, z: 0.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4.5176997}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 39000836}
   m_RootOrder: 9
@@ -44969,7 +44969,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 140.5}
+  m_AnchoredPosition: {x: 0, y: 108.9}
   m_SizeDelta: {x: 564, y: 171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1319581463
@@ -44991,7 +44991,7 @@ MonoBehaviour:
   m_ChildAlignment: 7
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 376, y: 35}
+  m_CellSize: {x: 376, y: 22.1}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -49378,7 +49378,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.017582994, w: 0.99984545}
   m_LocalPosition: {x: -4.99, y: -0.14, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.0149999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 39000836}
   m_RootOrder: 1
@@ -50062,7 +50062,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.70684236, w: 0.7073712}
   m_LocalPosition: {x: -49.93595, y: 5.36587, z: 0.02}
   m_LocalScale: {x: 2.7700002, y: 20.4, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.9572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1705928011}
   m_RootOrder: 0
@@ -53051,7 +53051,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
-    m_FontSize: 25
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -53125,7 +53125,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
-    m_FontSize: 25
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -53261,7 +53261,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
-    m_FontSize: 25
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -53540,7 +53540,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.08523181, w: 0.9963612}
   m_LocalPosition: {x: -0.76, y: 5.27, z: 1.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 9.7787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 828788506}
   m_RootOrder: 12
@@ -57236,7 +57236,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
-    m_FontSize: 25
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -57654,7 +57654,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.017582994, w: 0.99984545}
   m_LocalPosition: {x: -5.04, y: -0.02, z: 1.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.0149999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 39000836}
   m_RootOrder: 2
@@ -62762,7 +62762,7 @@ Transform:
   m_LocalRotation: {x: 0.40821794, y: -0.23456973, z: 0.109381676, w: 0.87542605}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -69698,7 +69698,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

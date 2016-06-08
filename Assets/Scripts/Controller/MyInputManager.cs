@@ -33,6 +33,7 @@ namespace Fading.Controller
         {
             {InputButton.Jump, "Jump" },
             {InputButton.SpeedModyficator, "Speed Modyficator" },
+            {InputButton.Pause, "Pause" },
         };
 
 

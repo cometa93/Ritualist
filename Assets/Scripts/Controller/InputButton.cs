@@ -19,6 +19,7 @@ namespace Fading.Controller
         Unknown,
         Jump,
         SpeedModyficator,
+        Pause,
         Count,
     }
 }

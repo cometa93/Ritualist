@@ -13,6 +13,7 @@ namespace Fading.Controller
         [SerializeField] private MyCharacterController _myCharacterAnimationController;
 
         private float _xAxisMoveValue;
+        private bool _paused;
 
         protected override void Awake()
         {
@@ -35,13 +36,20 @@ namespace Fading.Controller
             {
                 _characterMovementEnabled = !_characterMovementEnabled;
             }
-
+       
             if (gameEvent.Type == EventType.ButtonClicked)
             {
                 switch ((InputButton) gameEvent.Parameter)
                 {
                     case InputButton.Jump:
                         Jump();
+                        break;
+                    case InputButton.Pause:
+                        if (GameplayController.IsGameplayPaused)
+                        {
+                            return;
+                        }
+                        PauseGame();
                         break;
                 }
             }
@@ -71,6 +79,11 @@ namespace Fading.Controller
             _xAxisMoveValue = MyInputManager.GetAxis(InputAxis.HorizontalMovement);
             _myCharacterAnimationController.Move(_xAxisMoveValue, _jump);
             _jump = false;
+        }
+
+        private void PauseGame()
+        {
+            GameplayController.IsGameplayPaused = true;
         }
     }
 }

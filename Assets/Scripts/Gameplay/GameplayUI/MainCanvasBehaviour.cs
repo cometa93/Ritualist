@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DevilMind;
 using DevilMind.Utils;
-using SRF;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,8 +18,7 @@ namespace Fading.UI
         {
             get { return _instance != null ? _instance._uiEventSystem : null; }
         }
-
-
+        
         private readonly Dictionary<UIType,GameObject> _registeredPanels = new Dictionary<UIType, GameObject>();
         
         public void Setup()

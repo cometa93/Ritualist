@@ -2,10 +2,10 @@
 {
     public enum UIType
     {
-        Unkown,
+        Unknown,
         GameplayMenu,
         LoadingScreen,
-        GameplayConsole,
+        GameplayGUI,
         //Have to be last
         Count,
     }

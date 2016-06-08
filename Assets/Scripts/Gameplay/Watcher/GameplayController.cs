@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using Fading.UI;
+using EventType = DevilMind.EventType;
 
 namespace Fading
 {
@@ -10,7 +11,23 @@ namespace Fading
     {
         private static bool _isLoadingFromSave = false;
         private static bool _isEnteringFromBack = false;
-        
+
+        private static bool _isGameplayPaused;
+        public static bool IsGameplayPaused
+        {
+            get { return _isGameplayPaused; }
+            set
+            {
+                if (value == _isGameplayPaused)
+                {
+                    return;
+                }
+
+                _isGameplayPaused = value;
+                GameMaster.Events.Rise(EventType.PauseGame,_isGameplayPaused);
+            }
+        }
+
         private GameObject _gameplayGui;
 
         private readonly List<Transform> _checkPoints = new List<Transform>();
@@ -38,6 +55,7 @@ namespace Fading
             }
         }
 
+        
         protected override void Awake()
         {
             _instance = GetComponent<GameplayController>();
@@ -191,12 +209,13 @@ namespace Fading
                 return;
             }
 
-            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayConsole, out _gameplayGui))
+            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayGUI, out _gameplayGui))
             {
+                MainCanvasBehaviour.EnablePanel(UIType.GameplayGUI);
                 return;
             }
 
-            var go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayConsole, prefab);
+            var go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayGUI, prefab);
             go.name = "Gameplay Console";
         }
 
