@@ -9,8 +9,8 @@ namespace Fading
 {
     public class GameplayController : DevilBehaviour
     {
-        private static bool _isLoadingFromSave = false;
-        private static bool _isEnteringFromBack = false;
+        private static bool _isLoadingFromSave;
+        private static bool _isEnteringFromBack;
 
         private static bool _isGameplayPaused;
         public static bool IsGameplayPaused
@@ -54,16 +54,15 @@ namespace Fading
                 return _instance;
             }
         }
-
         
         protected override void Awake()
         {
             _instance = GetComponent<GameplayController>();
             SetupEventSystem();
             SetupCheckPoints();
-            SetupGameplayGui();
             SetupCharacterObject();
             SetupTargets();
+            SetupGameplayUserInterface();
             SceneLoader.Instance.StageLoaded();
             base.Awake();
         }
@@ -72,6 +71,12 @@ namespace Fading
         {
             CameraFollower.ResetCameraPosition();
             base.Start();
+        }
+
+        private void SetupGameplayUserInterface()
+        {
+            MainCanvasBehaviour.EnablePanel(UIType.GameplayMenu);
+            MainCanvasBehaviour.EnablePanel(UIType.GameplayGui);
         }
 
         private void SetupTargets()
@@ -193,30 +198,6 @@ namespace Fading
                 characterObj.transform.localEulerAngles = theRotation;
                 _isEnteringFromBack = false;
             }
-        }
-
-        private void SetupGameplayGui()
-        {
-            var prefab = ResourceLoader.LoadGameplayGUI();
-            if (prefab == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Can't get gameplay gui object");
-                return;
-            }
-
-            if (_gameplayGui != null)
-            {
-                return;
-            }
-
-            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayGUI, out _gameplayGui))
-            {
-                MainCanvasBehaviour.EnablePanel(UIType.GameplayGUI);
-                return;
-            }
-
-            var go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayGUI, prefab);
-            go.name = "Gameplay Console";
         }
 
         private void SetupEventSystem()

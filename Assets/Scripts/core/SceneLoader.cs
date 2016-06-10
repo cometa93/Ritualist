@@ -73,32 +73,7 @@ namespace DevilMind
                 return;
             }
 
-            var go = ResourceLoader.LoadLoadingScreen();
-            if (go == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Cant load loading screen prefab");
-                return;
-            }
-
-            go = MainCanvasBehaviour.RegisterPanel(UIType.LoadingScreen, go);
-            if (go == null)
-            {
-                return;
-            }
-
-            _loadingScreen = go.GetComponent<LoadingScreenBehaviour>();
-            if (_loadingScreen == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Loading screen dont have behaviour");
-            }
-//
-//#if UNITY_EDITOR
-//            // Only for initialization of gameplay controller on first scene while testing.
-//            if (IsOnStage)
-//            {
-//                GameplayController.CreateGameplayControllerOnStageLoaded();
-//            }
-//#endif
+            _loadingScreen = MainCanvasBehaviour.GetUi<LoadingScreenBehaviour>();
         }
 
         private void ShowLoadingStageScene(Action onSceneShow)
@@ -108,6 +83,8 @@ namespace DevilMind
 
         private void OnSceneLoaded()
         {
+            MainCanvasBehaviour.DisableAllPanels();
+
             if (_isLoadingStage)
             {
                 GameplayController.CreateGameplayControllerOnStageLoaded();

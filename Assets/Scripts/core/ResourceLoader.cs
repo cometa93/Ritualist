@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DevilMind.Utils;
+using Fading.UI;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -12,13 +13,20 @@ namespace DevilMind
         private const string _enemiesFolder = "Enemies/";
         private const string _buttonsPath = "Buttons/";
 
-        private static readonly Dictionary<ButtonType,string> ButtonsPaths =  new Dictionary<ButtonType, string>
+        private static readonly Dictionary<UIType, string> UIPanelPaths = new Dictionary<UIType, string>
+        {
+            {UIType.GameplayGui, "Prefabs/GameplayGUI/GameplayGUI"},
+            {UIType.GameplayMenu, "Prefabs/GameplayGUI/GameplayMenu"},
+            {UIType.LoadingScreen, "Prefabs/GameplayGUI/LoadingScreen"},
+        };
+
+        private static readonly Dictionary<ButtonType, string> ButtonsPaths =  new Dictionary<ButtonType, string>
         {
             {ButtonType.Standard, "StandardButton"},
             {ButtonType.Exit, "ExitButton"},
         };
 
-        private static readonly Dictionary<EnemyType,string> Enemies = new Dictionary<EnemyType, string>()
+        private static readonly Dictionary<EnemyType, string> Enemies = new Dictionary<EnemyType, string>()
         {
             {EnemyType.BurningSoul,  "BurningSoul"},
         }; 
@@ -36,6 +44,18 @@ namespace DevilMind
             return Load<GameObject>(_prefabsFolder +_buttonsPath + buttonName);
         }
 
+        public static GameObject LoadUIPanel(UIType type)
+        {
+            string path = "";
+            if (UIPanelPaths.TryGetValue(type, out path) == false)
+            {
+                Log.Error(MessageGroup.Common, "Can't load ui panel by type :" + type);
+                return null;
+            }
+            var panelObject = Load<GameObject>(path);
+            return panelObject;
+        }
+
         public static TextAsset LoadGameSave()
         {
             return Load<TextAsset>("GameStateSave");
@@ -50,22 +70,7 @@ namespace DevilMind
         {
             return Load<GameObject>("Prefabs/GameplayGUI/MainCanvas");
         }
-
-        public static GameObject LoadGameplayGUI()
-        {
-            return Load<GameObject>("Prefabs/GameplayGUI/GameplayGUI");
-        }
-
-        public static GameObject LoadLoadingScreen()
-        {
-            return Load<GameObject>("Prefabs/GameplayGUI/LoadingScreen");
-        }
-
-        public static GameObject LoadGameplayMenu()
-        {
-            return Load<GameObject>("Prefabs/GameplayGUI/GameplayMenu");
-        }
-
+        
         public static GameObject LoadCharacter()
         {
             return Load<GameObject>("Prefabs/Character/CharacterTransform");

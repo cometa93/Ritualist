@@ -29,7 +29,7 @@ namespace Fading.UI
         {
             UnpauseGameplay();
             SceneLoader.Instance.LoadScene(GameSceneType.MainMenu);
-            MainCanvasBehaviour.DisablePanel(UIType.GameplayGUI);
+            MainCanvasBehaviour.DisableAllPanels();
         }
 
         public void OnClickResumePauseMenu()

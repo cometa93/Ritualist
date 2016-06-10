@@ -26,6 +26,7 @@ namespace Fading.UI
                     _firstSelectedButton.Select();
                 }
             }
+
             base.Start();
         }
 

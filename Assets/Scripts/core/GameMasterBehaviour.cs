@@ -27,7 +27,6 @@ namespace DevilMind
             DontDestroyOnLoad(this);
             CreateMainCanvas();
             CreateSceneLoader();
-            CreateGameplayMenu();
         }
 
         private void CreateSceneLoader()
@@ -50,7 +49,7 @@ namespace DevilMind
                     Log.Error(MessageGroup.Common, "Cannot create main canvas object prefab is null");
                     return;
                 }
-                var spawned = Instantiate(go) as GameObject;
+                var spawned = Instantiate(go);
                 if (spawned == null)
                 {
                     Log.Error(MessageGroup.Common, "Spawned main canvas is null");
@@ -64,25 +63,6 @@ namespace DevilMind
             }
         }
 
-        private void CreateGameplayMenu()
-        {
-                  
-            var prefab = ResourceLoader.LoadGameplayMenu();
-            if (prefab == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Can't get gameplaymenu object");
-                return;
-            }
-            GameObject go;
-            if (MainCanvasBehaviour.TryGetRegisteredPanel(UIType.GameplayMenu, out go))
-            {
-                return;
-            }
-
-            go = MainCanvasBehaviour.RegisterPanel(UIType.GameplayMenu, prefab);
-            go.name = "Gameplay Menu (DONT DESTROY)";
-        }
-    
         public void Update()
         {
             GameMaster.Instance.MainLoop(Time.deltaTime);
