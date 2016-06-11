@@ -6097,7 +6097,11 @@ public class iTween : MonoBehaviour{
 		Component[] tweens = target.GetComponents<iTween>();
 		foreach (iTween item in tweens){
 			item.enabled=true;
-		}
+            if (item.physics)
+            {
+                item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            }
+        }
 	}
 	
 	/// <summary>
@@ -6125,7 +6129,11 @@ public class iTween : MonoBehaviour{
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.enabled=true;
-			}
+                if (item.physics)
+                {
+                    item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                }
+            }
 		}
 	}
 	
@@ -6142,7 +6150,11 @@ public class iTween : MonoBehaviour{
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.enabled=true;
-			}
+                if (item.physics)
+                {
+                    item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                }
+            }
 		}
 		if(includechildren){
 			foreach(Transform child in target.transform){
@@ -6198,7 +6210,11 @@ public class iTween : MonoBehaviour{
 			}
 			item.isPaused=true;
 			item.enabled=false;
-		}
+            if (item.physics)
+            {
+                item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            }
+        }
 	}
 	
 	/// <summary>
@@ -6231,7 +6247,11 @@ public class iTween : MonoBehaviour{
 				}
 				item.isPaused=true;
 				item.enabled=false;
-			}
+                if (item.physics)
+                {
+                    item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                }
+            }
 		}
 	}
 	
@@ -6569,6 +6589,11 @@ public class iTween : MonoBehaviour{
 	
 	//non-physics
 	void Update(){
+	    if (isPaused)
+	    {
+	        return;
+	    }
+
 		if(isRunning && !physics){
 			if(!reverse){
 				if(percentage<1f){
@@ -6587,8 +6612,14 @@ public class iTween : MonoBehaviour{
 	}
 	
 	//physics
-	void FixedUpdate(){
-		if(isRunning && physics){
+	void FixedUpdate()
+    {
+        if (isPaused)
+        {
+            return;
+        }
+
+        if (isRunning && physics){
 			if(!reverse){
 				if(percentage<1f){
 					TweenUpdate();

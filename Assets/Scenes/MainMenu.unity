@@ -15936,7 +15936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Width: 640
-  m_Height: 480
+  m_Height: 377
   m_AutoAspect: 1
   m_FramePerSecond: 30
   m_Repeat: 0

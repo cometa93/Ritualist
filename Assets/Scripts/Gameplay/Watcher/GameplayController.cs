@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
+using Fading.InteractiveObjects;
 using Fading.UI;
 using EventType = DevilMind.EventType;
 
@@ -54,15 +55,15 @@ namespace Fading
                 return _instance;
             }
         }
-        
+        public GameObject CharacterTransform { get; private set; }
+
         protected override void Awake()
         {
             _instance = GetComponent<GameplayController>();
-            SetupEventSystem();
             SetupCheckPoints();
             SetupCharacterObject();
             SetupTargets();
-            SetupGameplayUserInterface();
+            SetupWorldBehaviour();
             SceneLoader.Instance.StageLoaded();
             base.Awake();
         }
@@ -73,10 +74,17 @@ namespace Fading
             base.Start();
         }
 
-        private void SetupGameplayUserInterface()
+        private void SetupWorldBehaviour()
         {
-            MainCanvasBehaviour.EnablePanel(UIType.GameplayMenu);
-            MainCanvasBehaviour.EnablePanel(UIType.GameplayGui);
+            var go = GameObject.Find("World");
+            if (go == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Scene doesn't contain object with name World !");
+                return;
+            }
+
+            go.AddComponent<WorldBehaviour>();
+            Log.Info(MessageGroup.Gameplay, "World behaviour added to world object");
         }
 
         private void SetupTargets()
@@ -148,6 +156,8 @@ namespace Fading
                 Log.Error(MessageGroup.Gameplay, "Couldn't spawn character gameobject");
                 return;
             }
+
+            CharacterTransform = go;
             //Seting up character position on spawn point;
             var characterObj = go.transform.FindChild("MainCharacter");
             if (characterObj == null)
@@ -199,12 +209,7 @@ namespace Fading
                 _isEnteringFromBack = false;
             }
         }
-
-        private void SetupEventSystem()
-        {
-            
-        }
-
+        
         public void RegisterTarget(SkillTarget target)
         {
             if (_targets.ContainsKey(target.Type) == false)

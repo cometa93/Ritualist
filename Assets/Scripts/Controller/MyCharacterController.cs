@@ -1,5 +1,6 @@
 using DevilMind;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Fading
 {
@@ -64,9 +65,11 @@ namespace Fading
         [SerializeField] private Transform _groundCheck;
 
         [SerializeField] private LayerMask _whatIsGround;
-        [SerializeField] private LayerMask _platformsLayer;    
-        [SerializeField] private Rigidbody2D _myRigidBody2D;
+        [SerializeField] private LayerMask _platformsLayer;
         [SerializeField] private Animator _characterAnimator;
+
+        [FormerlySerializedAs("_myRigidBody2D")]
+        public Rigidbody2D CharacterRigidbody;
 
         private float _currentAirAnimationLayerWeight;
         private float _currentGroundAnimationLayerWeight = 1f;
@@ -91,9 +94,9 @@ namespace Fading
             SetupClipSpeedBasedOnVelocity();
             SetAnimationLayersWeight();
 
-            _characterAnimator.SetFloat(CharacterVerticalSpeed, _myRigidBody2D.velocity.y);
+            _characterAnimator.SetFloat(CharacterVerticalSpeed, CharacterRigidbody.velocity.y);
             _characterAnimator.SetBool(CharacterIsGrounded, _isGrounded);
-            _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(_myRigidBody2D.velocity.x));
+            _characterAnimator.SetFloat(CharacterHorizontalSpeed, Mathf.Abs(CharacterRigidbody.velocity.x));
 
             UpdateConsoleText();
         }
@@ -137,7 +140,7 @@ namespace Fading
         
         private void SetupClipSpeedBasedOnVelocity()
         {
-            float velocity = Mathf.Abs(_myRigidBody2D.velocity.x);
+            float velocity = Mathf.Abs(CharacterRigidbody.velocity.x);
             if (velocity <= 0.05f && _characterAnimator.IsInTransition(0))
             {
                 _characterAnimator.speed = 2.5f;
@@ -191,7 +194,7 @@ namespace Fading
             
             Debug.DrawRay(new Vector2(_centerRayPosition.position.x, _centerRayPosition.position.y), Vector2.down*2,Color.red,0.1f);
             Debug.DrawRay(new Vector2(_rightRayPosition.position.x, _rightRayPosition.position.y), new Vector3(IsFacingRight ? 1 : -1, -0.75f, 0), Color.red, 0.1f);
-            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + _myRigidBody2D.velocity, Color.cyan);
+            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + CharacterRigidbody.velocity, Color.cyan);
         }
 
         public void Move(float move, bool jump)
@@ -209,10 +212,10 @@ namespace Fading
             if (_isGrounded && jump)
             {
                 _isGrounded = false;
-                var velo = _myRigidBody2D.velocity;
+                var velo = CharacterRigidbody.velocity;
                 velo.y = 0;
-                _myRigidBody2D.velocity = velo;
-                _myRigidBody2D.AddRelativeForce(Vector2.up *_jumpForce, ForceMode2D.Impulse);
+                CharacterRigidbody.velocity = velo;
+                CharacterRigidbody.AddRelativeForce(Vector2.up *_jumpForce, ForceMode2D.Impulse);
                 return;
             }
 
@@ -220,7 +223,7 @@ namespace Fading
             {
                 if (Mathf.Abs(move) < 0.02f)
                 {
-                    _myRigidBody2D.velocity = new Vector2(0, _myRigidBody2D.velocity.y);
+                    CharacterRigidbody.velocity = new Vector2(0, CharacterRigidbody.velocity.y);
                 }
                 else
                 {
@@ -230,9 +233,9 @@ namespace Fading
 
             if (_isGrounded == false && _airControl)
             {
-                var velo = _myRigidBody2D.velocity;
+                var velo = CharacterRigidbody.velocity;
                 velo.x = move*_maxSpeed;
-                _myRigidBody2D.velocity = velo;
+                CharacterRigidbody.velocity = velo;
             }
         }
 
@@ -244,9 +247,9 @@ namespace Fading
             int angle = (int) (IsFacingRight ? _rayResult.SlopeAngle : -_rayResult.SlopeAngle);
             if (angle < 10)
             {
-                Vector2 velocity = _myRigidBody2D.velocity;
+                Vector2 velocity = CharacterRigidbody.velocity;
                 velocity.x = moveVector.x;
-                _myRigidBody2D.velocity = velocity;
+                CharacterRigidbody.velocity = velocity;
                 return;
             }
 
@@ -255,18 +258,18 @@ namespace Fading
                 angle > frontAngle &&
                 angle - frontAngle > _slopeAngleOffset)
             {
-                moveVector += Physics2D.gravity*Time.deltaTime*_myRigidBody2D.mass;
-                _myRigidBody2D.velocity = moveVector;
+                moveVector += Physics2D.gravity*Time.deltaTime*CharacterRigidbody.mass;
+                CharacterRigidbody.velocity = moveVector;
                 return;
             }
 
             if (angle >= 10)
             {
                 moveVector = DevilMath.RotateVectorZByAngle(moveVector, IsFacingRight ? angle : - angle);
-                Vector2 velocity = _myRigidBody2D.velocity;
+                Vector2 velocity = CharacterRigidbody.velocity;
                 velocity.y = moveVector.y;
                 velocity.x = moveVector.x;
-                _myRigidBody2D.velocity = velocity;
+                CharacterRigidbody.velocity = velocity;
             }
         }
 

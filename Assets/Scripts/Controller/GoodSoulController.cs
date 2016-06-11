@@ -69,7 +69,7 @@ namespace Fading.Controller
         protected override void Update()
         {
             base.Update();
-            if (_isControlled == false)
+            if (_isControlled == false || GameplayController.IsGameplayPaused)
             {
                 return;
             }

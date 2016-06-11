@@ -104,7 +104,7 @@ namespace Fading.UI
             return behaviour;
         }
 
-        public static void DisablePanel(UIType panelType)
+        private static void DisablePanel(UIType panelType)
         {
             GameObject panel;
             if (_instance._registeredPanels.TryGetValue(panelType, out panel))
@@ -118,7 +118,7 @@ namespace Fading.UI
             Log.Warning(MessageGroup.Gui, "Can't disable panel by type: " + panelType);
         }
 
-        public static void EnablePanel(UIType panelType)
+        private static void EnablePanel(UIType panelType)
         {
             GameObject panel;
             if (_instance._registeredPanels.TryGetValue(panelType, out panel))
@@ -132,7 +132,7 @@ namespace Fading.UI
             Log.Warning(MessageGroup.Gui, "Can't enable panel by type: " + panelType);
         }
 
-        public static void DisableAllPanels()
+        private static void DisableAllPanels()
         {
             for (int i = 1, c = (int) UIType.Count; i < c; ++i)
             {
@@ -159,5 +159,16 @@ namespace Fading.UI
                 RegisterPanel(type);
             }
         }
+        
+        public static void EnablePanels(List<UIType> panels)
+        {
+            DisableAllPanels();
+            for (int i = 0, c = panels.Count; i < c; ++i)
+            {
+                var type = panels[i];
+                EnablePanel(type);
+            }
+        }
+
     }
 }

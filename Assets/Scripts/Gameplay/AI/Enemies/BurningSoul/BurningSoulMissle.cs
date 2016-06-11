@@ -7,8 +7,8 @@ namespace Fading.AI.Enemies
     public class BurningSoulMissle : ShootableObject
     {
         [SerializeField] private GameObject _particleToSpawn;
-        [SerializeField] private float TimeForOneUnit = 0.3f;
-        private const int BurningMissleDamage = 10;
+        [SerializeField] private float TimeForOneUnit = 0.1f;
+        private const int BurningMissleDamage = 2;
 
         protected override Hashtable ShootItweenAnimation()
         {
@@ -17,7 +17,6 @@ namespace Fading.AI.Enemies
             return new Hashtable
             {
                 {iT.MoveTo.time, time },
-                {iT.MoveTo.easetype, EaseType.linear }
             };
         }
 
@@ -46,7 +45,7 @@ namespace Fading.AI.Enemies
             if (go != null)
             {
                 go.SetActive(true);
-                Destroy(go, 2f);
+                Destroy(go, 1f);
             }
             else
             {

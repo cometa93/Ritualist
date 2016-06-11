@@ -23,11 +23,25 @@ namespace Fading.Controller
             EventsToListen.Add(EventType.RightTriggerClicked);
             EventsToListen.Add(EventType.CharacterDied);
             EventsToListen.Add(EventType.CharacterChanged);
+            EventsToListen.Add(EventType.PauseGame);
+
             base.Awake();
         }
 
         protected override void OnEvent(Event gameEvent)
         {
+            if (gameEvent.Type == EventType.PauseGame &&
+                gameEvent.Parameter is bool)
+            {
+                bool pauseStatus = (bool) gameEvent.Parameter;
+
+                if (pauseStatus)
+                {
+                    _myCharacterAnimationController.CharacterRigidbody.velocity = Vector2.zero;
+                }
+                _myCharacterAnimationController.CharacterRigidbody.isKinematic = pauseStatus;
+            }
+
             if (gameEvent.Type == EventType.CharacterDied)
             {
                 _characterMovementEnabled = false;
@@ -57,6 +71,11 @@ namespace Fading.Controller
 
         protected override void Update()
         {
+            if (GameplayController.IsGameplayPaused)
+            {
+                return;
+            }
+
             Move();
         }
 

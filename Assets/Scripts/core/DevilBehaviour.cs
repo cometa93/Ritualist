@@ -29,7 +29,6 @@ namespace DevilMind
 
         protected virtual void Awake()
         {
-            ListenEvents(EventsToListen);
             LoadState();
         }
 
@@ -39,6 +38,7 @@ namespace DevilMind
 
         protected virtual void OnEnable()
         {
+            ListenEvents(EventsToListen);
         }
 
         protected virtual void Update()

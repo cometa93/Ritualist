@@ -2,6 +2,8 @@
 using DevilMind;
 using DevilMind.Utils;
 using UnityEngine;
+using Event = DevilMind.Event;
+using EventType = DevilMind.EventType;
 
 namespace Fading.AI
 {
@@ -30,6 +32,7 @@ namespace Fading.AI
 
         public EnemyType EnemyType;
         public string Name;
+
         public int Health;
         public int ProteciveField;
 
@@ -37,16 +40,21 @@ namespace Fading.AI
         {
             get { return Health > 0; }
         }
-        
+
+        protected bool IsPaused
+        {
+            get { return GameplayController.IsGameplayPaused; }
+        }
+
         protected override void Awake()
         {
             Setup();
             base.Awake();
         }
-
+        
         protected override void Update()
         {
-            if (IsAlive == false)
+            if (IsAlive == false || IsPaused)
             {
                 return;
             }

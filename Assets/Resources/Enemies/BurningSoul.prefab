@@ -371,7 +371,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -69.10926, y: 19.675232, z: -9.980469}
+  m_LocalPosition: {x: 7.7812614, y: -2.9664469, z: -9.980469}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -540,7 +540,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _particleToSpawn: {fileID: 196230}
-  TimeForOneUnit: 0.3
+  TimeForOneUnit: 0.1
 --- !u!114 &11492934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -552,21 +552,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f68b7a12444564ea4e7b586354d3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uniqueID: 
   _targetType: 2
   EnemyType: 0
   Name: BurningSoul
   Health: 50
   ProteciveField: 0
-  FrameOffsetBetweenStartAndStop: 2
   TimeForOneUnit: 1
   _pointsToMoveWithin:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _attackRange: 5
+  _pointsToMoveParentGameObject: {fileID: 0}
+  _burningSoulParticles:
+  - {fileID: 19857532}
+  - {fileID: 19834464}
+  - {fileID: 19868546}
+  - {fileID: 19855058}
+  - {fileID: 19849444}
+  _attackRange: 10
   _arrowPrefab: {fileID: 146652}
-  _attackCooldown: 3
+  _attackCooldown: 1
   _pingPongMoving: 1
 --- !u!198 &19826342
 ParticleSystem:

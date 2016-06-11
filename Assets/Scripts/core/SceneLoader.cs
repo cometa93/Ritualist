@@ -23,6 +23,12 @@ namespace DevilMind
             { GameSceneType.MainMenu, "MainMenu"}
         };
 
+        private readonly Dictionary<GameSceneType, List<UIType>> _uiTypesEnabledOnGameSceneTypes = new Dictionary<GameSceneType, List<UIType>>
+        {
+            {GameSceneType.Gameplay, new List<UIType> {UIType.GameplayGui, UIType.GameplayMenu}},
+            {GameSceneType.MainMenu, new List<UIType>()}
+        };
+
         public static int ObjectsToLoadStateRefCounter
         {
             get { return _objectsToLoadStateRefCounter; }
@@ -83,7 +89,11 @@ namespace DevilMind
 
         private void OnSceneLoaded()
         {
-            MainCanvasBehaviour.DisableAllPanels();
+            List<UIType> panelTypesToEnable;
+            if (_uiTypesEnabledOnGameSceneTypes.TryGetValue(_currentScene, out panelTypesToEnable))
+            {
+                MainCanvasBehaviour.EnablePanels(panelTypesToEnable);
+            }
 
             if (_isLoadingStage)
             {
@@ -178,6 +188,6 @@ namespace DevilMind
                 });
             }
         }
-
+        
     }
 }
