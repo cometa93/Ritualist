@@ -4,12 +4,15 @@ using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
 using Fading.InteractiveObjects;
 using Fading.UI;
+using SRDebugger.UI.Controls.Data;
 using EventType = DevilMind.EventType;
 
 namespace Fading
 {
     public class GameplayController : DevilBehaviour
     {
+        public static bool GameplayControllerCreated = false;
+
         private static bool _isLoadingFromSave;
         private static bool _isEnteringFromBack;
 

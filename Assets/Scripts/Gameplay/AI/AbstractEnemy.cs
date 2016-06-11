@@ -36,6 +36,8 @@ namespace Fading.AI
         public int Health;
         public int ProteciveField;
 
+        private bool _isStageLoaded;
+
         protected bool IsAlive
         {
             get { return Health > 0; }
@@ -46,15 +48,27 @@ namespace Fading.AI
             get { return GameplayController.IsGameplayPaused; }
         }
 
+
+        protected override void OnEvent(Event gameEvent)
+        {
+            if (gameEvent.Type == EventType.StageLoaded)
+            {
+                _isStageLoaded = true;
+            }
+
+            base.OnEvent(gameEvent);
+        }
+
         protected override void Awake()
         {
+            EventsToListen.Add(EventType.StageLoaded);
             Setup();
             base.Awake();
         }
         
         protected override void Update()
         {
-            if (IsAlive == false || IsPaused)
+            if (IsAlive == false || IsPaused || _isStageLoaded == false)
             {
                 return;
             }

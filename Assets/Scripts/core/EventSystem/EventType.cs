@@ -15,7 +15,8 @@
         HeroSkillChanged,
         CharacterChanged,
         ChangeSkill,
-        PauseGame
+        PauseGame,
+        StageLoaded,
     }
 
 }

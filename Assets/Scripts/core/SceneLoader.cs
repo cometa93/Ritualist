@@ -120,6 +120,7 @@ namespace DevilMind
                 return;
             }
 
+            GameMaster.Events.Rise(EventType.StageLoaded);
             _loadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
