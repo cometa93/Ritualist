@@ -1,0 +1,30 @@
+{
+  "currentQuestId": 0,
+  "lastId": 2,
+  "quests": {
+    "0": {
+      "iD": 0,
+      "title": "Life energy",
+      "summary": "Claim energy bulb by activating its magic fields.",
+      "longDescription": "Add Long Description",
+      "url": null,
+      "requairedQuestIds": [],
+      "isDone": false,
+      "isActive": true,
+      "requairedQuests": []
+    },
+    "1": {
+      "iD": 1,
+      "title": "Infected roses",
+      "summary": "Watch out for infected roses, evil demons are leaving traces that are easy to recognize.",
+      "longDescription": "Watch out for infected roses, evil demons are leaving traces that are easy to recognize.\nBad energy is leaving marks in the form of glowing light.",
+      "url": null,
+      "requairedQuestIds": [
+        1
+      ],
+      "isDone": false,
+      "isActive": true,
+      "requairedQuests": []
+    }
+  }
+}

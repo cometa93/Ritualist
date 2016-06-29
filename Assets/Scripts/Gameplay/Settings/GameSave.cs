@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using DevilMind;
+using DevilMind.QuestsSystem;
 using Newtonsoft.Json;
 
 namespace Fading.Settings
@@ -24,6 +25,7 @@ namespace Fading.Settings
             public int Checkpoint;
             public HeroStats HeroStats;
             public readonly Dictionary<string, object> InteractiveObjectsStates;
+            public Dictionary<int, Quest> Quests; 
 
             public Save(int slotNumber)
             {
@@ -32,6 +34,7 @@ namespace Fading.Settings
                 Checkpoint = 1;
                 HeroStats = new HeroStats();
                 InteractiveObjectsStates = new Dictionary<string, object>();
+                Quests = new Dictionary<int, Quest>();
             }
         }
 
@@ -57,9 +60,9 @@ namespace Fading.Settings
 //            return null;
         }
 
-        public string SaveCurrentGameProgress()
+        public string SaveCurrentGameProgress(bool withStats = true)
         {
-            if (CurrentSave != null)
+            if (CurrentSave != null && withStats)
             {
                 CurrentSave.HeroStats = GameMaster.Hero.Stats.CurrentStats();
             }
@@ -102,5 +105,36 @@ namespace Fading.Settings
                 SaveSlots.AddRange(slotList);
             }
         }
+
+
+#region Quest Manager Delegates
+
+        public void SaveQuests(Dictionary<int, Quest> questsToSave)
+        {
+            if (CurrentSave == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't save quests in game current save is null");
+                return;
+            }
+
+            CurrentSave.Quests = questsToSave;
+            var saveInText = JsonConvert.SerializeObject(SaveSlots, Formatting.Indented);
+            File.WriteAllText("Assets/Resources/GameStateSave.txt", saveInText);
+        }
+
+        public bool LoadQuests(out Dictionary<int, Quest> quests)
+        {
+            if (CurrentSave == null)
+            {
+                Log.Error(MessageGroup.Gameplay, "Can't save quests in game current save is null");
+                quests = new Dictionary<int, Quest>();
+                return false;
+            }
+
+            quests = CurrentSave.Quests;
+            return true;
+        }
+
+#endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using DevilMind.QuestsSystem;
 using Fading;
 using Fading.Settings;
 using Fading.UI;
@@ -15,12 +16,14 @@ namespace DevilMind
         public static EventSystem.EventSystem Events { get { return Instance._events; } }
         public static Hero Hero { get { return Instance._hero; } }
         public static GameSave GameSave { get { return Instance._saves; } }
+        public static QuestManager QuestManager { get { return Instance._questManager; } }
         #endregion
 
         #region Important properties
         private EventSystem.EventSystem _events;
         private Hero _hero;
         private GameSave _saves;
+        private QuestManager _questManager;
         #endregion
 
         private static GameMaster _instance;
@@ -36,6 +39,7 @@ namespace DevilMind
                     _instance._events = new EventSystem.EventSystem();
                     _instance._hero = new Hero();
                     _instance._saves = new GameSave();
+                    _instance._questManager = new QuestManager(GameSave.LoadQuests, GameSave.SaveQuests);
                 }
                 return _instance;
             }

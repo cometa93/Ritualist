@@ -87,7 +87,7 @@ namespace DevilMind
         }
         #endregion
 
-        private static T Load<T>(string name) where T : Object
+        public static T Load<T>(string name) where T : Object
         {
             Object loadedObject = Resources.Load(name, typeof(T));
             if (loadedObject == null )
