@@ -17,6 +17,7 @@
         ChangeSkill,
         PauseGame,
         StageLoaded,
+        DisplayQuestsPanel
     }
 
 }

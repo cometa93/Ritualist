@@ -13,7 +13,8 @@ namespace Fading.UI
 
         [SerializeField] private CanvasRenderer _characterDiedMenu;
         [SerializeField] private CanvasRenderer _pauseMenu;
-        
+        [SerializeField] private CanvasRenderer _questPanel;
+
         private Coroutine _animationCoroutine;
         private CanvasRenderer _animatedRenderer;
 
@@ -31,6 +32,7 @@ namespace Fading.UI
         {
             EventsToListen.Add(EventType.CharacterDied);
             EventsToListen.Add(EventType.PauseGame);
+            EventsToListen.Add(EventType.DisplayQuestsPanel);
             base.Awake();
         }
 
@@ -57,6 +59,22 @@ namespace Fading.UI
                     else
                     {
                         HidePauseMenu();
+                    }
+                    break;
+                case EventType.DisplayQuestsPanel:
+                    if (gameEvent.Parameter is bool == false)
+                    {
+                        Log.Error(MessageGroup.Gameplay, "Display quests panel event was rised without bool parameter");
+                        break;
+                    }
+
+                    if ((bool) gameEvent.Parameter)
+                    {
+                        ShowQuestsPanel();
+                    }
+                    else
+                    {
+                        HideQuestsPanel();
                     }
                     break;
             }
@@ -95,6 +113,14 @@ namespace Fading.UI
             _animationCoroutine = StartCoroutine(AnimateFade(_pauseMenu));
         }
 
+        private void ShowQuestsPanel()
+        {
+            StopAnimation();
+            _questPanel.gameObject.SetActive(true);
+            _questPanel.SetAlpha(0f);
+            _animationCoroutine = StartCoroutine(AnimateFade(_questPanel));
+        }
+
         private void HideDiedMenu()
         {
             StopAnimation();
@@ -112,6 +138,16 @@ namespace Fading.UI
             {
                 _pauseMenu.gameObject.SetActive(false);
                 _pauseMenu.SetAlpha(0f);
+            }));
+        }
+
+        private void HideQuestsPanel()
+        {
+            StopAnimation();
+            _animationCoroutine = StartCoroutine(AnimateFade(_questPanel, true, () =>
+            {
+                _questPanel.gameObject.SetActive(true);
+                _questPanel.SetAlpha(0f);
             }));
         }
 
