@@ -6,17 +6,11 @@ namespace Fading.InteractiveObjects
 {
     public class ActivatedGate : DevilBehaviour
     {
-        private class Config
-        {
-            private bool Unlocked;
-            private bool Active;
-        }
-
         [SerializeField] List<OrderLockPuzzle> _locks;
 
         private void OnLoadedObjectState(object stateLoaded)
         {
-            var config = stateLoaded as Config;
+            var config = stateLoaded as ActivatedGateConfig;
             if (config == null)
             {
                 return;
@@ -25,7 +19,7 @@ namespace Fading.InteractiveObjects
 
         protected override void Awake()
         {
-            LoadState(OnLoadedObjectState);
+            LoadState(GameMaster.GameSave.CurrentSave.ActivatedDoorsConfig ,OnLoadedObjectState);
             base.Awake();
         }
 

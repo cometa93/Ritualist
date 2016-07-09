@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Fading.InteractiveObjects;
 
 namespace DevilMind
 {
     public delegate void OnObjectStateLoaded(object state);
     public class DevilBehaviour : MonoBehaviour
     {
-        [SerializeField][HideInInspector] private string _uniqueID;
-        private OnObjectStateLoaded _onObjectStateLoaded;
+        [SerializeField][HideInInspector] protected string _uniqueID;
 
         protected readonly List<EventType> EventsToListen = new List<EventType>(); 
 
@@ -29,7 +29,6 @@ namespace DevilMind
 
         protected virtual void Awake()
         {
-            LoadState();
         }
 
         protected virtual void Start()
@@ -59,15 +58,7 @@ namespace DevilMind
         {
         }
 
-        protected void LoadState(OnObjectStateLoaded onObjectStateLoaded)
-        {
-            if (onObjectStateLoaded != null)
-            {
-                _onObjectStateLoaded = onObjectStateLoaded;
-            }
-        }
-
-        protected void SaveState(object config)
+        protected void SaveState<T>(Dictionary<string,T> saveTarget,T config, bool withStats = false)
         {
             if (string.IsNullOrEmpty(_uniqueID))
             {
@@ -75,6 +66,7 @@ namespace DevilMind
                     gameObject.name + " is saveable but don't have created unique identifier");
                 return;
             }
+
             var gameSave = GameMaster.GameSave.CurrentSave;
             if (gameSave == null)
             {
@@ -82,12 +74,14 @@ namespace DevilMind
                 return;
             }
 
-            gameSave.InteractiveObjectsStates[_uniqueID] = config;
+            saveTarget[_uniqueID] = config;
+            GameMaster.GameSave.SaveCurrentGameProgress(withStats);
+            
         }
 
-        private void LoadState()
+        protected void LoadState<T>(Dictionary<string, T> saveTarget, OnObjectStateLoaded onStateLoaded)
         {
-            if (_onObjectStateLoaded == null)
+            if (onStateLoaded == null)
             {
                 return;
             }
@@ -108,20 +102,20 @@ namespace DevilMind
                 return;
             }
 
-            object loadedState;
-            if (gameSave.InteractiveObjectsStates.TryGetValue(_uniqueID, out loadedState) == false)
+            T loadedState;
+            if (saveTarget.TryGetValue(_uniqueID, out loadedState) == false)
             {
-                if (_onObjectStateLoaded != null)
+                if (onStateLoaded != null)
                 {
-                    _onObjectStateLoaded(null);
+                    onStateLoaded(null);
                 }
                 SceneLoader.ObjectsToLoadStateRefCounter--;
                 return;
             }
 
-            if (_onObjectStateLoaded != null)
+            if (onStateLoaded != null)
             {
-                _onObjectStateLoaded(loadedState);
+                onStateLoaded(loadedState);
             }
             SceneLoader.ObjectsToLoadStateRefCounter--;
         }

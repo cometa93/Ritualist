@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Assets.Scripts.Gameplay.InteractiveObjects;
 using DevilMind;
@@ -12,10 +13,7 @@ namespace Fading
     public class GameplayController : DevilBehaviour
     {
         public static bool GameplayControllerCreated = false;
-
-        private static bool _isLoadingFromSave;
-        private static bool _isEnteringFromBack;
-
+        
         private static bool _isGameplayPaused;
         public static bool IsGameplayPaused
         {
@@ -31,13 +29,18 @@ namespace Fading
                 GameMaster.Events.Rise(EventType.PauseGame,_isGameplayPaused);
             }
         }
-
-        private GameObject _gameplayGui;
-
-        private readonly List<Transform> _checkPoints = new List<Transform>();
-        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>();
         
-        public static void CreateGameplayControllerOnStageLoaded()
+        private Transform _currentActiveCheckpoint;
+
+        private readonly Dictionary<SkillTargetType, List<SkillTarget>> _targets = new Dictionary<SkillTargetType, List<SkillTarget>>();
+
+        public static void SetupCharacter()
+        {
+            Instance.SetupCharacterObject();
+            SceneLoader.Instance.StageLoaded();
+        }
+
+        public static void CreateGameplayController()
         {
             if (_instance == null)
             {
@@ -47,6 +50,15 @@ namespace Fading
                 {
                     Log.Warning(MessageGroup.Gameplay, "Gameplay controller is null buuu....");
                 }
+            }
+        }
+
+        public static void DestroyGameplayController()
+        {
+            if (_instance != null)
+            {
+                Destroy(_instance.gameObject);
+                _instance = null;
             }
         }
 
@@ -60,92 +72,13 @@ namespace Fading
         }
         public GameObject CharacterTransform { get; private set; }
 
-        protected override void Awake()
-        {
-            _instance = GetComponent<GameplayController>();
-            SetupCheckPoints();
-            SetupCharacterObject();
-            SetupTargets();
-            SetupWorldBehaviour();
-            SceneLoader.Instance.StageLoaded();
-            base.Awake();
-        }
-
-        protected override void Start()
-        {
-            CameraFollower.ResetCameraPosition();
-            base.Start();
-        }
-
-        private void SetupWorldBehaviour()
-        {
-            var go = GameObject.Find("World");
-            if (go == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Scene doesn't contain object with name World !");
-                return;
-            }
-
-            go.AddComponent<WorldBehaviour>();
-            Log.Info(MessageGroup.Gameplay, "World behaviour added to world object");
-        }
-
-        private void SetupTargets()
-        {
-            var gos = GameObject.FindGameObjectsWithTag("Target");
-            for (int i = 0, c = gos.Length; i < c; ++i)
-            {
-                GameObject go = gos[i];
-                if (go == null)
-                {
-                    continue;
-                }
-
-                SkillTarget target = go.GetComponent<SkillTarget>();
-                if (target == null)
-                {
-                    Log.Warning(MessageGroup.Gameplay,
-                        "target with name : " + go.name + " is not a target or dont have script attached");
-                    continue;
-                }
-                RegisterTarget(target);
-            }
-        }
-        
-        private void SetupCheckPoints()
-        {
-            var go = GameObject.FindGameObjectWithTag("SpawnPoint");
-            if (go == null)
-            {
-                Log.Error(MessageGroup.Gameplay, "Couldn't find checkpoints parent");
-                return;
-            }
-
-            foreach (Transform t in go.transform)
-            {
-                _checkPoints.Add(t);
-            }
-
-            _checkPoints.Sort((transform1, transform2) =>
-            {
-                int t1, t2;
-
-                if (int.TryParse(transform1.name, out t1) == false)
-                {
-                    return -1;
-                };
-
-                if (int.TryParse(transform2.name, out t2) == false)
-                {
-                    return 1;
-                };
-
-                return t1 >= t2 ? 1:-1;
-            });
-        }
-
         private void SetupCharacterObject()
         {
+            if (CharacterTransform != null)
+            {
+                return;
+            }
+
             var prefab = ResourceLoader.LoadCharacter();
             if (prefab == null)
             {
@@ -169,50 +102,35 @@ namespace Fading
                 return;
             }
 
-            if (_checkPoints.Count <= 0)
+            if (_currentActiveCheckpoint == null)
             {
-                Log.Error(MessageGroup.Gameplay, "Checkpoints are empty !");
+                Log.Error(MessageGroup.Gameplay, "Checkpoint was not registered");
+                SceneLoader.Instance.LoadScene(GameSceneType.MainMenu);
                 return;
             }
 
-            int indexOfCheckpoint = 0;
-            if (_isEnteringFromBack)
-            {
-                indexOfCheckpoint = _checkPoints.Count - 1;
-            }
-
-            if (_isLoadingFromSave)
-            {
-                _isLoadingFromSave = false;
-                var save = GameMaster.GameSave.CurrentSave;
-                if (save != null)
-                {
-                    if (save.Checkpoint == 0)
-                    {
-                        Log.Warning(MessageGroup.Common, "save checkpoint is equal 0. Checkpoints are starting from 1");
-                        return;
-                    }
-                    if (_checkPoints.Count > save.Checkpoint - 1)
-                    {
-                        indexOfCheckpoint = save.Checkpoint - 1;
-                    }
-                }
-            }
-
-
-            characterObj.transform.position = _checkPoints[indexOfCheckpoint].position;
-            if (_isEnteringFromBack)
-            {
-                Vector3 theScale = characterObj.transform.localScale;
-                theScale.z *= -1;
-                characterObj.transform.localScale = theScale;
-                Vector3 theRotation = characterObj.transform.localEulerAngles;
-                theRotation.y = theScale.z > 0 ? 0 : 180;
-                characterObj.transform.localEulerAngles = theRotation;
-                _isEnteringFromBack = false;
-            }
+            var pose = _currentActiveCheckpoint.position;
+            pose.z = 0;
+            characterObj.position = pose;
         }
-        
+
+        protected override void Awake()
+        {
+            DontDestroyOnLoad(this);
+            if (_instance == null)
+            {
+                _instance = GetComponent<GameplayController>();
+            }
+
+            base.Awake();
+        }
+
+        protected override void Start()
+        {
+            CameraFollower.ResetCameraPosition();
+            base.Start();
+        }
+
         public void RegisterTarget(SkillTarget target)
         {
             if (_targets.ContainsKey(target.Type) == false)
@@ -247,16 +165,12 @@ namespace Fading
             }
 
             return _targets[type];
-        } 
-
-        public static void SetupFromGameSave()
-        {
-            _isLoadingFromSave = true;
         }
 
-        public static void SetupFromBack()
+        public void SetCurrentCheckpoint(Transform checkpoint)
         {
-            _isEnteringFromBack = true;
+            _currentActiveCheckpoint = checkpoint;
         }
+
     }
 }

@@ -52,7 +52,6 @@ namespace DevilMind.QuestsSystem
                 if (_quests == null)
                 {
                     GetQuests();
-                    return null;
                 }
 
                 return _quests;

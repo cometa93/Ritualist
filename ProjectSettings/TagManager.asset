@@ -7,6 +7,7 @@ TagManager:
   - SpawnPoint
   - Target
   - explosion
+  - World
   layers:
   - Default
   - TransparentFX

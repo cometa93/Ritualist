@@ -2,6 +2,7 @@
 using System.IO;
 using DevilMind;
 using DevilMind.QuestsSystem;
+using Fading.InteractiveObjects;
 using Newtonsoft.Json;
 
 namespace Fading.Settings
@@ -21,19 +22,19 @@ namespace Fading.Settings
         public class Save
         {
             public readonly int SlotNumber;
-            public int StageNumber;
-            public int Checkpoint;
+            public string CheckpointUniqueId;
             public HeroStats HeroStats;
-            public readonly Dictionary<string, object> InteractiveObjectsStates;
-            public Dictionary<int, Quest> Quests; 
+            public Dictionary<int, Quest> Quests;
+            public Dictionary<string, CheckpointConfig> CheckpointsConfigs;
+            public Dictionary<string, ActivatedGateConfig> ActivatedDoorsConfig;
 
             public Save(int slotNumber)
             {
                 SlotNumber = slotNumber;
-                StageNumber = 1;
-                Checkpoint = 1;
+                CheckpointUniqueId = null;
                 HeroStats = new HeroStats();
-                InteractiveObjectsStates = new Dictionary<string, object>();
+                CheckpointsConfigs = new Dictionary<string, CheckpointConfig>();
+                ActivatedDoorsConfig = new Dictionary<string, ActivatedGateConfig>();
                 Quests = new Dictionary<int, Quest>();
             }
         }
@@ -78,9 +79,30 @@ namespace Fading.Settings
                 Log.Error(MessageGroup.Gameplay, "Can't load game Current save is null");
                 return;
             }
-            
-            GameplayController.SetupFromGameSave();
-            SceneLoader.Instance.LoadStage(CurrentSave.StageNumber);
+
+            if (CurrentSave.CheckpointUniqueId == null)
+            {
+                SceneLoader.Instance.LoadClearStage(1);
+                return;
+            }
+
+            CheckpointConfig config;
+            if(CurrentSave.CheckpointsConfigs.TryGetValue(CurrentSave.CheckpointUniqueId, out config) == false)
+            {
+                SceneLoader.Instance.LoadClearStage(1);
+                return;
+            }
+
+            CheckpointConfig checkpointData = config as CheckpointConfig;
+            if (checkpointData == null)
+            {
+                Log.Warning(MessageGroup.Gameplay, "Can't cast config to checkpoint config something is bad");
+                SceneLoader.Instance.LoadClearStage(1);
+                return;
+            }
+
+
+            SceneLoader.Instance.LoadClearStage(checkpointData.StageNumber);
         }
 
         private void LoadSaveSlots()

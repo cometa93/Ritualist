@@ -51,6 +51,7 @@ namespace Assets.Scripts.Gameplay.InteractiveObjects
         {
             _myTransform = transform;
             _myPosition = new Vector2(_myTransform.position.x, _myTransform.position.y);
+            GameplayController.Instance.RegisterTarget(this);
             base.Awake();
         }
 

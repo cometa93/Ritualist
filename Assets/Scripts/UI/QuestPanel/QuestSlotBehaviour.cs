@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Fading.UI
 {
-    public class QuestSlotBehaviour
+    public class QuestSlotBehaviour : DevilBehaviour, ISelectHandler
     {
         [SerializeField] private Text _questTitle;
 

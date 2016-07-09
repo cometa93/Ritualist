@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DevilMind;
 using DevilMind.QuestsSystem;
 using DevilMind.Utils;
+using UnityEngine.UI;
 
 namespace Fading.UI
 {
@@ -12,7 +13,8 @@ namespace Fading.UI
     {
         [SerializeField] private GameObject _questSlotPrefab;
         [SerializeField] private GameObject _questSlotsParent;
-
+        [SerializeField] private Text _questDescription;
+        [SerializeField] private Text _questTitle;
 
         private readonly Dictionary<int, QuestSlotBehaviour> _spawnedSlots = new Dictionary<int, QuestSlotBehaviour>();
 
@@ -31,6 +33,11 @@ namespace Fading.UI
         {
             var quests = GameMaster.QuestManager.Quests;
             int number = 0;
+            if (quests == null)
+            {
+                return;
+            }
+            
             foreach (var quest in quests)
             {
                 var slot = GetSlot(number++);
@@ -44,6 +51,10 @@ namespace Fading.UI
                 {
                     SlotSelected(questToSelect);
                 });
+                if (number == 1)
+                {
+                    SlotSelected(quest.Value);
+                }
             }
 
         }
@@ -76,7 +87,8 @@ namespace Fading.UI
 
         private void SlotSelected(Quest quest)
         {
-            //TODO Display quest details in right panel
+            _questTitle.text = quest.Title;
+            _questDescription.text = quest.Summary;
         }
     }
 }

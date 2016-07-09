@@ -1,9 +1,0 @@
-{
-  "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-  "$values": [
-    "SplashScreen",
-    "MainMenu",
-    "1_STAGE",
-    "2_STAGE"
-  ]
-}

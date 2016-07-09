@@ -8,7 +8,6 @@ namespace Fading.InteractiveObjects
     public class WorldBehaviour : DevilBehaviour
     {
         private GameObject _myGameObject;
-        private GameObject _myCharacterGameObject;
 
         private bool _isPaused;
         private bool IsPaused

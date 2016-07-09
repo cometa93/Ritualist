@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using DevilMind;
+using Fading.InteractiveObjects;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,8 +34,7 @@ namespace Fading
             {GameplayObjects,  CharacterLayer}
         }; 
 
-        private GameObject _world;
-
+        
         [MenuItem("Devilmind/Scenes/Setup Scene Objects")]
         static void CreateWizard()
         {
@@ -41,16 +42,31 @@ namespace Fading
                 "Script will set order layers based on names of gameObjects \n" +
                 "Ground, Second, First,Background", typeof(SetupSceneLayersBasedOnNames), "Setup Scene");
         }
-
+        
         void OnWizardCreate()
         {
-            _world = GameObject.Find(WorldObjectName);
-            if (_world == null)
+            var worldObjects = Selection.objects;
+            for (int index = 0; index < worldObjects.Length; index++)
             {
-                Debug.LogWarning("Couldn't find gameobject with name World on scen Fix It");
+                var world = worldObjects[index];
+                Setup(world as GameObject);
+            }
+        }
+
+        void Setup(GameObject world)
+        {
+            if (world == null)
+            {
+                Debug.LogWarning("Selected object is not world or its name is not world");
                 return;
             }
             
+            if (world.GetComponent<WorldBehaviour>() == null)
+            {
+                world.AddComponent<WorldBehaviour>();
+                Log.Info(MessageGroup.Gameplay, "World behaviour added to world object");
+            }
+
             string layerName = "";
             foreach (var keyValue in ObjectNameToLayerName)
             {
@@ -59,14 +75,14 @@ namespace Fading
                 {
                     continue;
                 }
-                Transform child = _world.transform.FindChild(keyValue.Key);
+                Transform child = world.transform.FindChild(keyValue.Key);
                 
                 var go = child != null ? child.gameObject : null;
                 SetupLayer(go, keyValue.Value, keyValue.Key);
             }
 
             //TODO setting layers for skipped before backgrounds 
-            foreach (Transform child in _world.transform)
+            foreach (Transform child in world.transform)
             {
                 if (child.name == BackgroundObjectName && 
                     ObjectNameToLayerName.TryGetValue(child.name,out layerName))

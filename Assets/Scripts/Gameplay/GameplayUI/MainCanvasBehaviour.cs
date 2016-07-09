@@ -132,12 +132,13 @@ namespace Fading.UI
             Log.Warning(MessageGroup.Gui, "Can't enable panel by type: " + panelType);
         }
 
-        private static void DisableAllPanels()
+        private static void DisableAllPanels( List<UIType> panelsToRemainActive )
         {
             for (int i = 1, c = (int) UIType.Count; i < c; ++i)
             {
                 var uiType = (UIType) i;
-                if (Instance._uiTypesThatCannotBeDeactivated.Contains(uiType))
+                if (Instance._uiTypesThatCannotBeDeactivated.Contains(uiType) ||
+                    panelsToRemainActive.Contains(uiType))
                 {
                     continue;
                 }
@@ -162,12 +163,12 @@ namespace Fading.UI
         
         public static void EnablePanels(List<UIType> panels)
         {
-            DisableAllPanels();
+            DisableAllPanels(panels);
             for (int i = 0, c = panels.Count; i < c; ++i)
             {
                 var type = panels[i];
                 EnablePanel(type);
-            }
+            }            
         }
 
     }

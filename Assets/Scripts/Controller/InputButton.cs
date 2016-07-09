@@ -20,6 +20,7 @@ namespace Fading.Controller
         Jump,
         SpeedModyficator,
         Pause,
+        Quests,
         Count,
     }
 }

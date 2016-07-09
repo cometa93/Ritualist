@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using Fading;
 using Fading.UI;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace DevilMind
         private bool _isLoadingStage;
         private LoadingScreenBehaviour _loadingScreen;
         private GameSceneType _currentScene = GameSceneType.Unknown;
+
+        private readonly Dictionary<int, string> _loadedStages = new Dictionary<int, string>(); 
 
         private readonly Dictionary<GameSceneType, string> _sceneBuildNames = new Dictionary<GameSceneType, string>
         {
@@ -43,8 +46,6 @@ namespace DevilMind
         {
             get { return _currentScene == GameSceneType.Gameplay; }
         }
-
-        public int CurrentStage { private set; get; }
 
         public static SceneLoader Instance
         {
@@ -82,7 +83,7 @@ namespace DevilMind
             _loadingScreen = MainCanvasBehaviour.GetUi<LoadingScreenBehaviour>();
         }
 
-        private void ShowLoadingStageScene(Action onSceneShow)
+        private void ShowLoadingScreen(Action onSceneShow)
         {
             LoadingScreen.ShowLoadingScreen(onSceneShow);
         }
@@ -97,7 +98,7 @@ namespace DevilMind
 
             if (_isLoadingStage)
             {
-                GameplayController.CreateGameplayControllerOnStageLoaded();
+                GameplayController.SetupCharacter();
                 return;
             }
 
@@ -124,27 +125,31 @@ namespace DevilMind
             _loadingScreen.HideLoadingScreen(OnLoadingScreenHided);
         }
 
-        private IEnumerator LoadSceneAsync(string scene, Action<float> onProgress, Action onLoaded)
+        private IEnumerator LoadSceneAsync(string scene, Action<float> onProgress, Action onLoaded, bool additive = false)
         {
-            var async = SceneManager.LoadSceneAsync(scene);
+            Application.backgroundLoadingPriority = ThreadPriority.Low;
+            var async = SceneManager.LoadSceneAsync(scene, additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
             async.allowSceneActivation = false;
             while (async.progress < 0.89f)
             {
                 onProgress(async.progress);
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
-
+            
             async.allowSceneActivation = true;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForEndOfFrame();
 
             while (async.isDone == false)
             {
                 onProgress(async.progress);
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
 
             onLoaded();
+            Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
         }
+
+        #region Stages Scene Managment
 
         public void StageLoaded()
         {
@@ -154,15 +159,74 @@ namespace DevilMind
 
         public void LoadStage(int number)
         {
-            _currentScene = GameSceneType.Gameplay;
-            ShowLoadingStageScene(() =>
+            if (_loadedStages.ContainsKey(number))
             {
-                _isLoadingStage = true;
-                CurrentStage = number;
-                StartCoroutine(LoadSceneAsync(number + StagePrefix, OnProgress, OnSceneLoaded));
+                return;
+            }
+            
+            _currentScene = GameSceneType.Gameplay;
+            _isLoadingStage = true;
+            _loadedStages[number] = GetStageName(number);
+            StartCoroutine(LoadSceneAsync(GetStageName(number), OnProgress, OnSceneLoaded, true));
+        }
+
+        public void UnloadStage(int number)
+        {
+            string stageName = "";
+            if (_loadedStages.TryGetValue(number, out stageName) == false)
+            {
+                return;
+            }
+
+            SceneManager.UnloadScene(stageName);
+            _loadedStages.Remove(number);
+        }
+
+        public void LoadStages(List<int> stageNumbersToLoad)
+        {
+            for (int i = 0, c = stageNumbersToLoad.Count; i < c; ++i)
+            {
+                var number = stageNumbersToLoad[i];
+                LoadStage(number);
+            }
+
+            foreach (var stage in _loadedStages)
+            {
+                if (stageNumbersToLoad.Contains(stage.Key))
+                {
+                    continue;
+                }
+
+                UnloadStage(stage.Key);
+            }
+        }
+
+        public void LoadClearStage(int stageNumber)
+        {
+            _currentScene = GameSceneType.Gameplay;
+            GameplayController.DestroyGameplayController();
+            GameplayController.CreateGameplayController();
+            _loadedStages.Clear();
+            _loadedStages[stageNumber] = GetStageName(stageNumber);
+
+            _isLoadingStage = true;
+            ShowLoadingScreen(() =>
+            {
+                StartCoroutine(LoadSceneAsync(GetStageName(stageNumber), OnProgress, () =>
+                {
+                    OnSceneLoaded();
+                    GameplayController.SetupCharacter();
+                }));
             });
         }
-        
+
+        private string GetStageName(int number)
+        {
+            return number + StagePrefix;
+        }
+
+        #endregion
+
         public void LoadScene(GameSceneType type)
         {
             if (_currentScene == type)
@@ -176,19 +240,20 @@ namespace DevilMind
                 return;
             }
 
+            GameplayController.DestroyGameplayController();
             _currentScene = type;
             string sceneName;
             if (_sceneBuildNames.TryGetValue(_currentScene, out sceneName))
             {
 
-                ShowLoadingStageScene(() =>
+                ShowLoadingScreen(() =>
                 {
                     _isLoadingStage = false;
-                    CurrentStage = 0;
                     StartCoroutine(LoadSceneAsync(sceneName, OnProgress, OnSceneLoaded));
                 });
             }
         }
-        
+
+     
     }
 }

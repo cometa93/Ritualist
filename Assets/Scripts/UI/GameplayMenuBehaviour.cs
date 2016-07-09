@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DevilMind;
+using Fading.Controller;
 using UnityEngine;
 using Event = DevilMind.Event;
 using EventType = DevilMind.EventType;
@@ -17,6 +18,7 @@ namespace Fading.UI
 
         private Coroutine _animationCoroutine;
         private CanvasRenderer _animatedRenderer;
+        private bool _isQuestsVisible;
 
         protected override void Start()
         {
@@ -32,7 +34,7 @@ namespace Fading.UI
         {
             EventsToListen.Add(EventType.CharacterDied);
             EventsToListen.Add(EventType.PauseGame);
-            EventsToListen.Add(EventType.DisplayQuestsPanel);
+            EventsToListen.Add(EventType.ButtonClicked);
             base.Awake();
         }
 
@@ -61,19 +63,23 @@ namespace Fading.UI
                         HidePauseMenu();
                     }
                     break;
-                case EventType.DisplayQuestsPanel:
-                    if (gameEvent.Parameter is bool == false)
+                case EventType.ButtonClicked:
+
+                    var buttonType = (InputButton)gameEvent.Parameter;
+                    if (buttonType != InputButton.Quests)
                     {
-                        Log.Error(MessageGroup.Gameplay, "Display quests panel event was rised without bool parameter");
-                        break;
+                        return;
                     }
 
-                    if ((bool) gameEvent.Parameter)
+                    if (_isQuestsVisible == false)
                     {
+
+                        _isQuestsVisible = true;
                         ShowQuestsPanel();
                     }
                     else
                     {
+                        _isQuestsVisible = false;
                         HideQuestsPanel();
                     }
                     break;
@@ -146,7 +152,7 @@ namespace Fading.UI
             StopAnimation();
             _animationCoroutine = StartCoroutine(AnimateFade(_questPanel, true, () =>
             {
-                _questPanel.gameObject.SetActive(true);
+                _questPanel.gameObject.SetActive(false);
                 _questPanel.SetAlpha(0f);
             }));
         }

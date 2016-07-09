@@ -1,12 +1,18 @@
 [
   {
     "SlotNumber": 1,
-    "StageNumber": 1,
-    "Checkpoint": 2,
+    "CheckpointUniqueId": "405831ee-e36f-45ee-a7c8-1d3191594b08",
     "HeroStats": {
-      "Power": 76,
+      "Power": 100,
       "MaxPower": 100
     },
-    "InteractiveObjectsStates": {}
+    "Quests": {},
+    "CheckpointsConfigs": {
+      "405831ee-e36f-45ee-a7c8-1d3191594b08": {
+        "StageNumber": 1,
+        "IsActivated": true
+      }
+    },
+    "ActivatedDoorsConfig": {}
   }
 ]
